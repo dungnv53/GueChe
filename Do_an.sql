@@ -10,3 +10,34 @@
 3. User
 4. Admin
 5. Cart
+
+
+1. Admin:
++ id
++ username
++ password
+
+2. User:
++ id
++ username
++ password
+
+3. Catelog:
++ id
++ name
+
+4. Food
++ id
++ cat_id
++ name
++ price
++ unit
+
+5. Purchasing:
++ id
++ user_id
++ product_id (food_id)
++ time
++ number
+
+
