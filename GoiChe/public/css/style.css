@@ -19,7 +19,7 @@ a {
 }
 
 #container {
-    width: 768px;
+    width: 1280px;
     margin: 0 auto;
     background-color: #FFF;
     padding: 20px 40px;
@@ -83,7 +83,7 @@ textarea {
     margin-left: auto;
     margin-right: auto;
     margin-top: 12px;
-    max-width: 1024px;
+    max-width: 1280px;
     padding-left: 1em;
     padding-right: 1em;
 }

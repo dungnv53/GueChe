@@ -17,6 +17,7 @@
                     <li>{{ HTML::linkRoute('profile', 'Profile ('.Auth::user()->id.')') }}</li>
                     <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
                     <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
+                    <li>{{ HTML::linkRoute('dashboard.index', 'Manage') }}</li>
                 @else
                     <li>{{ HTML::linkRoute('login', 'Login') }}</li>
                 @endif

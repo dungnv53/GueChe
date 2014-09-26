@@ -1,6 +1,6 @@
 @include('common.layout')
+abc
 
-	<div class="content">
 	{{ Form::open(['route' => 'doLogin', 'method' => 'POST' ]) }}
 		<h1>Login</h1>
 
@@ -21,5 +21,4 @@
 
 		<p>{{ Form::submit('Login') }}</p>
 	{{ Form::close() }}
-	</div>
 

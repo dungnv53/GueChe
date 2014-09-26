@@ -6,7 +6,7 @@ class ProductSeeder extends Seeder {
             $product = new Product();
             $product->fill([
                 'name'       => 'Bánh bột lọc',
-                'price'      => '3.500',
+                'price'      => '3500',
                 'unit'       =>  'cai',
                 'cat_id'     =>  '1',
     	    	'created_at' => date('Y-m-d H:i:s'),

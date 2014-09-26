@@ -42,3 +42,12 @@ Route::resource('accounts', 'AccountsController',array('names' => array('index' 
 	 														    	,'update' =>'accounts.update'
 	 														    	,'destroy'=>'accounts.destroy'
 	 														 )));
+
+Route::resource('dashboard', 'DashboardController',array('names' => array('index'  => 'dashboard.index'
+	 														        ,'create' =>'dashboard.create'
+	 														    	,'store'  =>'dashboard.store'
+	 														    	,'show'   =>'dashboard.show'
+	 														    	,'edit'   =>'dashboard.edit'
+	 														    	,'update' =>'dashboard.update'
+	 														    	,'destroy'=>'dashboard.destroy'
+	 														 )));
