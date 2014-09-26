@@ -5,6 +5,11 @@ class AccountsController extends BaseController {
     public function __construct() {
     														
     }
+
+    public function getlist(){
+        
+        return View::make('account.list');
+    }
 	
     public function leftmenu() {
     }
@@ -86,6 +91,7 @@ class AccountsController extends BaseController {
     }
 
     public function show($id) {
+
         
     }
 

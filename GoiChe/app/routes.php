@@ -32,6 +32,7 @@ Route::post('change_password/cmp', ['uses' => 'AccountsController@updateCurrentP
 Route::get('/accounts/{accounts}/profile',   array('uses' => 'AccountsController@profile', 'as' => 'profile'));
 Route::get('/accounts/complete',   array('uses' => 'AccountsController@complete', 'as' => 'account_complete'));
 Route::get('/logout',   array('uses' => 'AccountsController@logout', 'as' => 'logout'));
+Route::get('/accounts/list', array('uses' => 'AccountsController@getlist', 'as' => 'accounts.list'));
 
 
 Route::resource('accounts', 'AccountsController',array('names' => array('index'  => 'accounts.index'
@@ -41,6 +42,7 @@ Route::resource('accounts', 'AccountsController',array('names' => array('index' 
 	 														    	,'edit'   =>'accounts.edit'
 	 														    	,'update' =>'accounts.update'
 	 														    	,'destroy'=>'accounts.destroy'
+
 	 														 )));
 
 Route::resource('dashboard', 'DashboardController',array('names' => array('index'  => 'dashboard.index'

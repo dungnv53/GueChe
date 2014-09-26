@@ -26,25 +26,11 @@ SET time_zone = "+00:00";
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=34 ;
-
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role_id`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@chris.cn', '$2y$10$8Au5McglJVnxPPFks3E71.5Pz', 1, '2014-09-25 23:59:59', '2014-09-25 23:59:59'),
-(2, 'tunglv', 'tunglv@nadia.bz', '$2y$10$02udi8p.fx70Z3pEpEGQk.pKK', 2, '2014-09-26 00:00:00', '2014-09-26 00:00:00'),
 (3, 'lanpt', 'lanpt@nal.vn', '$2y$10$TWVKVDRp3MIkplPc/kJQreXV9', 2, '2014-09-26 01:43:47', '2014-09-26 01:43:47'),
 (4, 'thaott', 'thaott@nal.vn', '$2y$10$QRv0u4qnJeHwL/30roSl/OQyM', 2, '2014-09-26 01:56:45', '2014-09-26 01:56:45'),
 (5, 'tuandt', 'tuandt@nal.vn', '$2y$10$BQcUeaX48l0tIGCJXHMO9u2dr', 2, '2014-09-26 01:57:17', '2014-09-26 01:57:17'),

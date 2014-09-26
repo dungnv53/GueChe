@@ -18,6 +18,7 @@
                     <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
                     <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
                     <li>{{ HTML::linkRoute('dashboard.index', 'Manage') }}</li>
+                    <li>{{ HTML::linkRoute('accounts.list','List User') }}</li>
                 @else
                     <li>{{ HTML::linkRoute('login', 'Login') }}</li>
                 @endif
