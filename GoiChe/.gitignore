@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /bootstrap/compiled.php
 /vendor
 composer.phar
@@ -7,6 +6,3 @@ composer.lock
 .env.php
 .DS_Store
 Thumbs.db
-=======
-./GoiChe/vendor/*
->>>>>>> 22475c659168d7b19e32a1ef19070daf526420fa
