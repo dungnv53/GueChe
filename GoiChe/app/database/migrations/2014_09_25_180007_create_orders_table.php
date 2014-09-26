@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration {
       $table->integer('total');
       $table->integer('status');
       $table->integer('orderSession_id');
+      $table->timestamps();
     });
   }
 

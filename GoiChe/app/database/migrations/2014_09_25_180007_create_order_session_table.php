@@ -18,6 +18,7 @@ class CreateOrderSessionTable extends Migration {
       $table->timestamp('date');
       $table->timestamp('start');
       $table->timestamp('end');
+      $table->timestamps();
     });
   }
 
