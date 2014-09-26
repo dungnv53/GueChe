@@ -1,4 +1,4 @@
-@include('common.layout');
+@include('common.layout')
 
 <div class="content">
 
@@ -70,9 +70,9 @@
 	    <fieldset>
 	    <select>
 
-	    @foreach($products as $product)
-	    <option name="product_{{ $user['id'] }}" value="{{ $product['id'] }}">
-	    	{{ $product['name'] }}
+	    @foreach($che as $ch)
+	    <option name="product_{{ $user['id'] }}" value="{{ $ch['id'] }}">
+	    	{{ $ch['name'] }}
 	    </option>
 	    @endforeach
 	    	
@@ -132,7 +132,21 @@
 	</th>
   </tr>
   <tr>
-  	
+  	<td>1</td>
+  	<td></td>
+  	<td></td>
+  	<td></td>
+  	<td></td>
+  	<td></td>
+  </tr>
+  <td colspan="6">
+  	 <fieldset>
+	    {{ Form::button('save') }}
+	    {{ Form::button('stopReserve') }}
+	 </fieldset>
+  </td>
+  <tr>
+
   </tr>
 {{ Form::close() }}
 </table>

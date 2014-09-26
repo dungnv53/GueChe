@@ -16,7 +16,14 @@ class DashboardController extends BaseController {
         $products = Product::all()->toArray();
         $categories = Category::all()->toArray();
 
-        return View::make('dashboard.index', compact('users', 'products', 'categories'));
+        $che = Product::where('cat_id', '=', 2)->get(); 
+        if(!is_null($che)) { 
+            $che = $che->toArray();
+        } else {
+            $che = array();
+        }
+
+        return View::make('dashboard.index', compact('users', 'products', 'categories', 'che'));
     }
 
     public function logout() {
