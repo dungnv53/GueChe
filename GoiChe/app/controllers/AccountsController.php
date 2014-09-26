@@ -36,6 +36,7 @@ class AccountsController extends BaseController {
 
     public function create($id = null) {
         
+        return View::make('account.form');
     }
 
     public function edit($id = null) {
@@ -43,7 +44,41 @@ class AccountsController extends BaseController {
     }
 
     public function store($id = null) {
+    	// dd(Input::all());
+
+    	 $rules = array(
+         'username'=>'required|alpha_dash',
+         'password'=>'required|alpha_dash',
+         'role_id'=>'required|numeric|digits_between:1,3',
+         'email'=>'required|email',
+         // 'email_confirmation'=>'required|email',
+        );
         
+        $validator = Validator::make(Input::all(), $rules);
+
+        if($validator->passes()) {
+        	$user = new User();
+        	$user->username = Input::get('username');
+        	$user->password = Hash::make(Input::get('password'));
+        	$user->email = Input::get('email');
+        	$user->role_id = Input::get('role_id');
+        	$user->save();
+
+        } else {
+        	return Redirect::back()
+            ->withInput()
+            ->withErrors($validator);
+        }
+
+        return View::make('account.complete');
+
+        return Redirect::back()
+            ->withInput()
+            ->withErrors($validator);
+    }
+
+    public function complete() {
+    	return View::make('account.complete');
     }
 
     public function update($id='') {
@@ -102,5 +137,9 @@ class AccountsController extends BaseController {
         "username" => "required",
         "password" => "required"
       ]);
+    }
+
+    public function profile() {
+    	return "abc";
     }
 }

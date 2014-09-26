@@ -1,5 +1,6 @@
 @extends('layout')
 
+<div class="container">
 @section('content')
     <h1>Login</h1>
 
@@ -24,4 +25,5 @@
     <p>{{ Form::submit('Login') }}</p>
 
     {{ Form::close() }}
-@stop
+    @stop
+</div>

@@ -4,6 +4,9 @@
 <head>
     <title>Goi Che Online</title>
     {{ HTML::style('/css/style.css') }}
+    {{ HTML::style('/css/pure-min.css') }}
+    {{ HTML::style('/css/baby-blue.css') }}
+    {{ HTML::style('/css/grids-responsive-min.css') }}
 </head>
 <body>
     <div id="container">
@@ -11,7 +14,7 @@
             <ul>
                 <li>{{ HTML::linkRoute('home', 'Home') }}</li>
                 @if(Auth::check())
-                    <li>{ { route('profile', 'Profile' ) } }</li>
+                    <li>{{ HTML::linkRoute('profile', 'Profile ('.Auth::user()->id.')') }}</li>
                     <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
                 @else
                     <li>{{ HTML::linkRoute('login', 'Login') }}</li>
@@ -24,7 +27,9 @@
             <div id="flash_notice">{{ Session::get('flash_notice') }}</div>
         @endif
 
-        @yield('content')
+        <div class="content">
+          @yield('content')
+        </div>
     </div><!-- end container -->
 </body>
 </html>
