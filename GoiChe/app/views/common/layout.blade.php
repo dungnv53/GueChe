@@ -32,6 +32,10 @@
         <div class="content">
           @yield('content')
         </div>
+
+        <div class="footer">
+            
+        </div>
     </div><!-- end container -->
 </body>
 </html>
