@@ -3,10 +3,10 @@
 <div class="content">
 
 <!-- { {  print_r($users->toArray()) } } -->
-<!-- <table class="pure-table pure-table-bordered"> -->
-<table border="0">
+<div class="cur_time">Current time: {{ date('F j, Y, g:i A') }} </div>
+<table border="0" id="buy_list">
 
-{{ Form::open(array('route' => 'dashboard.store', 'class' => 'pure-form')) }}
+{{ Form::open(array('route' => 'dashboard.store')) }}
 
   @if($errors->any())
     <ul>
@@ -46,17 +46,12 @@
   @foreach($users as $user)
   <tr id="row_{{ $user['id'] }}">
   	<td width="1%" border="0">
-	    <fieldset>
 	    {{ $stt++ }}
-	    </fieldset>
     </td> 
     <td width="10%">
-	    <fieldset>
 	    {{ $user['username'] }}
-	    </fieldset>
     </td>  
     <td width="10%">
-	    <fieldset>
 	    <select>
 
 	    @foreach($categories as $cat)
@@ -66,10 +61,8 @@
 	    @endforeach
 
 		</select>
-	    </fieldset>
     </td>  
     <td width="30%" nowrap>
-	    <fieldset>
 	    <select>
 
 	    @foreach($che as $ch)
@@ -81,29 +74,20 @@
 		</select>
 	    {{ Form::button('+') }}
 	    {{ Form::button('-') }}
-	    </fieldset>
 
     </td>    
     <td width="5%">
-	    <fieldset>
 	    {{ Form::text('quantity') }}
-	    </fieldset>
     </td>    
     <td width="15%" nowrap>
-	    <fieldset>
-	    {{ number_format($che[0]['price'],0,'',' ') }}
-	    </fieldset>
+	    {{ number_format($che[0]['price'],0,'','.') }}
     </td> 
     <td width="10%">
-	    <fieldset>
 	    {{ Form::text('Tổng') }}
-	    </fieldset>
     </td>    
     <td width="20%" nowrap>
-	    <fieldset>
 	    {{ Form::button('save') }}
 	    {{ Form::button('edit') }}
-	    </fieldset>
     </td>
   </tr>
   @endforeach
@@ -144,10 +128,8 @@
   </tr>
   <tr>
   <td colspan="7">
-  	 <fieldset>
 	    {{ Form::button('save') }}
 	    {{ Form::button('stopReserve') }}
-	 </fieldset>
   </td>
 
 {{ Form::close() }}
@@ -159,6 +141,9 @@
 function number_format(num) {
   return num.toString().replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g , '$1,')
 }
+
+$(document).ready(function() {
+});
 
 </script>
 

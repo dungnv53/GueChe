@@ -4,7 +4,6 @@
 <head>
     <title>Goi Che Online</title>
     {{ HTML::style('/css/style.css') }}
-    {{ HTML::style('/css/pure-min.css') }}
     {{ HTML::style('/css/rwd.css') }}
     {{ HTML::style('/css/baby-blue.css') }}
     {{ HTML::style('/css/grids-responsive-min.css') }}
