@@ -140,6 +140,6 @@ class AccountsController extends BaseController {
     }
 
     public function profile() {
-    	return "abc";
+    	return View::make('account.profile');
     }
 }
