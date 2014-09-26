@@ -13,11 +13,14 @@
   @endif
 
   <tr>
-	<th width="5%">
+	<th width="1%">
 		Stt
 	</th>
-	<th width="15%">
+	<th width="10%">
 		Tên
+	</th>
+	<th width="10%">
+		Loại
 	</th>
 	<th width="25%">
 		Đồ ăn
@@ -28,7 +31,10 @@
 	<th width="15%">
 		Giá
 	</th>
-	<th width="15%">
+	<th width="10%">
+		Tổng 
+	</th>
+	<th width="20%">
 		Thao tác
 	</th>
   </tr>
@@ -37,32 +43,61 @@
   <?php $stt = 0; ?>
   @foreach($users as $user)
   <tr>
-  	<td>
+  	<td width="1%">
 	    <fieldset>
 	    {{ $stt++ }}
 	    </fieldset>
     </td> 
-    <td>
+    <td width="10%">
 	    <fieldset>
 	    {{ $user['username'] }}
 	    </fieldset>
     </td>  
-    <td>
+    <td width="10%">
 	    <fieldset>
-	    {{ Form::text('product') }}
+	    <select>
+
+	    @foreach($categories as $cat)
+	    <option name="cat_{{ $user['id'] }}" value="{{ $cat['id'] }}" {{ ($cat['id'] == 2) ? "selected=" : ""; }}>
+	    	{{ $cat['name'] }}
+	    </option>
+	    @endforeach
+
+		</select>
 	    </fieldset>
+    </td>  
+    <td width="30%" nowrap>
+	    <fieldset>
+	    <select>
+
+	    @foreach($products as $product)
+	    <option name="product_{{ $user['id'] }}" value="{{ $product['id'] }}">
+	    	{{ $product['name'] }}
+	    </option>
+	    @endforeach
+	    	
+		</select>
+	    {{ Form::button('+') }}
+	    {{ Form::button('-') }}
+	    </fieldset>
+
     </td>    
-    <td>
+    <td width="5%">
 	    <fieldset>
 	    {{ Form::text('quantity') }}
 	    </fieldset>
     </td>    
-    <td>
+    <td width="15%">
 	    <fieldset>
 	    {{ Form::text('cost') }}
 	    </fieldset>
+    </td> 
+    <td width="10%">
+	    <fieldset>
+	    {{ Form::text('Tổng') }}
+	    </fieldset>
     </td>    
-    <td>
+    <td width="20%">
 	    <fieldset>
 	    {{ Form::button('save') }}
 	    {{ Form::button('edit') }}
@@ -70,7 +105,12 @@
     </td>
   </tr>
   @endforeach
-
+  
+  <tr>
+  	<td colspan="6">
+  		<h2>Thống kê số lượng chè đã đặt.</h2>
+  	<td>
+  </tr>
   <tr>
   	<th width="5%">
 		Stt
@@ -98,3 +138,5 @@
 </table>
 
 </div>
+
+@include('common.footer')
