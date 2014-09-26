@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration {
       $table->integer('price');
       $table->integer('unit');
       $table->integer('cat_id');
+      $table->timestamps();
     });
   }
 
