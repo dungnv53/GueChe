@@ -3,31 +3,18 @@ class AccountsController extends BaseController {
 	// protected $with_model = 'account.agent';
 
     public function __construct() {
-    	$this->checkAuthenticate('admin.accounts.index');
-        $this->beforeFilter('@leftmenu',array('except' => array(
-																'login',
-																'logout',
-																'loginCheck',
-															)));
-		$this->beforeFilter('@check_access_action', array('only' =>
-	                            array('edit','update','destroy','show','getPassword','doPassword')));
-																
+    														
     }
-	
-	public function check_access_action($route, $request)
-	{
-
-	}
 	
     public function leftmenu() {
     }
 
     public function login() {
-        if (Auth::check()) {
+    	if (Auth::check()) {
 
             return Redirect::intended('/');
         }
-        $model = new Account();
+        $model = new User();
         return View::make('account.login', compact('model'));
     }
 
@@ -35,9 +22,6 @@ class AccountsController extends BaseController {
     }
 
     public function changePassword() {
-    	$model = App::make('Account');
-
-    	return View::make('account.change_passwd',['model' => $model]);
     }
 
     public function updateCurrentPassword() {
@@ -45,10 +29,8 @@ class AccountsController extends BaseController {
     }
 
     public function logout() {
-        Auth::logout();
-        //Session::flash('flash.success', Lang::get('alert.logged_out'));
-        return Redirect::intended('/login')->withInput()
-			->withErrors(array(Lang::get('alert.logged_out')));
+    	Auth::logout();
+        return Redirect::intended('/login');
     }
 
 
@@ -77,25 +59,48 @@ class AccountsController extends BaseController {
     }
 
     public function getPassword($account_id) {
-        $model = App::make('Account');
-		$account = Account::where('id','=',$account_id)
-			                ->where('del_flag','=', C_NOT_DELETE)
-							->first();
-
-        if($account) {
-           View::share('fullname', $account['fullname']);
-           View::share('username', $account['username']);
-           View::share('permission', $account['permission']);
-        } else {
-           View::share('fullname', '');
-           View::share('username', '');
-           View::share('permission', '');
-        }
-
-        return View::make('account.password',['model' => $model, 'mod_account_id' => $account_id]);
     }
 
     public function doPassword($account_id) {
      	return "do passwd";
+    }
+
+    public function doLogin() {
+	    if ($this->isPostRequest()) {
+	        $validator = $this->getLoginValidator();
+
+		    $user = array(
+				'username' => Input::get('username'),
+				'password' => Input::get('password')
+			);
+
+		  	if (Auth::attempt($user)) {
+			  return Redirect::route('home')
+			      ->with('flash_notice', 'You are successfully logged in.');
+			} else {
+				return Redirect::route('login')
+			      ->with('flash_notice', 'Wrong username or password.');
+			}
+	  
+	      $current_password = Input::get('password');
+	      if ($validator->passes()) {
+	        echo "Validation passed!";
+	      } else {
+	        echo "Validation failed!";
+	      }
+    	}
+  
+    	return View::make("common/home");
+    }
+    
+    protected function isPostRequest() {
+      return Input::server("REQUEST_METHOD") == "POST";
+    }
+    
+    protected function getLoginValidator() {
+      return Validator::make(Input::all(), [
+        "username" => "required",
+        "password" => "required"
+      ]);
     }
 }

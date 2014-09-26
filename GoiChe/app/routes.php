@@ -11,52 +11,14 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', array('as' => 'home', function () {
+	return View::make('home');
+}));
 
-// Route::get('/', array('as' => 'home', function () {
-// 	return View::make('home');
-// }));
+Route::get('/', 'BaseController@home');
 
-Route::get('login', array('as' => 'login', function () {
-	if (Auth::check()) {
-		return Redirect::route('home')
-			->with('flash_notice', 'You are successfully logged in.');
-	}
-	return View::make('login');
-}))->before('guest');
-
-Route::post('login', function () {
-	$user = array(
-		'username' => Input::get('username'),
-		'password' => Input::get('password')
-	);
-
-	if (Auth::attempt($user)) {
-		return Redirect::route('home')
-			->with('flash_notice', 'You are successfully logged in.');
-	}
-	
-	return Redirect::route('login')
-		->with('flash_error', 'Your username/password combination was incorrect.')
-		->withInput();
-	});
-
-Route::get('logout', array('as' => 'logout', function () {
-	Auth::logout();
-	return Redirect::route('home')
-		->with('flash_notice', 'You are successfully logged out.');
-}))->before('auth');
-
-Route::get('profile', array('as' => 'profile', function () {
-	return View::make('profile');
-}))->before('auth');
-
-// Route::get('/', 'AccountsController@login');
-
-Route::get('/login', 'AccountsController@login');
+Route::get('/login', array('uses' => 'AccountsController@login', 'as' => 'login'));
+Route::post('/login', array('uses' => 'AccountsController@doLogin', 'as' => 'doLogin'));
 Route::get('/accounts/{accounts}/password/reset',array('uses'=>"AccountsController@resetPass",'as'=>'admin.accounts.resetPass'));
 
 Route::get('/accounts/{accounts}/password',array('uses'=>"AccountsController@getPassword",'as'=>'admin.accounts.getPassword'));

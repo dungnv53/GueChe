@@ -15,4 +15,8 @@ class BaseController extends Controller {
 		}
 	}
 
+	public function home() {
+		return View::make('common.home');
+	}
+
 }
