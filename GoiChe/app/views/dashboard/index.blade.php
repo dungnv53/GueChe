@@ -3,7 +3,9 @@
 <div class="content">
 
 <!-- { {  print_r($users->toArray()) } } -->
-<table class="pure-table pure-table-bordered">
+<!-- <table class="pure-table pure-table-bordered"> -->
+<table border="0">
+
 {{ Form::open(array('route' => 'dashboard.store', 'class' => 'pure-form')) }}
 
   @if($errors->any())
@@ -12,7 +14,7 @@
     </ul>
   @endif
 
-  <tr>
+  <thead><tr>
 	<th width="1%">
 		Stt
 	</th>
@@ -37,13 +39,13 @@
 	<th width="20%">
 		Thao tác
 	</th>
-  </tr>
+  </tr></thead>
 
 
-  <?php $stt = 0; ?>
+  <?php $stt = 1; ?>
   @foreach($users as $user)
-  <tr>
-  	<td width="1%">
+  <tr id="row_{{ $user['id'] }}">
+  	<td width="1%" border="0">
 	    <fieldset>
 	    {{ $stt++ }}
 	    </fieldset>
@@ -87,9 +89,9 @@
 	    {{ Form::text('quantity') }}
 	    </fieldset>
     </td>    
-    <td width="15%">
+    <td width="15%" nowrap>
 	    <fieldset>
-	    {{ Form::text('cost') }}
+	    {{ number_format($che[0]['price'],0,'',' ') }}
 	    </fieldset>
     </td> 
     <td width="10%">
@@ -97,7 +99,7 @@
 	    {{ Form::text('Tổng') }}
 	    </fieldset>
     </td>    
-    <td width="20%">
+    <td width="20%" nowrap>
 	    <fieldset>
 	    {{ Form::button('save') }}
 	    {{ Form::button('edit') }}
@@ -106,12 +108,13 @@
   </tr>
   @endforeach
   
+  <br/><br />
   <tr>
-  	<td colspan="6">
-  		<h2>Thống kê số lượng chè đã đặt.</h2>
-  	<td>
+  	<td colspan="8" style="text-align: center;" class="seaGreen">
+  	Tổng đơn hàng
+  	</td>
   </tr>
-  <tr>
+  <tr class="tfoot">
   	<th width="5%">
 		Stt
 	</th>
@@ -127,7 +130,7 @@
 	<th width="15%">
 		Giá
 	</th>
-	<th width="15%">
+	<th width="15%" colspan="3">
 		Thao tác
 	</th>
   </tr>
@@ -139,18 +142,28 @@
   	<td></td>
   	<td></td>
   </tr>
-  <td colspan="6">
+  <tr>
+  <td colspan="7">
   	 <fieldset>
 	    {{ Form::button('save') }}
 	    {{ Form::button('stopReserve') }}
 	 </fieldset>
   </td>
-  <tr>
 
-  </tr>
 {{ Form::close() }}
 </table>
 
 </div>
+
+<script type="text/javascript">
+function number_format(num) {
+  return num.toString().replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g , '$1,')
+}
+
+</script>
+
+@section('closing')
+
+@stop
 
 @include('common.footer')
