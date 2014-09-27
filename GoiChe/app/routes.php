@@ -10,6 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::model('user','User');
 
 Route::get('/', array('as' => 'home', function () {
 	return View::make('home');
@@ -33,6 +34,7 @@ Route::get('/accounts/{accounts}/profile',   array('uses' => 'AccountsController
 Route::get('/accounts/complete',   array('uses' => 'AccountsController@complete', 'as' => 'account_complete'));
 Route::get('/logout',   array('uses' => 'AccountsController@logout', 'as' => 'logout'));
 Route::get('/accounts/list', array('uses' => 'AccountsController@getlist', 'as' => 'accounts.list'));
+Route::get('/accounts/{user}/edit', array('uses' => 'AccountsController@edit', 'as' => 'accounts.edit'));
 
 
 Route::resource('accounts', 'AccountsController',array('names' => array('index'  => 'accounts.index'
