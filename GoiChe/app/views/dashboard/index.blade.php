@@ -70,19 +70,20 @@
 	    	{{ $ch['name'] }}
 	    </option>
 	    @endforeach
+		</select>
 	    	
 	    {{ Form::button('+') }}
 	    {{ Form::button('-') }}
 
     </td>    
-    <td width="5%">
-	    {{ Form::text('quantity') }}
+    <td width="5%" align="center">
+	    <input type="text" name="quantity_{{ $user['id'] }}" size="6" />
     </td>    
     <td width="15%" nowrap>
 	    {{ number_format($che[0]['price'],0,'',' ') }}
     </td> 
     <td width="10%">
-	    {{ Form::text('Tổng') }}
+	    {{ 0 }}
     </td>    
     <td width="20%" nowrap>
 	    {{ Form::button('save') }}
@@ -126,12 +127,11 @@
   	<td></td>
   </tr>
   <tr>
-  <td colspan="7">
-  	 <fieldset>
+  <td colspan="7" align="right">
 	    {{ Form::button('save') }}
 	    {{ Form::button('stopReserve') }}
-	 </fieldset>
   </td>
+  <td></td>
 
 {{ Form::close() }}
 </table>
