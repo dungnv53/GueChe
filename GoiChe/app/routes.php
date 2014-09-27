@@ -10,6 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::model('user','User');
 
 Route::get('/', array('as' => 'home', function () {
 	return View::make('home');
@@ -32,6 +33,8 @@ Route::post('change_password/cmp', ['uses' => 'AccountsController@updateCurrentP
 Route::get('/accounts/{accounts}/profile',   array('uses' => 'AccountsController@profile', 'as' => 'profile'));
 Route::get('/accounts/complete',   array('uses' => 'AccountsController@complete', 'as' => 'account_complete'));
 Route::get('/logout',   array('uses' => 'AccountsController@logout', 'as' => 'logout'));
+Route::get('/accounts/list', array('uses' => 'AccountsController@getlist', 'as' => 'accounts.list'));
+Route::get('/accounts/{user}/edit', array('uses' => 'AccountsController@edit', 'as' => 'accounts.edit'));
 
 
 Route::resource('accounts', 'AccountsController',array('names' => array('index'  => 'accounts.index'
@@ -41,6 +44,7 @@ Route::resource('accounts', 'AccountsController',array('names' => array('index' 
 	 														    	,'edit'   =>'accounts.edit'
 	 														    	,'update' =>'accounts.update'
 	 														    	,'destroy'=>'accounts.destroy'
+
 	 														 )));
 
 Route::resource('dashboard', 'DashboardController',array('names' => array('index'  => 'dashboard.index'
@@ -50,4 +54,13 @@ Route::resource('dashboard', 'DashboardController',array('names' => array('index
 	 														    	,'edit'   =>'dashboard.edit'
 	 														    	,'update' =>'dashboard.update'
 	 														    	,'destroy'=>'dashboard.destroy'
+	 														 )));
+
+Route::resource('product', 'ProductController',array('names' => array('index'  => 'products.index'
+	 														        ,'create' =>'products.create'
+	 														    	,'store'  =>'products.store'
+	 														    	,'show'   =>'products.show'
+	 														    	,'edit'   =>'products.edit'
+	 														    	,'update' =>'products.update'
+	 														    	,'destroy'=>'products.destroy'
 	 														 )));

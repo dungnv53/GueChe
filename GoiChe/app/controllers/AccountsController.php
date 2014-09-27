@@ -4,6 +4,12 @@ class AccountsController extends BaseController {
     public function __construct() {
     														
     }
+
+    public function getlist(){
+        $users = User::orderBy('id')->paginate(15);
+
+        return View::make('account.list',compact('users'));
+    }
 	
     public function leftmenu() {
     }
@@ -38,8 +44,8 @@ class AccountsController extends BaseController {
         return View::make('account.form');
     }
 
-    public function edit($id = null) {
-        
+    public function edit(User $user) {
+        return View::make('account.edit',compact('user'));
     }
 
     public function store($id = null) {
@@ -85,6 +91,7 @@ class AccountsController extends BaseController {
     }
 
     public function show($id) {
+
         
     }
 

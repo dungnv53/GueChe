@@ -14,10 +14,12 @@
             <ul>
                 <li>{{ HTML::linkRoute('home', 'Home') }}</li>
                 @if(Auth::check())
-                    <li>{{ HTML::linkRoute('profile', 'Profile ('.Auth::user()->id.')') }}</li>
-                    <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
                     <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
                     <li>{{ HTML::linkRoute('dashboard.index', 'Manage') }}</li>
+                    <li>{{ HTML::linkRoute('accounts.list','List User') }}</li>
+                    <li>{{ HTML::linkRoute('products.create','Reserve') }}</li>
+                    <li>{{ HTML::linkRoute('profile', 'Profile ('.Auth::user()->id.')') }}</li>
+                    <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
                 @else
                     <li>{{ HTML::linkRoute('login', 'Login') }}</li>
                 @endif
