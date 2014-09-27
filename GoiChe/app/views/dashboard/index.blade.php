@@ -1,9 +1,11 @@
-@include('common.layout');
+@include('common.layout')
 
 <div class="content">
 
 <!-- { {  print_r($users->toArray()) } } -->
-<table class="pure-table pure-table-bordered">
+<!-- <table class="pure-table pure-table-bordered"> -->
+<table border="0">
+
 {{ Form::open(array('route' => 'dashboard.store', 'class' => 'pure-form')) }}
 
   @if($errors->any())
@@ -12,7 +14,7 @@
     </ul>
   @endif
 
-  <tr>
+  <thead><tr>
 	<th width="1%">
 		Stt
 	</th>
@@ -37,81 +39,66 @@
 	<th width="20%">
 		Thao tác
 	</th>
-  </tr>
+  </tr></thead>
 
 
-  <?php $stt = 0; ?>
+  <?php $stt = 1; ?>
   @foreach($users as $user)
-  <tr>
-  	<td width="1%">
-	    <fieldset>
+  <tr id="row_{{ $user['id'] }}">
+  	<td width="1%" border="0">
 	    {{ $stt++ }}
-	    </fieldset>
     </td> 
     <td width="10%">
-	    <fieldset>
 	    {{ $user['username'] }}
-	    </fieldset>
     </td>  
     <td width="10%">
-	    <fieldset>
 	    <select>
 
 	    @foreach($categories as $cat)
-	    <option name="cat_{{ $user['id'] }}" value="{{ $cat['id'] }}" {{ ($cat['id'] == 2) ? "selected=" : ""; }}>
+	    <option name="cat_{{ $user['id'] }}" value="{{ $cat['id'] }}" {{ ($cat['name'] == 'Chè') ? "selected=" : ""; }}>
 	    	{{ $cat['name'] }}
 	    </option>
 	    @endforeach
 
 		</select>
-	    </fieldset>
     </td>  
     <td width="30%" nowrap>
-	    <fieldset>
 	    <select>
 
-	    @foreach($products as $product)
-	    <option name="product_{{ $user['id'] }}" value="{{ $product['id'] }}">
-	    	{{ $product['name'] }}
+	    @foreach($che as $ch)
+	    <option name="product_{{ $user['id'] }}" value="{{ $ch['id'] }}">
+	    	{{ $ch['name'] }}
 	    </option>
 	    @endforeach
-	    	
 		</select>
+	    	
 	    {{ Form::button('+') }}
 	    {{ Form::button('-') }}
-	    </fieldset>
 
     </td>    
-    <td width="5%">
-	    <fieldset>
-	    {{ Form::text('quantity') }}
-	    </fieldset>
+    <td width="5%" align="center">
+	    <input type="text" name="quantity_{{ $user['id'] }}" size="6" />
     </td>    
-    <td width="15%">
-	    <fieldset>
-	    {{ Form::text('cost') }}
-	    </fieldset>
+    <td width="15%" nowrap>
+	    {{ number_format($che[0]['price'],0,'',' ') }}
     </td> 
     <td width="10%">
-	    <fieldset>
-	    {{ Form::text('Tổng') }}
-	    </fieldset>
+	    {{ 0 }}
     </td>    
-    <td width="20%">
-	    <fieldset>
+    <td width="20%" nowrap>
 	    {{ Form::button('save') }}
 	    {{ Form::button('edit') }}
-	    </fieldset>
     </td>
   </tr>
   @endforeach
   
+  <br/><br />
   <tr>
-  	<td colspan="6">
-  		<h2>Thống kê số lượng chè đã đặt.</h2>
-  	<td>
+  	<td colspan="8" style="text-align: center;" class="seaGreen">
+  	Tổng đơn hàng
+  	</td>
   </tr>
-  <tr>
+  <tr class="tfoot">
   	<th width="5%">
 		Stt
 	</th>
@@ -127,16 +114,39 @@
 	<th width="15%">
 		Giá
 	</th>
-	<th width="15%">
+	<th width="15%" colspan="3">
 		Thao tác
 	</th>
   </tr>
   <tr>
-  	
+  	<td>1</td>
+  	<td></td>
+  	<td></td>
+  	<td></td>
+  	<td></td>
+  	<td></td>
   </tr>
+  <tr>
+  <td colspan="7" align="right">
+	    {{ Form::button('save') }}
+	    {{ Form::button('stopReserve') }}
+  </td>
+  <td></td>
+
 {{ Form::close() }}
 </table>
 
 </div>
+
+<script type="text/javascript">
+function number_format(num) {
+  return num.toString().replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g , '$1,')
+}
+
+</script>
+
+@section('closing')
+
+@stop
 
 @include('common.footer')

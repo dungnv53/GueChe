@@ -16,6 +16,7 @@ class BaseController extends Controller {
 	}
 
 	public function home() {
+		date_default_timezone_set("Asia/Bangkok");
 		return View::make('common.home');
 	}
 

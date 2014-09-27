@@ -1,6 +1,5 @@
 <?php
 class AccountsController extends BaseController {
-	// protected $with_model = 'account.agent';
 
     public function __construct() {
     														
