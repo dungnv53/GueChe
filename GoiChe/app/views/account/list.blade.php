@@ -11,7 +11,7 @@
 			<th>Delete</th>
 		</tr>
 	</thead>
-	<tbody style="color:white">
+	<tbody>
 		@foreach($users as $user)
 			<tr>
 				<td>{{ $user->id }}</td>
