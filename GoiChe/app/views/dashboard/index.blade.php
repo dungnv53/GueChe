@@ -46,30 +46,23 @@
   @foreach($users as $user)
   <tr id="row_{{ $user['id'] }}">
   	<td width="1%" border="0">
-	    <fieldset>
 	    {{ $stt++ }}
-	    </fieldset>
     </td> 
     <td width="10%">
-	    <fieldset>
 	    {{ $user['username'] }}
-	    </fieldset>
     </td>  
     <td width="10%">
-	    <fieldset>
 	    <select>
 
 	    @foreach($categories as $cat)
-	    <option name="cat_{{ $user['id'] }}" value="{{ $cat['id'] }}" {{ ($cat['id'] == 2) ? "selected=" : ""; }}>
+	    <option name="cat_{{ $user['id'] }}" value="{{ $cat['id'] }}" {{ ($cat['name'] == 'Chè') ? "selected=" : ""; }}>
 	    	{{ $cat['name'] }}
 	    </option>
 	    @endforeach
 
 		</select>
-	    </fieldset>
     </td>  
     <td width="30%" nowrap>
-	    <fieldset>
 	    <select>
 
 	    @foreach($che as $ch)
@@ -78,32 +71,22 @@
 	    </option>
 	    @endforeach
 	    	
-		</select>
 	    {{ Form::button('+') }}
 	    {{ Form::button('-') }}
-	    </fieldset>
 
     </td>    
     <td width="5%">
-	    <fieldset>
 	    {{ Form::text('quantity') }}
-	    </fieldset>
     </td>    
     <td width="15%" nowrap>
-	    <fieldset>
 	    {{ number_format($che[0]['price'],0,'',' ') }}
-	    </fieldset>
     </td> 
     <td width="10%">
-	    <fieldset>
 	    {{ Form::text('Tổng') }}
-	    </fieldset>
     </td>    
     <td width="20%" nowrap>
-	    <fieldset>
 	    {{ Form::button('save') }}
 	    {{ Form::button('edit') }}
-	    </fieldset>
     </td>
   </tr>
   @endforeach
