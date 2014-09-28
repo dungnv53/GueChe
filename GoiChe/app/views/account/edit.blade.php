@@ -3,6 +3,7 @@
 
 <div class="content">
 {{ Form::open(array('route' => 'accounts.store', 'method' => 'POST')) }}
+{{-- Form::open(['route' => ['accounts.update1',$user->id]]) --}}
 
   {{ Form::hidden('user_id', $user->id) }}
   @if($errors->any())

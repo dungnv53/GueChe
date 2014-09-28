@@ -8,8 +8,11 @@
     {{-- HTML::style('/css/rwd2.css') --}}
     {{ HTML::style('/css/baby-blue.css') }}
     {{ HTML::style('/css/grids-responsive-min.css') }}
+
+    {{-- HTML::style('assets/stylesheets/foundation.css')--}}
     
     {{ HTML::script('/js/jquery-1.11.1.min.js') }}
+
 </head>
 <body>
     <div id="container">
@@ -20,11 +23,12 @@
                   @if(Auth::user()->role_id == ROLE_ADMIN)
                     <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
                     <li>{{ HTML::linkRoute('dashboard.index', 'Manage') }}</li>
-                    <li>{{ HTML::linkRoute('accounts.list','List User') }}</li>
+                    <li>{{ HTML::linkRoute('accounts.index','List User') }}</li>
                   @endif
                     <li>{{ HTML::linkRoute('orders.index','Reserve') }}</li>
                     <li>{{ HTML::linkRoute('profile', 'Profile ('.Auth::user()->id.')') }}</li>
                     <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
+
                 @else
                     <li>{{ HTML::linkRoute('login', 'Login') }}</li>
                 @endif
