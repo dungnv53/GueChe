@@ -2,8 +2,9 @@
 
 
 <div class="content">
-{{ Form::open(array('route' => 'accounts.edit',$user->id, 'class' => 'pure-form')) }}
+{{ Form::open(array('route' => 'accounts.store', 'method' => 'POST')) }}
 
+  {{ Form::hidden('user_id', $user->id) }}
   @if($errors->any())
     <ul>
       {{ implode('', $errors->all('<li>:message</li>'))}}
@@ -17,6 +18,19 @@
     </fieldset>
   </div>
 
+  <div>
+    <fieldset>
+    {{ Form::label('password', 'Password') }}
+    {{ Form::password('password') }}
+    </fieldset>
+  </div> 
+
+  <div>
+    <fieldset>
+    {{ Form::label('confirm_password', 'Confirm Password') }}
+    {{ Form::password('confirm_password') }}
+    </fieldset>
+  </div>
   <div>
     <fieldset>
     {{ Form::label('email', 'Email') }}

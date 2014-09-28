@@ -65,7 +65,7 @@ Route::resource('product', 'ProductController',array('names' => array('index'  =
 	 														    	,'destroy'=>'products.destroy'
 	 														 )));
 
-Route::resource('order', 'OrderController',array('names' => array('index'  => 'order.index'
+Route::resource('order', 'OrderController',array('names' => array('index'  => 'orders.index'
 	 														        ,'create' =>'orders.create'
 	 														    	,'store'  =>'orders.store'
 	 														    	,'show'   =>'orders.show'

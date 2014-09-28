@@ -2,6 +2,16 @@
 
 class BaseController extends Controller {
 
+	public function __construct() {
+        $this->beforeFilter('@check_login');														
+    }
+
+  	public function check_login() {
+	    if(!isset(Auth::user()->id)) {
+	        return Redirect::to('/login');
+	    }
+    }
+
 	/**
 	 * Setup the layout used by the controller.
 	 *

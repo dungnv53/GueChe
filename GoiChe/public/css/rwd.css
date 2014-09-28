@@ -39,7 +39,7 @@ tbody tr td:nth-child(2) {
 
 tbody tr td:nth-child(3),
 tbody tr td:nth-child(4) {
-  text-align: right;
+  text-align: center;
   font-family: monospace;
 }
 
@@ -62,6 +62,10 @@ tr.tfoot th{
   font-family: "Helvetica Neue";
   font-weight: bold;
   font-size: 18px;
+}
+
+.steelBlue {
+  background: #EAF3F3;
 }
 
 tfoot tr th:last-child {

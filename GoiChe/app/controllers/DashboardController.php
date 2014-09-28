@@ -2,13 +2,16 @@
 class DashboardController extends BaseController {
 
     public function __construct() {
-    														
+    	$this->beforeFilter('@loginCheck');													
     }
 	
     public function leftmenu() {
     }
 
     public function loginCheck() {
+        if(!isset(Auth::user()->id)) {
+            return Redirect::to('/');
+        }
     }
 
     public function index() {
@@ -25,7 +28,7 @@ class DashboardController extends BaseController {
 
         // dd($last_order->toArray());
 
-        $users = User::where('role_id', '=', ROLE_USER)->get();
+        $users = User::where('role_id', '=', ROLE_USER)->orderBy('username')->get();
         $products = Product::all()->toArray();
         $categories = Category::all()->toArray();
 

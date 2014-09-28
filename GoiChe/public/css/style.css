@@ -56,6 +56,17 @@ a {
     padding: 0;
 }
 
+ul.pagination {
+    margin: 0;
+    padding: 0;
+}
+
+ul.pagination li {
+    display: inline;
+    padding: 12px 12px;
+}
+
+
 #nav ul li {
     display: inline;
 }

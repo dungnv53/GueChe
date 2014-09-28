@@ -2,9 +2,15 @@
 class AccountsController extends BaseController {
 
     public function __construct() {
-    														
+        $this->beforeFilter('@check_access_action', array('only' =>
+                            array('edit', 'create', 'list', 'destroy', 'store')));														
     }
 
+    public function check_access_action() {
+        if(Auth::user()->role_id != ROLE_ADMIN) {
+            return Redirect::to('/');
+        }
+    }
     public function getlist(){
         $users = User::orderBy('id')->paginate(15);
 
@@ -49,6 +55,40 @@ class AccountsController extends BaseController {
     }
 
     public function store($id = null) {
+        // Edit
+        $uid = Input::get('user_id');
+        if($uid) {
+         $rules = array(
+         'username'=>'required|alpha_dash',
+         'password'=>'required|alpha_dash',
+         'role_id'=>'required|numeric|digits_between:1,3',
+         'email'=>'required|email',
+         // 'email_confirmation'=>'required|email',
+        );
+        
+        $validator = Validator::make(Input::all(), $rules);
+
+        if($validator->passes()) {
+            $user = User::where('id', '=', $uid)->first();
+            $user->username = Input::get('username');
+            $user->password = Input::get('password');
+            $user->email = Input::get('email');
+            $user->role_id = Input::get('role_id');
+            $user->save();
+
+        } else {
+            return Redirect::back()
+            ->withInput()
+            ->withErrors($validator);
+        }
+
+        return View::make('account.complete');
+
+        return Redirect::back()
+            ->withInput()
+            ->withErrors($validator);
+        }
+
     	// dd(Input::all());
 
     	 $rules = array(

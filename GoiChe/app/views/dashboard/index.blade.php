@@ -4,7 +4,7 @@
 
 <!-- { {  print_r($users->toArray()) } } -->
 <div class="cur_time">Current time: {{ date('F j, Y, g:i A') }} </div>
-<table border="0" id="buy_list" class="responstable2">
+<table border="0" id="buy_list">
 
 {{ Form::open(array('route' => 'dashboard.store')) }}
 
@@ -93,7 +93,9 @@
   @endforeach
   </tbody>
 
-  <br/><br />
+  <tr>
+  	<td colspan="8" style="background: #FFFFFF">&nbsp</td>
+  </tr>
   <tr>
   	<td colspan="8" style="text-align: center;" class="seaGreen">
   	Tổng đơn hàng
@@ -120,19 +122,21 @@
 	</th>
   </tr>
   <tr>
-  	<td>1</td>
-  	<td></td>
-  	<td></td>
-  	<td></td>
-  	<td></td>
-  	<td></td>
+  	<td class="steelBlue">1</td>
+  	<td class="steelBlue">&nbsp</td>
+  	<td class="steelBlue"></td>
+  	<td class="steelBlue"></td>
+  	<td class="steelBlue"></td>
+  	<td class="steelBlue"></td>
+  	<td class="steelBlue"></td>
   </tr>
   <tr>
-  <td colspan="7" align="right">
+  <td colspan="3" class="steelBlue">&nbsp</td>
+  <td class="steelBlue">&nbsp</td>
+  <td colspan="3" align="right" class="steelBlue">
 	    {{ Form::button('save') }}
 	    {{ Form::button('stopReserve') }}
   </td>
-  <td></td>
 
 {{ Form::close() }}
 </table>

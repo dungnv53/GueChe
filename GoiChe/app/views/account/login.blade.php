@@ -9,17 +9,17 @@
 			{{ $errors->first('password') }}
 		</p>
 
-		<p>
+		<fieldset>
 			{{ Form::label('username', 'Name') }}
 			{{ Form::text('username', Input::old('username'), array('placeholder' => '')) }}
-		</p>
+		</fieldset>
 
-		<p>
+		<fieldset>
 			{{ Form::label('password', 'Password') }}
 			{{ Form::password('password') }}
-		</p>
+		</fieldset>
 
-		<p>{{ Form::submit('Login') }}</p>
+		<fieldset>{{ Form::submit('Login') }}</fieldset>
 	{{ Form::close() }}
 	</div>
 

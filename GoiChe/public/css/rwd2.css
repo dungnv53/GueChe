@@ -91,33 +91,3 @@ h1 {
 h1 span {
   color: #167F92;
 }
-
-
-tfoot {
-  background: SeaGreen;
-  color: white;
-  text-align: right;
-}
-
-tr.tfoot th{
-  background: SeaGreen;
-  color: white;
-  text-align: right;
-}
-
-.seaGreen {
-  background: SeaGreen;
-  color: black;
-  text-align: right;
-  font-family: "Helvetica Neue";
-  font-weight: bold;
-  font-size: 18px;
-}
-
-tfoot tr th:last-child {
-  font-family: monospace;
-}
-
-tr.tfoot th:last-child {
-  font-family: monospace;
-}

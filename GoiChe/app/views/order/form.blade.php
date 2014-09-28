@@ -1,6 +1,5 @@
 @include('common.layout')
 
-
 <div class="content">
 {{ Form::open(array('route' => 'orders.store')) }}
 
@@ -74,8 +73,10 @@
   </tr>
  
   <tr class="tfoot">
-  <td colspan="4">&nbsp</td>
-  <td colspan="3">
+  <td colspan="4" class="steelBlue">&nbsp</td>
+  <td colspan="" class="steelBlue">&nbsp</td>
+  <td colspan="2" class="steelBlue" align="center">
+  <button>{{ HTML::linkRoute('orders.show','Cancel') }}</button>
   {{ Form::submit('Reserve') }}
   </td>
   </tr>
