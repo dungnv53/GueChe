@@ -1,5 +1,12 @@
 table {
-  font-family: "Helvetica Neue", Helvetica, sans-serif
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  margin: 1em 0;
+  width: 100%;
+  overflow: hidden;
+  background: #FFF;
+  color: SteelBlue; /*#024457;*/
+  /*border-radius: 10px;*/
+  /*border: 1px solid #167F92;*/
 }
 
 caption {
@@ -20,8 +27,10 @@ td {
   padding: 5px 10px;
 }
 
-tbody tr:nth-child(even) {
-  background: WhiteSmoke;
+tbody tr:nth-child(odd) {
+  /*background: WhiteSmoke;*/
+  background-color: #EAF3F3;
+  border: 1px solid #D9E4E6;
 }
 
 tbody tr td:nth-child(2) {

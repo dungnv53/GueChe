@@ -15,7 +15,16 @@ class DashboardController extends BaseController {
         if(Auth::user()->id != ROLE_ADMIN) {
             return Redirect::to('/');
         }
-        
+
+
+        // doc het order cua cac user
+        // luu vao 1 array
+
+        // Lay het order trong ngay hom nay theo tung User
+        $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->orderBy('updated_at', 'asc')->groupBy('user_id')->get();
+
+        // dd($last_order->toArray());
+
         $users = User::where('role_id', '=', ROLE_USER)->get();
         $products = Product::all()->toArray();
         $categories = Category::all()->toArray();

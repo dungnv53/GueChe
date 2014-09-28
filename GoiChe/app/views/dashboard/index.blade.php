@@ -4,7 +4,7 @@
 
 <!-- { {  print_r($users->toArray()) } } -->
 <div class="cur_time">Current time: {{ date('F j, Y, g:i A') }} </div>
-<table border="0" id="buy_list">
+<table border="0" id="buy_list" class="responstable2">
 
 {{ Form::open(array('route' => 'dashboard.store')) }}
 
@@ -41,7 +41,7 @@
 	</th>
   </tr></thead>
 
-
+  <tbody>
   <?php $stt = 1; ?>
   @foreach($users as $user)
   <tr id="row_{{ $user['id'] }}">
@@ -49,7 +49,7 @@
 	    {{ $stt++ }}
     </td> 
     <td width="10%">
-	    {{ $user['username'] }}
+	    {{ $user['fullname'] }}
     </td>  
     <td width="10%">
 	    <select>
@@ -91,7 +91,8 @@
     </td>
   </tr>
   @endforeach
-  
+  </tbody>
+
   <br/><br />
   <tr>
   	<td colspan="8" style="text-align: center;" class="seaGreen">
