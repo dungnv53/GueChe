@@ -64,3 +64,13 @@ Route::resource('product', 'ProductController',array('names' => array('index'  =
 	 														    	,'update' =>'products.update'
 	 														    	,'destroy'=>'products.destroy'
 	 														 )));
+
+Route::resource('order', 'OrderController',array('names' => array('index'  => 'order.index'
+	 														        ,'create' =>'orders.create'
+	 														    	,'store'  =>'orders.store'
+	 														    	,'show'   =>'orders.show'
+	 														    	,'edit'   =>'orders.edit'
+	 														    	,'update' =>'orders.update'
+	 														    	,'destroy'=>'orders.destroy'
+	 														 )));
+Route::get('/order/complete',   array('uses' => 'OrderController@complete', 'as' => 'order_complete'));

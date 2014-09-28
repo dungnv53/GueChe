@@ -7,6 +7,8 @@
     {{ HTML::style('/css/rwd.css') }}
     {{ HTML::style('/css/baby-blue.css') }}
     {{ HTML::style('/css/grids-responsive-min.css') }}
+    
+    {{ HTML::script('/js/jquery-1.11.1.min.js') }}
 </head>
 <body>
     <div id="container">
@@ -14,10 +16,12 @@
             <ul>
                 <li>{{ HTML::linkRoute('home', 'Home') }}</li>
                 @if(Auth::check())
+                  @if(Auth::user()->role_id == ROLE_ADMIN)
                     <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
                     <li>{{ HTML::linkRoute('dashboard.index', 'Manage') }}</li>
                     <li>{{ HTML::linkRoute('accounts.list','List User') }}</li>
-                    <li>{{ HTML::linkRoute('products.create','Reserve') }}</li>
+                  @endif
+                    <li>{{ HTML::linkRoute('orders.create','Reserve') }}</li>
                     <li>{{ HTML::linkRoute('profile', 'Profile ('.Auth::user()->id.')') }}</li>
                     <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
                 @else

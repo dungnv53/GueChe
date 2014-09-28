@@ -62,6 +62,7 @@ INSERT INTO `users` (`id`, `username`, `fullname`, `email`, `password`, `role_id
 (31, 'cuonggt', 'Giang thái Cường' , 'cuonggt@nal.vn', '$2y$10$wP0Cq6zTvY4wA9DAyQCPH.xg0', 2, '2014-09-26 02:16:32', '2014-09-26 02:16:32'),
 (32, 'haihd',   'Hoàng duy Hải' , 'haihd@nal.vn', '$2y$10$Cd9xm9VTClqId23va.7H4urAL', 2, '2014-09-26 02:17:00', '2014-09-26 02:17:00'),
 (33, 'ducnn',   'Nguyễn ngọc Đức' , 'ducnn@nal.vn', '$2y$10$xB5WGRGQmop9AwkjzubFeOs.Y', 2, '2014-09-26 02:17:37', '2014-09-26 02:17:37');
+(34, 'dungnv',   'Nguyễn Văn Dũng' , 'dungnv@nal.vn', '$2y$10$xB5WGRGQmop9AwkjzubFeOs.Y', 2, '2014-09-26 02:17:37', '2014-09-26 02:17:37');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

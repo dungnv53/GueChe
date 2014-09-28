@@ -12,6 +12,10 @@ class DashboardController extends BaseController {
     }
 
     public function index() {
+        if(Auth::user()->id != ROLE_ADMIN) {
+            return Redirect::to('/');
+        }
+        
         $users = User::where('role_id', '=', ROLE_USER)->get();
         $products = Product::all()->toArray();
         $categories = Category::all()->toArray();

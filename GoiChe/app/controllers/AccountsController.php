@@ -64,7 +64,7 @@ class AccountsController extends BaseController {
         if($validator->passes()) {
         	$user = new User();
         	$user->username = Input::get('username');
-        	$user->password = Hash::make(Input::get('password'));
+        	$user->password = Input::get('password');
         	$user->email = Input::get('email');
         	$user->role_id = Input::get('role_id');
         	$user->save();

@@ -2,7 +2,7 @@
 
 
 <div class="content">
-{{ Form::open(array('route' => 'products.store')) }}
+{{ Form::open(array('route' => 'orders.store')) }}
 
   @if($errors->any())
     <ul>

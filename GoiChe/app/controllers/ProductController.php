@@ -35,7 +35,7 @@ class ProductController extends BaseController {
     }
 
     public function store($id = null) {
-    	
+
     }
 
     public function complete() {
