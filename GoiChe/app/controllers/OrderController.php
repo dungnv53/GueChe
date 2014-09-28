@@ -39,22 +39,31 @@ class OrderController extends BaseController {
         $categories = Input::get('category');
         $products = Input::get('product');
         $qtys = Input::get('quantity');
+        $uid = Auth::user()->id;
+
+        if(is_null($uid)) Redirect::to('/');
 
         if(!is_null($categories)) {
 
             // Todo only 1 oder per day 
             // exist --> get order this day
-            $order = new Order();
-            $order->user_id = Auth::user()->id;
-            $order->orderSession_id = 1; // fix me
-            $order->touch();
-            $order->save();
+            $order = Order::where('user_id', '=', $uid)->orderBy('updated_at', 'desc')->first();
+            if(is_null($order)) {
+                $new_order = new Order();
+                $new_order->user_id = Auth::user()->id;
+                $new_order->orderSession_id = 1; // fix me
+                $new_order->touch();
+                $new_order->save();
+            } else {
+                $order->touch();
+                $order->save();
+            }
 
             $number = 0;
             foreach($categories as $cat) {
                 $cur_row = $number++;
                 $p_order = new ProductOrder();
-                $p_order->order_id = $order->id;
+                $p_order->order_id = is_null($order) ? $new_order->id : $order->id;
                 if($qtys[$cur_row] > 0) {
                     $p_order->quantity = $qtys[$cur_row];
                 }
@@ -64,16 +73,17 @@ class OrderController extends BaseController {
                     $p_order->save();
                 }
             }
-        return Redirect::to('/order/complete');
+        return View::make('order.complete');
+        // return Redirect::to(route('order_complete'));
         }
         // dd(Input::all());
-        // dd($products);
 
     	return Redirect::back()
             ->withInput();
     }
 
     public function complete() {
+        dd('outa');
         return 'ota';
     	return View::make('order.complete');
     }
