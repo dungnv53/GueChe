@@ -4,12 +4,14 @@
 <head>
     <title>Goi Che Online</title>
     {{ HTML::style('/css/style.css') }}
-    {{ HTML::style('/css/pure-min.css') }}
     {{ HTML::style('/css/rwd.css') }}
     {{ HTML::style('/css/baby-blue.css') }}
     {{ HTML::style('/css/grids-responsive-min.css') }}
+
     {{-- HTML::style('assets/stylesheets/foundation.css')--}}
-   
+    
+    {{ HTML::script('/js/jquery-1.11.1.min.js') }}
+
 </head>
 <body>
     <div id="container">
@@ -17,11 +19,15 @@
             <ul>
                 <li>{{ HTML::linkRoute('home', 'Home') }}</li>
                 @if(Auth::check())
-                    <li>{{ HTML::linkRoute('profile', 'Profile ('.Auth::user()->id.')') }}</li>
-                    <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
+                  @if(Auth::user()->role_id == ROLE_ADMIN)
                     <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
                     <li>{{ HTML::linkRoute('dashboard.index', 'Manage') }}</li>
                     <li>{{ HTML::linkRoute('accounts.index','List User') }}</li>
+                  @endif
+                    <li>{{ HTML::linkRoute('orders.create','Reserve') }}</li>
+                    <li>{{ HTML::linkRoute('profile', 'Profile ('.Auth::user()->id.')') }}</li>
+                    <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
+
                 @else
                     <li>{{ HTML::linkRoute('login', 'Login') }}</li>
                 @endif

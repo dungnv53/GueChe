@@ -1,5 +1,5 @@
 <?php
-class DashboardController extends BaseController {
+class ProductController extends BaseController {
 
     public function __construct() {
     														
@@ -12,10 +12,10 @@ class DashboardController extends BaseController {
     }
 
     public function index() {
-        if(Auth::user()->id != ROLE_ADMIN) {
-            return Redirect::to('/');
-        }
-        
+       
+    }
+
+    public function create($id = null) {
         $users = User::where('role_id', '=', ROLE_USER)->get();
         $products = Product::all()->toArray();
         $categories = Category::all()->toArray();
@@ -27,18 +27,7 @@ class DashboardController extends BaseController {
             $che = array();
         }
 
-        return View::make('dashboard.index', compact('users', 'products', 'categories', 'che'));
-    }
-
-    public function logout() {
-    	Auth::logout();
-        return Redirect::intended('/login');
-    }
-
-
-    public function create($id = null) {
-        
-        return View::make('account.form');
+        return View::make('product.form', compact('users', 'products', 'categories', 'che'));
     }
 
     public function edit($id = null) {
@@ -46,7 +35,7 @@ class DashboardController extends BaseController {
     }
 
     public function store($id = null) {
-    	
+
     }
 
     public function complete() {

@@ -3,10 +3,10 @@
 <div class="content">
 
 <!-- { {  print_r($users->toArray()) } } -->
-<!-- <table class="pure-table pure-table-bordered"> -->
-<table border="0">
+<div class="cur_time">Current time: {{ date('F j, Y, g:i A') }} </div>
+<table border="0" id="buy_list">
 
-{{ Form::open(array('route' => 'dashboard.store', 'class' => 'pure-form')) }}
+{{ Form::open(array('route' => 'dashboard.store')) }}
 
   @if($errors->any())
     <ul>
@@ -142,6 +142,9 @@
 function number_format(num) {
   return num.toString().replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g , '$1,')
 }
+
+$(document).ready(function() {
+});
 
 </script>
 

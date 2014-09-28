@@ -19,14 +19,11 @@
 				<td>{{ $user->email }}</td>
 				<td>{{ $user->role_id }}</td>
 				<td>{{ HTML::linkRoute('accounts.edit','Edit',$user->id) }}</td>
-				<td>{{ HTML::linkRoute('accounts.delete','Delete',$user->id) }}</td>
+				<td>{{ HTML::linkRoute('accounts.destroy','Delete',$user->id) }}</td>
 
 			</tr>
 		@endforeach
 	</tbody>
 </table>
-
 {{ $users->links() }}
-
 </div>
-

@@ -49,6 +49,20 @@ class AccountsController extends BaseController {
         return View::make('account.edit',compact('user'));
     }
 
+    public function delete(User $user){
+        $user->delete();
+         return Redirect::route('accounts.index');
+    }
+    // public function destroy($id){
+    //     dd($id);
+    //     $user = User::find($id);
+    //     dd($user);
+    //     // dd($user);
+    //     $user->delete();
+    //     return Redirect::route('accounts.index');
+
+    // }
+
     public function store($id = null) {
     	// dd(Input::all());
 
@@ -89,34 +103,34 @@ class AccountsController extends BaseController {
 
    
 
-    public function update($id) {
-        dd($id);
-        // $data = [
-        //             'username'  => Input::get('username'),
-        //             'email'     => Input::get('email'),
-        //             'role_id'   => Input::get('role_id')
-        // ];
+    public function update(User $user) {
+        // dd($id);
+        $data = [
+                    'username'  => Input::get('username'),
+                    'email'     => Input::get('email'),
+                    'role_id'   => Input::get('role_id')
+        ];
 
-        // $rules = [
-        //             'username'=>'required|alpha_dash',
-        //             'email'=>'required|email',
-        //             'role_id'=>'required|numeric|digits_between:1,3',
-        // ];
+        $rules = [
+                    'username'=>'required|alpha_dash',
+                    'email'=>'required|email',
+                    'role_id'=>'required|numeric|digits_between:1,3',
+        ];
 
-        // $valid = Validator::make($data, $rules);
-        // if($valid->passes())
-        // {
-        //     $user->username = $data['username'];
-        //     $user->email    = $data['email'];
-        //     $user->role_id  = $data['role_id'];
-        //     if(count($user->getDirty()) > 0)
-        //     {
-        //         $user->save();
-        //         return Redirect::back();
-        //     } else
-        //         return Redirect::back();
-        // } else
-        //     return Redirect::back()->withErrors($valid)->withInput();
+        $valid = Validator::make($data, $rules);
+        if($valid->passes())
+        {
+            $user->username = $data['username'];
+            $user->email    = $data['email'];
+            $user->role_id  = $data['role_id'];
+            if(count($user->getDirty()) > 0)
+            {
+                $user->save();
+                return Redirect::route('accounts.index');
+            } else
+                return Redirect::back();
+        } else
+            return Redirect::back()->withErrors($valid)->withInput();
         }
     
 
@@ -146,15 +160,15 @@ class AccountsController extends BaseController {
 			);
 
 		  	if (Auth::attempt($user)) {
-                $role_id = Auth::user()->role_id;
+                // $role_id = Auth::user()->role_id;
                 // dd($role_id);
-                if($role_id == 1){
+                // if($role_id == 1){
                     return Redirect::route('home')
                   ->with('flash_notice', 'You are successfully logged in.');
-                }
-                else{
-                    return Redirect::route('front_end.index');
-                }
+                // }
+                // else{
+                //     return Redirect::route('front_end.index');
+                // }
 			  
 			} else {
 				return Redirect::route('login')
