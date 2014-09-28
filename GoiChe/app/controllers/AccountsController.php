@@ -5,10 +5,10 @@ class AccountsController extends BaseController {
     														
     }
 
-    public function getlist(){
+    public function index(){
         $users = User::orderBy('id')->paginate(15);
 
-        return View::make('account.list',compact('users'));
+        return View::make('account.index',compact('users'));
     }
 	
     public function leftmenu() {
@@ -44,7 +44,8 @@ class AccountsController extends BaseController {
         return View::make('account.form');
     }
 
-    public function edit(User $user) {
+    public function edit($id) {
+        $user = User::find($id);
         return View::make('account.edit',compact('user'));
     }
 
@@ -86,9 +87,38 @@ class AccountsController extends BaseController {
     	return View::make('account.complete');
     }
 
-    public function update($id='') {
-        
-    }
+   
+
+    public function update($id) {
+        dd($id);
+        // $data = [
+        //             'username'  => Input::get('username'),
+        //             'email'     => Input::get('email'),
+        //             'role_id'   => Input::get('role_id')
+        // ];
+
+        // $rules = [
+        //             'username'=>'required|alpha_dash',
+        //             'email'=>'required|email',
+        //             'role_id'=>'required|numeric|digits_between:1,3',
+        // ];
+
+        // $valid = Validator::make($data, $rules);
+        // if($valid->passes())
+        // {
+        //     $user->username = $data['username'];
+        //     $user->email    = $data['email'];
+        //     $user->role_id  = $data['role_id'];
+        //     if(count($user->getDirty()) > 0)
+        //     {
+        //         $user->save();
+        //         return Redirect::back();
+        //     } else
+        //         return Redirect::back();
+        // } else
+        //     return Redirect::back()->withErrors($valid)->withInput();
+        }
+    
 
     public function show($id) {
 
@@ -116,14 +146,22 @@ class AccountsController extends BaseController {
 			);
 
 		  	if (Auth::attempt($user)) {
-			  return Redirect::route('home')
-			      ->with('flash_notice', 'You are successfully logged in.');
+                $role_id = Auth::user()->role_id;
+                // dd($role_id);
+                if($role_id == 1){
+                    return Redirect::route('home')
+                  ->with('flash_notice', 'You are successfully logged in.');
+                }
+                else{
+                    return Redirect::route('front_end.index');
+                }
+			  
 			} else {
 				return Redirect::route('login')
 			      ->with('flash_notice', 'Wrong username or password.');
 			}
 	  
-	      $current_password = Input::get('password');
+	      // $current_password = Input::get('password');
 	      if ($validator->passes()) {
 	        echo "Validation passed!";
 	      } else {

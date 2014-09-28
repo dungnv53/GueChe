@@ -14,6 +14,9 @@ class Category extends Eloquent {
 	*
 	* @return string
 	*/
-	
+	public function products()
+	{
+		$this->hasMany('Product');
+	}
 
 }

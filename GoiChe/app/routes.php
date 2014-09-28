@@ -10,7 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::model('user','User');
+// Route::model('user','User');
 
 Route::get('/', array('as' => 'home', function () {
 	return View::make('home');
@@ -33,8 +33,6 @@ Route::post('change_password/cmp', ['uses' => 'AccountsController@updateCurrentP
 Route::get('/accounts/{accounts}/profile',   array('uses' => 'AccountsController@profile', 'as' => 'profile'));
 Route::get('/accounts/complete',   array('uses' => 'AccountsController@complete', 'as' => 'account_complete'));
 Route::get('/logout',   array('uses' => 'AccountsController@logout', 'as' => 'logout'));
-Route::get('/accounts/list', array('uses' => 'AccountsController@getlist', 'as' => 'accounts.list'));
-Route::get('/accounts/{user}/edit', array('uses' => 'AccountsController@edit', 'as' => 'accounts.edit'));
 
 
 Route::resource('accounts', 'AccountsController',array('names' => array('index'  => 'accounts.index'
@@ -42,7 +40,7 @@ Route::resource('accounts', 'AccountsController',array('names' => array('index' 
 	 														    	,'store'  =>'accounts.store'
 	 														    	,'show'   =>'accounts.show'
 	 														    	,'edit'   =>'accounts.edit'
-	 														    	,'update' =>'accounts.update'
+	 														        ,'update' =>'accounts.update'
 	 														    	,'destroy'=>'accounts.destroy'
 
 	 														 )));
@@ -55,3 +53,23 @@ Route::resource('dashboard', 'DashboardController',array('names' => array('index
 	 														    	,'update' =>'dashboard.update'
 	 														    	,'destroy'=>'dashboard.destroy'
 	 														 )));
+
+
+
+Route::resource('user', 'UserController',array('names' => array('index'  => 'front_end.index'
+ 														        ,'create' =>'front_end.create'
+ 														    	,'store'  =>'front_end.store'
+ 														    	,'show'   =>'front_end.show'
+ 														    	,'edit'   =>'front_end.edit'
+ 														        ,'update' =>'front_end.update'
+ 														    	,'destroy'=>'front_end.destroy'
+
+	 														 )));
+
+
+
+
+
+
+
+

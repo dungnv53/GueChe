@@ -2,7 +2,7 @@
 
 
 <div class="content">
-{{ Form::open(array('route' => 'accounts.edit',$user->id, 'class' => 'pure-form')) }}
+{{ Form::open(array('route' => array('accounts.update',$user->id), 'class' => 'pure-form')) }}
 
   @if($errors->any())
     <ul>

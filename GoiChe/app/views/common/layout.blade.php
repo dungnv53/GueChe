@@ -8,6 +8,8 @@
     {{ HTML::style('/css/rwd.css') }}
     {{ HTML::style('/css/baby-blue.css') }}
     {{ HTML::style('/css/grids-responsive-min.css') }}
+    {{-- HTML::style('assets/stylesheets/foundation.css')--}}
+   
 </head>
 <body>
     <div id="container">
@@ -19,7 +21,7 @@
                     <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
                     <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
                     <li>{{ HTML::linkRoute('dashboard.index', 'Manage') }}</li>
-                    <li>{{ HTML::linkRoute('accounts.list','List User') }}</li>
+                    <li>{{ HTML::linkRoute('accounts.index','List User') }}</li>
                 @else
                     <li>{{ HTML::linkRoute('login', 'Login') }}</li>
                 @endif
