@@ -80,7 +80,7 @@
 	    <input type="text" name="quantity_{{ $user['id'] }}" size="6" />
     </td>    
     <td width="15%" nowrap>
-	    {{ number_format($che[0]['price'],0,'',' ') }}
+	    {{ number_format(8000,0,'',' ') }} {{--$che[0]['price']--}}
     </td> 
     <td width="10%">
 	    {{ 0 }}
