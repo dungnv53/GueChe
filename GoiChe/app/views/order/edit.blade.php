@@ -41,7 +41,7 @@
   <tbody>
   <?php $stt = 1; ?>
   @foreach($prod_orders as $order)
-  <tr>
+  <tr id="food_row" class="food_row">
     <td width="1%" border="0">
       {{ $stt++ }}
     </td> 
@@ -57,7 +57,7 @@
     </select>
     </td>  
     <td width="30%" nowrap>
-      <select>
+      <select onchange="updateFee()">
 
       @foreach($che as $ch)
       <option name="product[]" value="{{ $ch['id'] }}">
@@ -67,13 +67,13 @@
     </select>
     </td>    
     <td width="5%" align="center">
-      <input type="text" name="quantity[]" value="{{ $order->quantity }}" size="6" />
+      <input type="text" name="quantity[]" value="{{ $order->quantity }}" size="6" class="numberOnly" onkeyup="updateFee(this)" />
     </td>    
     <td width="15%" nowrap>
-      {{ number_format($order->price,0,'',' ') }}
+      <span class="price_cell">{{ number_format($order->price,0,'',' ') }}</span>
     </td> 
     <td width="15%" align="right">
-      {{ number_format($order->price*$order->quantity,0,'',' ') }}
+      <span id="total_{{$stt}}" class="total">{{ number_format($order->price*$order->quantity,0,'',' ') }}</span>
     </td>    
     <td width="15%" align="center">
       <button type="button" id="plus" name="plus" onclick="addChildRow(this)" >+</button>
@@ -95,6 +95,99 @@
 {{ Form::close() }}
 </table>
 
-{{ Form::close() }}
-
 </div>
+<script>
+    function number_format(num) {
+      return num.toString().replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g , '$1,')
+    }
+
+    var s = new Array();
+    <?php
+        // foreach ($services as $service) {
+        //     echo "s[".$service->getId()."] = ".$service->getFee().";\n";
+        // }
+    ?>
+    
+
+    function checked_click(id) {
+        var checked = $('#checkbox_'+id).attr('checked');
+        if (checked) {
+          $('#input_number_rental_'+id).val(1);
+          $('#number_rental_'+id).html(1);
+        } else {
+          $('#input_number_rental_'+id).val(0);
+          $('#number_rental_'+id).html(0);
+        }
+        updateFee();
+      }
+    
+    function updateFee(fee) {
+      console.log(fee);
+      var total = 0;
+
+      $('.food_row').each(function() {
+        var cur_qty = $(fee).find("input:text").val();
+        var cur_price = $(fee).find('td.price_cell').val();
+        $(this).find('td#total').text(cur_qty*cur_price);
+      });
+      $('.total').each(function(){
+        total += parseInt($.trim($(this).html().toString()));
+      });
+      // fix me
+      $('#total_cell').text(total+ ' 000');
+    }
+
+    function addChildRow(cur_row) {
+        var length = $('tr.food_row').length;
+        var new_row = '<tr class="food_row">' + $('#food_row').html() + '</tr>';
+        $('#buy_list tr.food_row:last').after(new_row);
+        $('#buy_list tr.food_row:last').find("input:text").val("");
+        $('#buy_list tr.food_row:last').find("td:first").text(++length);
+        $('.numbersOnly').keyup(function () { 
+            this.value = this.value.replace(/[^0-9]/g,'');
+        });
+        // checkLength();
+        updateFee();
+    }
+    function removeChildRow(cur_row) {
+       if(checkLength()) {
+         $('#buy_list tr.food_row:last').remove();
+         updateFee();
+       }
+    }
+
+    function minus(id) {
+
+     }
+      
+     function plus(id) {
+
+     }
+      
+    function checkLength() {
+      length = $('tr.food_row').length;
+      if(length < 2) {
+        return false;
+      }
+      return length;
+    }
+    
+  $(document).ready(function() {
+    // checkLength();
+    updateFee();
+    
+    $('.numbersOnly').keyup(function () { 
+        this.value = this.value.replace(/[^0-9]/g,'');
+    });
+    
+    $('form').submit(function(){
+        $(this).find(':submit').attr('disabled','disabled');
+    });
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+    });
+  });
+</script>
