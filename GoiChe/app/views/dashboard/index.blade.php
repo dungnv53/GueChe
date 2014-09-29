@@ -54,7 +54,20 @@
     <td width="10%" id="cat_row_{{$user['id']}}">
     	@if($user->getCurOrder())
     	<!-- { { print_r($user->getCurOrder()->getProdOrder()) } } -->
-    	@endif
+    	  @foreach($user->getCurOrder()->getProdOrder() as $prod_order) 
+    	  <?php $product = $prod_order->getProduct() ?>
+    	  	<select id="cat_{{$user['id']}}" name="cat_{{$user['id']}}[]">
+
+		    @foreach($categories as $cat)
+			    <option value="{{ $cat['id'] }}" {{ ($product[0]['cat_id'] == $cat['id']) ? "selected=" : ""; }}>
+			    	{{ $cat['name'] }}
+			    </option>
+			@endforeach
+			</select>
+		  	<br />
+		  @endforeach
+
+    	@else
 	    <select id="cat_{{$user['id']}}" name="cat_{{$user['id']}}[]">
 
 	    @foreach($categories as $cat)
@@ -64,6 +77,8 @@
 	    @endforeach
 
 		</select>
+
+		@endif
 
 
     </td>  

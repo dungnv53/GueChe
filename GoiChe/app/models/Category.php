@@ -19,4 +19,13 @@ class Category extends Eloquent {
 		$this->hasMany('Product');
 	}
 
+	public function getAllProduct($cat_id) {
+		$products = Product::where('cat_id', '=', $this->id)->get();
+		if(count($products)) {
+			return $products;
+		} else {
+			return null;
+		}
+	}
+
 }

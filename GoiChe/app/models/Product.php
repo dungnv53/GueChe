@@ -19,4 +19,13 @@ class Product extends Eloquent {
         return $this->belongsTo('Category');
     }
 
+    public function getCatName() {
+    	$cat_name = Category::where('id', '=', $this->cat_id)->get();
+    	if(count($cat_name)) {
+    		return $cat_name->name;
+    	} else {
+    		return '';
+    	}
+    }
+
 }
