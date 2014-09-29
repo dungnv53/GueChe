@@ -126,9 +126,10 @@
       var total = 0;
 
       $('.food_row').each(function() {
-        var cur_qty = $(fee).find("input:text").val();
-        var cur_price = $(fee).find('td.price_cell').val();
-        $(this).find('td#total').text(cur_qty*cur_price);
+        var cur_qty = $(this).find("input:text").val();
+        var cur_price = parseInt($(this).find('span.price_cell').html());
+        // console.log(cur_price);
+        $(this).find('span#total').html(cur_qty*cur_price*1000); //fix me
       });
       $('.total').each(function(){
         total += parseInt($.trim($(this).html().toString()));
