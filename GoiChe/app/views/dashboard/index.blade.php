@@ -56,7 +56,7 @@
     	<!-- { { print_r($user->getCurOrder()->getProdOrder()) } } -->
     	  @foreach($user->getCurOrder()->getProdOrder() as $prod_order) 
     	  <?php $product = $prod_order->getProduct() ?>
-    	  	<select id="cat_{{$user['id']}}" name="cat_{{$user['id']}}[]">
+    	  	<select id="cat_{{$user['id']}}" name="cat_{{$user['id']}}[]" onchange="drawProduct(this)">
 
 		    @foreach($categories as $cat)
 			    <option value="{{ $cat['id'] }}" {{ ($product[0]['cat_id'] == $cat['id']) ? "selected=" : ""; }}>
@@ -68,7 +68,7 @@
 		  @endforeach
 
     	@else
-	    <select id="cat_{{$user['id']}}" name="cat_{{$user['id']}}[]">
+	    <select id="cat_{{$user['id']}}" name="cat_{{$user['id']}}[]" onchange="drawProduct(this)">
 
 	    @foreach($categories as $cat)
 	    <option value="{{ $cat['id'] }}" {{ ($cat['name'] == 'Chè') ? "selected=" : ""; }}>
@@ -189,13 +189,7 @@
 
     function checked_click(id) {
         var checked = $('#checkbox_'+id).attr('checked');
-        if (checked) {
-          $('#input_number_rental_'+id).val(1);
-          $('#number_rental_'+id).html(1);
-        } else {
-          $('#input_number_rental_'+id).val(0);
-          $('#number_rental_'+id).html(0);
-        }
+
         updateFee();
       }
     
@@ -252,10 +246,28 @@
       }
       return length;
     }
+
+    function drawProduct(row) {
+    	console.log(row);
+    }
+
+    function getListProduct(cat_id) {
+    	// $('').click(function() {
+    	// });
+		console.log(cat_id);
+    	$.post('{{ route("products.getList" ) }}', {'cat_id': cat_id, '_method': 'POST' }, function(data, msg) {
+			// console.log(data);
+			
+    	});
+    }
+
+
     
   $(document).ready(function() {
     // checkLength();
     // updateFee();
+
+
     $('.btn_add').click(function(event) {
     	console.log(event.target.name);
     	var btn_id = event.target.name;

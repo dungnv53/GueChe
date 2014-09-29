@@ -19,7 +19,8 @@ class Category extends Eloquent {
 		return $this->hasMany('Product','cat_id');
 	}
 
-	public function getAllProduct($cat_id) {
+	// Get all product in same category
+	public function getAllProduct() {
 		$products = Product::where('cat_id', '=', $this->id)->get();
 		if(count($products)) {
 			return $products;

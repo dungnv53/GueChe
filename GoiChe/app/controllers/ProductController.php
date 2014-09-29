@@ -108,14 +108,16 @@ class ProductController extends BaseController {
         
     }
 
-    public function resetPass() {
-    	return "reset passwd";
-    }
-
-    public function getPassword($account_id) {
-    }
-
-    public function doPassword($account_id) {
-     	return "do passwd";
+    public function getList() {
+        $cat_id = Input::get('cat_id');
+        if(!$cat_id) {
+            return Response::json('');
+        }
+        $cat = Category::find($cat_id);
+        if(!is_null($cat))  {
+            return Response::json($cat->getAllProduct());
+        } else {
+            return Response::json('');
+        }
     }
 }

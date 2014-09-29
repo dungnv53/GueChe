@@ -80,6 +80,7 @@ Route::resource('product', 'ProductController',array('names' => array('index'  =
 	 														    	,'update' =>'products.update'
 	 														    	,'destroy'=>'products.destroy'
 	 														 )));
+Route::post('products/getList', array('uses' => 'ProductController@getList', 'as' => 'products.getList'));
 
 Route::resource('order', 'OrderController',array('names' => array('index'  => 'orders.index'
 	 														        ,'create' =>'orders.create'
