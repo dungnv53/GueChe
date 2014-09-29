@@ -13,11 +13,10 @@ class Product extends Eloquent {
 	*
 	* @return string
 	*/
-	
-	public function category()
-    {
-        return $this->belongsTo('Category');
-    }
+
+	public function category(){
+		return $this->belongsTo('Category','cat_id');
+	}
 
     public function getCatName() {
     	$cat_name = Category::where('id', '=', $this->cat_id)->get();

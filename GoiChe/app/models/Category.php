@@ -16,7 +16,7 @@ class Category extends Eloquent {
 	*/
 	public function products()
 	{
-		$this->hasMany('Product');
+		return $this->hasMany('Product','cat_id');
 	}
 
 	public function getAllProduct($cat_id) {

@@ -11,6 +11,7 @@
 |
 */
  Route::model('user','User');
+ Route::model('products','Product');
 
 Route::get('/', array('as' => 'home', function () {
 	return View::make('home');
@@ -35,8 +36,10 @@ Route::get('/accounts/complete',   array('uses' => 'AccountsController@complete'
 Route::get('/accounts/list',   array('uses' => 'AccountsController@index', 'as' => 'account_list'));
 Route::get('/logout',   array('uses' => 'AccountsController@logout', 'as' => 'logout'));
 Route::get('/accounts/{user}/delete', array('uses' => 'AccountsController@delete', 'as' => 'accounts.delete'));
+Route::get('products/{products}/delete', array('uses' =>  'ProductController@delete', 'as' => 'products.delete'));
 
 Route::post('accounts/{user}/update',array('uses' => 'AccountsController@update','as' => 'accounts.update1'));
+Route::post('products/{products}/update', array('uses' => 'ProductController@update', 'as' => 'products.update1'));
 
 Route::resource('accounts', 'AccountsController',array('names' => array('index'  => 'accounts.index'
 	 														        ,'create' =>'accounts.create'
