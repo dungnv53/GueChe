@@ -21,6 +21,13 @@
 
   <div>
     <fieldset>
+    {{ Form::label('fullname', 'Fullname') }}
+    {{ Form::text('fullname',Input::old('fullname',$user->fullname)) }}
+    </fieldset>
+  </div>
+
+  <div>
+    <fieldset>
     {{ Form::label('password', 'Password') }}
     {{ Form::password('password') }}
     </fieldset>

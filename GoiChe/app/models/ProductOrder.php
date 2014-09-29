@@ -14,5 +14,14 @@ class ProductOrder extends Eloquent {
 	* @return string
 	*/
 	
+	public function order()
+    {
+        return $this->belongsTo('Order');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo('Product');
+    }
 
 }

@@ -1,12 +1,12 @@
 <?php
 
-class Product extends Eloquent {
+class OrderSession extends Eloquent {
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'products';
+	protected $table = 'order_session';
 
 	/**
 	* Get the password for the user.
@@ -14,9 +14,9 @@ class Product extends Eloquent {
 	* @return string
 	*/
 	
-	public function category()
+	public function user()
     {
-        return $this->belongsTo('Category');
+        return $this->hasMany('Order');
     }
 
 }

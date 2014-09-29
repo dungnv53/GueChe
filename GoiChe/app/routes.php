@@ -32,6 +32,7 @@ Route::post('change_password/cmp', ['uses' => 'AccountsController@updateCurrentP
 
 Route::get('/accounts/{accounts}/profile',   array('uses' => 'AccountsController@profile', 'as' => 'profile'));
 Route::get('/accounts/complete',   array('uses' => 'AccountsController@complete', 'as' => 'account_complete'));
+Route::get('/accounts/list',   array('uses' => 'AccountsController@index', 'as' => 'account_list'));
 Route::get('/logout',   array('uses' => 'AccountsController@logout', 'as' => 'logout'));
 Route::get('/accounts/{user}/delete', array('uses' => 'AccountsController@delete', 'as' => 'accounts.delete'));
 

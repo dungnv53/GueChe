@@ -25,7 +25,7 @@
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin',NULL,'admin@chris.cn','$2y$10$KLeTmOD83aVKRvXhaQxr4.isVC.gB7wymErgcVx0jrNa46Zwa6yTK',1,'I4xIdH965lVGqAbLRe0NrtLKAK9FS1MdkOEkOUAzSapQRjiEqPpYhpjjZmsk','2014-09-26 05:11:04','2014-09-28 05:39:07');
+INSERT INTO `users` VALUES (1,'admin',NULL,'admin@chris.cn','$2y$10$uVTH5tf/aM/8e9ioF0LHuecq1vOwLU90aZUuRe.oKktGxWbHKXIO2',1,'I4xIdH965lVGqAbLRe0NrtLKAK9FS1MdkOEkOUAzSapQRjiEqPpYhpjjZmsk','2014-09-26 05:11:04','2014-09-28 05:39:07');
 INSERT INTO `users` VALUES (2,'tunglv','Lê văn Tùng','tunglv@nadia.bz','$2y$10$KLeTmOD83aVKRvXhaQxr4.isVC.gB7wymErgcVx0jrNa46Zwa6yTK',2,'trEgEYHaI9jgFXhjCrNy7YW5akA8ieFtKDIYQxQy3Mc2eSc1wsYPEGxuQE6O','2014-09-26 05:11:05','2014-09-28 10:23:36');
 INSERT INTO `users` VALUES (3,'lanpt','Phạm thị Lan','lanpt@nal.vn','$2y$10$W2ksG1C36292Ns4e.Jh4d.GneA1Rvz3sVgktGUhFFVRA4liZjV9Nm',2,NULL,'2014-09-25 18:43:47','2014-09-28 11:07:45');
 INSERT INTO `users` VALUES (4,'thaott','Trần thị Thảo','thaott@nal.vn','$2y$10$NwynRSjp220/Xhd3i0wpWeIp07TsoIDX8Rp5F9toq9Sjk4BK9fW2K',2,NULL,'2014-09-25 18:56:45','2014-09-28 11:07:58');

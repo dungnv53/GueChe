@@ -2,6 +2,6 @@
 
  <div class="content">
  <fieldset>
- <a id="btn-back" href="{{ route('accounts.list') }}">Back</a>
+ {{ HTML::linkRoute('account_list','Back') }}
  </fieldset>
 </div>
