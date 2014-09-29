@@ -97,7 +97,7 @@
           <select id="product_{{$user['id']}}" name="product_{{$user['id']}}[]" >
 
           @foreach($list as $prod)
-            <option value="{{ $cat['id'] }}" {{ ($prod_order->product_id == $prod->id) ? "selected=" : ""; }}>
+            <option value="{{ $prod['id'] }}" {{ ($prod_order->product_id == $prod->id) ? "selected=" : ""; }}>
               {{ $prod->name }}
             </option>
           @endforeach
@@ -134,10 +134,10 @@
       @if($user->getCurOrder())
        <?php $total_row = 0; ?>
        @foreach($user->getCurOrder()->getProdOrder() as $prod_order) 
-          <?php $total_row += $prod_order->getProduct()[0]['price'];
-                $total_fee += $total_row;
+          <?php $total_row += $prod_order->getProduct()[0]['price']*$prod_order->quantity;
+                $total_fee += $prod_order->getProduct()[0]['price']*$prod_order->quantity; //$total_row;
            ?>
-          {{number_format($prod_order->getProduct()[0]['price'],0,'',' ')}}
+          {{number_format($prod_order->getProduct()[0]['price']*$prod_order->quantity,0,'',' ')}}
           <br />
         @endforeach
       @else   <!-- normal form -->
@@ -151,7 +151,7 @@
       0
       @endif
     </td>    
-    <td width="20%" nowrap>
+    <td width="20%" nowrap align="center">
 	    {{ Form::button('save') }}
 	    {{ Form::button('edit') }}
     </td>
@@ -166,7 +166,7 @@
   <tr>
   <td colspan="5" class="seaGreen">&nbsp;</td>
   <td class="seaGreen" colspan="2">
-    <button>{{ HTML::linkRoute('report', 'Report') }}</button>
+    {{ HTML::linkRoute('report', 'Report') }}
   </td>
   <td class="seaGreen" id="allFee">{{number_format($total_fee,0,'',' ')}}</td>
   <td colspan="" align="right" class="seaGreen">
@@ -176,18 +176,6 @@
 
 {{ Form::close() }}
 </table>
-
-<div id="hidden_item">
-    <select id="cat_hid_{{$user['id']}}" style="display:none">
-
-    @foreach($categories as $cat)
-    <option name="cat_{{ $user['id'] }}" value="{{ $cat['id'] }}" {{ ($cat['name'] == 'Chè') ? "selected=" : ""; }}>
-    	{{ $cat['name'] }}
-    </option>
-    @endforeach
-
-	</select>
-</div>
 
 </div>
 
@@ -229,7 +217,6 @@
 
     function addChildRow(cur_row) {
         var length = $('tr#row'+cur_row+'input[type=select]').length;
-        alert(length);
 
         var new_row = '<tr class="food_row">' + $('#food_row').html() + '</tr>';
         $('#buy_list tr.food_row:last').after(new_row);

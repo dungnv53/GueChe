@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-    <title>Goi Che Online</title>
+    <title>Che Online</title>
     {{ HTML::style('/css/style.css') }}
     {{ HTML::style('/css/rwd.css') }}
     {{-- HTML::style('/css/rwd2.css') --}}
@@ -21,7 +21,7 @@
                 <li>{{ HTML::linkRoute('home', 'Home') }}</li>
                 @if(Auth::check())
                   @if(Auth::user()->role_id == ROLE_ADMIN)
-                    <li>{{ HTML::linkRoute('dashboard.index', 'Manage') }}</li>
+                    <li>{{ HTML::linkRoute('dashboard.index', 'Manage Order') }}</li>
                     <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
                     <li>{{ HTML::linkRoute('products.create','Add Product') }}</li>
                     <li>{{ HTML::linkRoute('accounts.index','List User') }}</li>

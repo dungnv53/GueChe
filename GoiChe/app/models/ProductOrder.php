@@ -43,11 +43,14 @@ class ProductOrder extends Eloquent {
 
     // Count all product order of this type
     public function countProduct() {
-        $number = ProductOrder::where('product_id', '=', $this->product_id)->where('updated_at', '>=', date('Y-m-d'))->count();
-        if($number) {
-            return $number;
+        $products = ProductOrder::where('product_id', '=', $this->product_id)->where('updated_at', '>=', date('Y-m-d'))->get();
+        $count = 0;
+        if(count($products)) {
+            foreach($products as $pd) {
+                $count += $pd->quantity;
+            }
         } 
-        return 0;
+        return $count;
     }
 
 }
