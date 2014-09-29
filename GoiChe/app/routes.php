@@ -88,7 +88,11 @@ Route::resource('order', 'OrderController',array('names' => array('index'  => 'o
 	 														    	,'show'   =>'orders.show'
 	 														    	,'edit'   =>'orders.edit'
 	 														    	,'update' =>'orders.update'
+	 														    	,'admCreate' =>'orders.admCreate'
 	 														    	,'destroy'=>'orders.destroy'
 	 														 )));
 Route::get('/order/complete',   array('uses' => 'OrderController@complete', 'as' => 'order_complete'));
+Route::get('/order/{uid}/admCreate',   array('uses' => 'OrderController@admCreate', 'as' => 'orders.admCreate'));
+Route::get('/order/{order_id}/admEdit',   array('uses' => 'OrderController@admEdit', 'as' => 'orders.admEdit'));
+Route::post('/order/{uid}/admStore',   array('uses' => 'OrderController@admStore', 'as' => 'orders.admStore'));
 

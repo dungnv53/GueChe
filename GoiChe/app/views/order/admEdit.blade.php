@@ -4,7 +4,7 @@
 <div class="content">
 
 <table border="0" id="buy_list">
-{{ Form::open(array('route' => 'orders.store')) }}
+{{ Form::open(array('route' => 'orders.admStore')) }}
 
 
   @if($errors->any())
@@ -39,40 +39,41 @@
 
   <tbody>
   <?php $stt = 1; ?>
-  @foreach($prod_orders as $order)
+  <!-- { { dd($prod_orders)} } -->
+  @foreach($prod_orders as $p_order)
   <tr id="food_row" class="food_row">
     <td width="1%" border="0">
       {{ $stt++ }}
     </td> 
     <td width="10%">
-      <select onchange="drawProduct(this)">
+      <select id="cat_{{$p_order->id}}" name="cat[]" onchange="drawProduct(this, {{$p_order->id}})">
 
       @foreach($categories as $cat)
-      <option name="cat[]" value="{{ $cat->id }}" {{ ($cat->id == $order->cat_id) ? "selected='1'" : ""; }}>
+      <option value="{{ $cat->id }}" {{ ($cat->id == $p_order->cat_id) ? "selected='1'" : ""; }}>
         {{ $cat->name }}
       </option>
       @endforeach
 
     </select>
     </td>  
-    <td width="30%" nowrap>
-      <select onchange="updateFee()">
-
-      @foreach($che as $ch)
-      <option name="product[]" value="{{ $ch->id }}">
-        {{ $ch->name }}
+    <?php $prod_list = Product::find($p_order->product_id)->getProdList(); ?>
+    <td width="30%" nowrap id="product_row">
+      <select id="prod_{{$p_order->id}}" name="product[]" onchange="updateFee()">
+      @foreach($prod_list as $prod)
+      <option value="{{ $prod->id }}" {{ ($prod->id == $p_order->product_id) ? "selected='1'" : "" }}>
+        {{ $prod->name }}
       </option>
       @endforeach
     </select>
     </td>    
     <td width="5%" align="center">
-      <input type="text" name="quantity[]" value="{{ $order->quantity }}" size="6" class="numberOnly" onkeyup="updateFee(this)" />
+      <input type="text" name="quantity[]" value="{{ $p_order->quantity }}" size="6" class="numberOnly" onkeyup="updateFee(this)" />
     </td>    
     <td width="15%" nowrap>
-      <span class="price_cell">{{ number_format($order->price,0,'',' ') }}</span>
+      <span class="price_cell">{{ number_format($p_order->price,0,'',' ') }}</span>
     </td> 
     <td width="15%" align="right">
-      <span id="total_{{$stt}}" class="total">{{ number_format($order->price*$order->quantity,0,'',' ') }}</span>
+      <span id="total_{{$stt}}" class="total">{{ number_format($p_order->price*$p_order->quantity,0,'',' ') }}</span>
     </td>    
     <td width="15%" align="center">
       <button type="button" id="plus" name="plus" onclick="addChildRow(this)" >+</button>
@@ -83,8 +84,8 @@
   </tbody>
 
   <tr>
-  <td colspan="4" class="steelBlue">&nbsp</td>
-  <td class="steelBlue">&nbsp</td>
+  <td colspan="4" class="steelBlue">&nbsp;</td>
+  <td class="steelBlue">&nbsp;</td>
   <td class="steelBlue" id="total_cell">{{ number_format($order->price*$order->quantity,0,'',' ') }}</td>
   <td align="right" class="steelBlue">
       {{ Form::submit('save') }}
@@ -171,21 +172,25 @@
       }
       return length;
     }
-
-    function drawProduct(row) {
-      console.log(row);
-    }
-
-    function getListProduct(cat_id) {
+    
+    function drawProduct(row, row_id) {
+      // console.log(row.value);
       // $('').click(function() {
       // });
-    console.log(cat_id);
-      $.post('{{ route("products.getList" ) }}', {'cat_id': cat_id, '_method': 'POST' }, function(data, msg) {
-      // console.log(data);
+      $.post('{{ route("products.getList" ) }}', {'cat_id': row.value, '_method': 'POST' }, function(data, msg) {
+          // console.log(data);
+          var products = data;
+          var html = '';
+          for(var i = 0; i < products.length; i++){
+            var product = products[i];
+            html += '<option value='+product.id+' price='+product.price+' cat_id='+product.cat_id+'>'+product.name+'</option>';
+          }
+
+          $('#prod_'+row_id).html(html);
       
       });
     }
-    
+
   $(document).ready(function() {
     // checkLength();
     updateFee();

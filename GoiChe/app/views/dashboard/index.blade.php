@@ -18,13 +18,13 @@
 	<th width="1%">
 		Stt
 	</th>
-	<th width="10%">
+	<th width="15%">
 		Tên
 	</th>
 	<th width="10%">
 		Loại
 	</th>
-  <th width="25%">
+  <th width="20%">
     Đồ ăn
   </th>	
   <th width="1%" nowrap>
@@ -39,7 +39,7 @@
 	<th width="10%">
 		Tổng 
 	</th>
-	<th width="20%">
+	<th width="15%">
 		Thao tác
 	</th>
   </tr></thead>
@@ -152,8 +152,12 @@
       @endif
     </td>    
     <td width="20%" nowrap align="center">
-	    {{ Form::button('save') }}
-	    {{ Form::button('edit') }}
+	    <!-- { { Form::button('save') } } -->
+      @if($user->getCurOrder())
+	    {{ HTML::linkRoute('orders.admEdit','Edit', $user->getCurOrder()->id) }}
+      @else
+      {{ HTML::linkRoute('orders.admCreate','Order', $user->id) }}
+      @endif
     </td>
   </tr>
   @endforeach

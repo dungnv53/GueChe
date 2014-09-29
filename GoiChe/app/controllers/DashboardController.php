@@ -24,7 +24,7 @@ class DashboardController extends BaseController {
         $products = Product::all()->toArray();
         $categories = Category::all()->toArray();
 
-        $che = Product::where('cat_id', '=', 2)->get(); 
+        $che = Product::where('cat_id', '=', 3)->get(); 
         if(!is_null($che)) { 
             $che = $che->toArray();
         } else {
