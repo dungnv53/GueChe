@@ -21,14 +21,15 @@
                 <li>{{ HTML::linkRoute('home', 'Home') }}</li>
                 @if(Auth::check())
                   @if(Auth::user()->role_id == ROLE_ADMIN)
-                    <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
                     <li>{{ HTML::linkRoute('dashboard.index', 'Manage') }}</li>
-                    <li>{{ HTML::linkRoute('accounts.index','List User') }}</li>
+                    <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
                     <li>{{ HTML::linkRoute('products.create','Add Product') }}</li>
+                    <li>{{ HTML::linkRoute('accounts.index','List User') }}</li>
                     <li>{{ HTML::linkRoute('products.index','List Product') }}</li>
-                  @endif
+                  @else
                     <li>{{ HTML::linkRoute('orders.index','Reserve') }}</li>
                     <li>{{ HTML::linkRoute('profile', 'Profile') }}</li>
+                  @endif
                     <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
 
                 @else

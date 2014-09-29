@@ -59,7 +59,7 @@ Route::resource('dashboard', 'DashboardController',array('names' => array('index
 	 														    	,'update' =>'dashboard.update'
 	 														    	,'destroy'=>'dashboard.destroy'
 	 														 )));
-
+Route::get('/report', array('uses' => 'DashboardController@report', 'as' => 'report'));
 
 Route::resource('user', 'UserController',array('names' => array('index'  => 'front_end.index'
  														        ,'create' =>'front_end.create'

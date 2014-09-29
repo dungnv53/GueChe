@@ -33,7 +33,7 @@
 	<th width="5%" nowrap>
 		Số lượng
 	</th>
-	<th width="15%">
+	<th width="10%">
 		Giá
 	</th>
 	<th width="10%">
@@ -45,7 +45,9 @@
   </tr></thead>
 
   <tbody>
-  <?php $stt = 1; ?>
+  <?php $stt = 1; 
+    $total_fee = 0;
+  ?>
   @foreach($users as $user)
   <tr id="row_{{ $user['id'] }}">
   	<td width="1%" border="0">
@@ -130,7 +132,7 @@
     </td>    
     <td width="15%" nowrap>
       @if($user->getCurOrder())
-       <?php $total_row = $total_fee = 0; ?>
+       <?php $total_row = 0; ?>
        @foreach($user->getCurOrder()->getProdOrder() as $prod_order) 
           <?php $total_row += $prod_order->getProduct()[0]['price'];
                 $total_fee += $total_row;
@@ -139,7 +141,7 @@
           <br />
         @endforeach
       @else   <!-- normal form -->
-      
+      0
       @endif
     </td> 
     <td width="10%">
@@ -164,12 +166,13 @@
   <tr>
   <td colspan="5" class="seaGreen">&nbsp;</td>
   <td class="seaGreen" colspan="2">
-    {{ Form::button('Report') }}
+    <button>{{ HTML::linkRoute('report', 'Report') }}</button>
   </td>
   <td class="seaGreen" id="allFee">{{number_format($total_fee,0,'',' ')}}</td>
   <td colspan="" align="right" class="seaGreen">
 	    {{ Form::button('stopReserve') }}
   </td>
+</tr>
 
 {{ Form::close() }}
 </table>
