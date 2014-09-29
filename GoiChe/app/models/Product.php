@@ -28,8 +28,8 @@ class Product extends Eloquent {
     }
 
     // Get all product in same category
-    public function getProdList($cat_id) {
-    	$list_pd = Product::where('cat_id', '=', $cat_id)->get();
+    public function getProdList() {
+    	$list_pd = Product::where('cat_id', '=', $this->cat_id)->get();
     	if(count($list_pd)) {
     		return $list_pd;
     	} else {

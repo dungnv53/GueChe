@@ -33,4 +33,12 @@ class ProductOrder extends Eloquent {
     	}
     }
 
+    public function getListProduct() {
+        $list = Product::find($this->product_id)->getProdList();
+        if(count($list)) {
+            return $list;
+        }
+        return false;
+    }
+
 }

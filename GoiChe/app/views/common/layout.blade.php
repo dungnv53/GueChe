@@ -28,7 +28,7 @@
                     <li>{{ HTML::linkRoute('products.index','List Product') }}</li>
                   @endif
                     <li>{{ HTML::linkRoute('orders.index','Reserve') }}</li>
-                    <li>{{ HTML::linkRoute('profile', 'Profile ('.Auth::user()->id.')') }}</li>
+                    <li>{{ HTML::linkRoute('profile', 'Profile') }}</li>
                     <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
 
                 @else

@@ -27,7 +27,7 @@
   <th width="25%">
     Đồ ăn
   </th>	
-  <th width="1%" nowrap>
+  <th width="1%">
 		&nbsp;
 	</th>
 	<th width="5%" nowrap>
@@ -114,7 +114,7 @@
       @endif
 	    	
     </td>
-    <td width="1%" align="center" nowrap>
+    <td width="1%" align="center">
 	      <button type="button" id="plus" name="plus_{{$user['id']}}" class="btn_add" >+</button>
       	<button type="button"  id="minus" name="minus_{{$user['id']}}" onclick="removeChildRow(this)">-</button>
     </td>    
@@ -130,12 +130,10 @@
     </td>    
     <td width="15%" nowrap>
       @if($user->getCurOrder())
-       <?php $total_row = $total_fee = 0; ?>
+       <?php $total_row = 0; ?>
        @foreach($user->getCurOrder()->getProdOrder() as $prod_order) 
-          <?php $total_row += $prod_order->getProduct()[0]['price'];
-                $total_fee += $total_row;
-           ?>
-          {{number_format($prod_order->getProduct()[0]['price'],0,'',' ')}}
+          <?php $total_row += $prod_order->getProduct()[0]['price'] ?>
+          {{number_format($prod_order->getProduct()[0]['price'])}}
           <br />
         @endforeach
       @else   <!-- normal form -->
@@ -144,7 +142,7 @@
     </td> 
     <td width="10%">
       @if($user->getCurOrder())
-	    {{ number_format($total_row,0,'',' ') }}
+	    {{ number_format($total_row) }}
       @else
       0
       @endif
@@ -160,14 +158,45 @@
   <tr>
   	<td colspan="8" style="background: #FFFFFF">&nbsp;</td>
   </tr>
-
   <tr>
-  <td colspan="5" class="seaGreen">&nbsp;</td>
-  <td class="seaGreen" colspan="2">
-    {{ Form::button('Report') }}
-  </td>
-  <td class="seaGreen" id="allFee">{{number_format($total_fee,0,'',' ')}}</td>
-  <td colspan="" align="right" class="seaGreen">
+  	<td colspan="8" style="text-align: center;" class="seaGreen">
+  	Tổng đơn hàng
+  	</td>
+  </tr>
+  <tr class="tfoot">
+  	<th width="5%">
+		Stt
+	</th>
+	<th width="15%">
+		Tên
+	</th>
+	<th width="25%">
+		Đồ ăn
+	</th>
+	<th width="5%">
+		Số lượng
+	</th>
+	<th width="15%">
+		Giá
+	</th>
+	<th width="15%" colspan="3">
+		Thao tác
+	</th>
+  </tr>
+  <tr>
+  	<td class="steelBlue">1</td>
+  	<td class="steelBlue">&nbsp;</td>
+  	<td class="steelBlue"></td>
+  	<td class="steelBlue"></td>
+  	<td class="steelBlue"></td>
+  	<td class="steelBlue"></td>
+  	<td class="steelBlue"></td>
+  </tr>
+  <tr>
+  <td colspan="4" class="steelBlue">&nbsp;</td>
+  <td class="steelBlue">&nbsp;</td>
+  <td colspan="3" align="right" class="steelBlue">
+	    {{ Form::button('save') }}
 	    {{ Form::button('stopReserve') }}
   </td>
 

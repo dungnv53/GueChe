@@ -4,7 +4,7 @@
 <div class="content">
 
 <table border="0" id="buy_list">
-{{ Form::open(array('route' => 'orders.store', 'class' => 'pure-form')) }}
+{{ Form::open(array('route' => 'orders.store')) }}
 
   {{ Form::hidden('order_id', $last_order->id) }}
 
@@ -88,7 +88,7 @@
   <td class="steelBlue">&nbsp</td>
   <td class="steelBlue" id="total_cell">{{ number_format($order->price*$order->quantity,0,'',' ') }}</td>
   <td align="right" class="steelBlue">
-      {{ Form::button('save') }}
+      {{ Form::submit('save') }}
       {{ HTML::linkRoute('orders.index', 'Cancel') }}
   </td>
 

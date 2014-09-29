@@ -87,6 +87,10 @@ class OrderController extends BaseController {
     }
 
     public function store($id = null) {
+        $order_id = Input::get('order_id');
+        if($order_id)  {
+            // edit
+        }
 
         $categories = Input::get('category');
         $products = Input::get('product');
@@ -128,8 +132,8 @@ class OrderController extends BaseController {
                 }
             }
 
-        // return View::make('order.complete');
-        return Redirect::to(route('order_complete'));
+        return View::make('order.complete');
+        // return Redirect::to(route('orders.complete'));
         }
         // dd(Input::all());
 
@@ -138,6 +142,7 @@ class OrderController extends BaseController {
     }
 
     public function complete() {
+        dd('in comp');
         $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->orderBy('updated_at', 'asc')->groupBy('user_id')->get();
 
         if(!empty($last_order)) {

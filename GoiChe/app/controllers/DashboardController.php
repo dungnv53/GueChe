@@ -83,4 +83,16 @@ class DashboardController extends BaseController {
     public function doPassword($account_id) {
      	return "do passwd";
     }
+
+    public function getProdList($product_id) {
+        if(!$product_id) {
+            return 'false';
+        }
+        $product = Product::find($product_id);
+        if(count($product)) {
+            $list = Product::where('cat_id', '=', $product->cat_id);
+            return (count($list) > 0) ? $list : false;
+        }
+        return false;
+    }
 }
