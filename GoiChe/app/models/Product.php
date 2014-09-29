@@ -8,12 +8,12 @@ class Product extends Eloquent {
 	 */
 	protected $table = 'products';
 
-	protected $fillable = ['name','price','unit','cat_id'];
 	/**
 	* Get the password for the user.
 	*
 	* @return string
 	*/
+
 	public function category(){
 		return $this->belongsTo('Category','cat_id');
 	}

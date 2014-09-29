@@ -69,4 +69,22 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		$this->attributes['password'] = Hash::make($pass);
 
 	}
+
+	public function order()
+    {
+        return $this->hasMany('Order');
+    }
+
+
+    // TODO
+    // One user has only 1 order per day (or per session order)
+    // Return newest order of user
+    public function getCurOrder() {
+        $cur_order = Order::where('user_id', '=', $this->id)->where('updated_at', '>=', date('Y-m-d'))->first();
+        if(count($cur_order)) {
+        	return $cur_order;
+        } else {
+        	return false;
+        }
+    }
 }

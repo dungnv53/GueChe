@@ -3,7 +3,7 @@ class AccountsController extends BaseController {
 
     public function __construct() {
         $this->beforeFilter('@check_access_action', array('only' =>
-                            array('edit', 'create', 'list', 'destroy', 'store')));														
+                            array('edit', 'create', 'list', 'destroy', 'store', 'index')));														
     }
 
     public function check_access_action() {
@@ -78,6 +78,7 @@ class AccountsController extends BaseController {
         if($uid) {
          $rules = array(
          'username'=>'required|alpha_dash',
+         'fullname'=>'required',
          'password'=>'required|alpha_dash',
          'role_id'=>'required|numeric|digits_between:1,3',
          'email'=>'required|email',
@@ -89,6 +90,7 @@ class AccountsController extends BaseController {
         if($validator->passes()) {
             $user = User::where('id', '=', $uid)->first();
             $user->username = Input::get('username');
+            $user->fullname = Input::get('fullname');
             $user->password = Input::get('password');
             $user->email = Input::get('email');
             $user->role_id = Input::get('role_id');
@@ -111,6 +113,7 @@ class AccountsController extends BaseController {
 
     	 $rules = array(
          'username'=>'required|alpha_dash',
+         'fullname'=>'required',
          'password'=>'required|alpha_dash',
          'role_id'=>'required|numeric|digits_between:1,3',
          'email'=>'required|email',
@@ -121,7 +124,8 @@ class AccountsController extends BaseController {
 
         if($validator->passes()) {
         	$user = new User();
-        	$user->username = Input::get('username');
+            $user->username = Input::get('username');
+        	$user->fullname = Input::get('fullname');
         	$user->password = Hash::make(Input::get('password'));
         	$user->email = Input::get('email');
         	$user->role_id = Input::get('role_id');
@@ -150,6 +154,7 @@ class AccountsController extends BaseController {
         // dd($id);
         $data = [
                     'username'  => Input::get('username'),
+                    'fullname'  => Input::get('fullname'),
                     'email'     => Input::get('email'),
                     'role_id'   => Input::get('role_id')
         ];
@@ -164,6 +169,7 @@ class AccountsController extends BaseController {
         if($valid->passes())
         {
             $user->username = $data['username'];
+            $user->fullname = $data['fullname'];
             $user->email    = $data['email'];
             $user->role_id  = $data['role_id'];
             if(count($user->getDirty()) > 0)
