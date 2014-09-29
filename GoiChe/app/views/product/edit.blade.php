@@ -1,8 +1,6 @@
 @include('common.layout')
-
-
 <div class="content">
-{{ Form::open(array('route' => 'accounts.edit',$user->id, 'class' => 'pure-form')) }}
+{{ Form::open(['route' => ['products.update1',$product->id]]) }}
 
   @if($errors->any())
     <ul>
@@ -12,22 +10,39 @@
 
   <div>
     <fieldset>
-    {{ Form::label('username', 'Username') }}
-    {{ Form::text('username',Input::old('username',$user->username)) }}
+    {{ Form::label('cat_id', 'Category') }}
+   
+    <select name="cat_id"> 
+
+        @foreach($categories as $cat)
+            <option  value="{{ $cat['id'] }}" {{ ($cat['name'] == $product->category->name) ? "selected=" : ""; }}>
+                {{ $cat['name'] }}
+            </option>
+        @endforeach
+
+    </select>
+    
     </fieldset>
   </div>
 
   <div>
     <fieldset>
-    {{ Form::label('email', 'Email') }}
-    {{ Form::text('email',Input::old('email', $user->email)) }}
+    {{ Form::label('name', 'Name') }}
+    {{ Form::text('name',Input::old('name',$product->name)) }}
     </fieldset>
   </div> 
 
   <div>
     <fieldset>
-    {{ Form::label('role_id', 'Role'  ) }}
-    {{ Form::text('role_id', Input::old('role_id', $user->role_id)) }}
+    {{ Form::label('price', 'Price') }}
+    {{ Form::text('price',Input::old('price',$product->price)) }}
+    </fieldset>
+  </div>
+
+  <div>
+    <fieldset>
+    {{ Form::label('unit', 'Unit') }}
+    {{ Form::text('unit',Input::old('unit',$product->unit)) }}
     </fieldset>
   </div>
 

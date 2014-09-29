@@ -24,6 +24,8 @@
                     <li>{{ HTML::linkRoute('accounts.create', 'Add User') }}</li>
                     <li>{{ HTML::linkRoute('dashboard.index', 'Manage') }}</li>
                     <li>{{ HTML::linkRoute('accounts.index','List User') }}</li>
+                    <li>{{ HTML::linkRoute('products.create','Add Product') }}</li>
+                    <li>{{ HTML::linkRoute('products.index','List Product') }}</li>
                   @endif
                     <li>{{ HTML::linkRoute('orders.index','Reserve') }}</li>
                     <li>{{ HTML::linkRoute('profile', 'Profile ('.Auth::user()->id.')') }}</li>
