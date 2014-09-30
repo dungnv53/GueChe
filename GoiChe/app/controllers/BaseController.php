@@ -30,4 +30,17 @@ class BaseController extends Controller {
 		return View::make('common.home');
 	}
 
+	// Check if order session closed
+	public function expired() {
+		$end = OrderSession::where('updated_date', '>=', date('Y-m-d'))->first();
+		$now = date('Y-m-d H:i:s');
+		if(count($end) == 0) {
+			return false; // end not set --> no expire due
+		}
+		if(strtotime($now) > strtotime($end)) {
+			return true;
+		}
+		return false;
+	}
+
 }

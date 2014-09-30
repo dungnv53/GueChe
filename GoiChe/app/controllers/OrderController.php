@@ -282,7 +282,6 @@ class OrderController extends BaseController {
             } else {
                 $order = Order::where('user_id', '=', $uid)->orderBy('updated_at', 'desc')->first();
             }
-            dd($uid);
             if(is_null($order)) {
                 $new_order = new Order();
                 $new_order->user_id = $uid;

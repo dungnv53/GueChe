@@ -39,7 +39,7 @@
       <select name="category[]" onchange="drawProduct(this)">
 
       @foreach($categories as $cat)
-      <option value="{{ $cat['id'] }}" {{ ($cat['name'] == 'Chè') ? "selected=" : ""; }}>
+      <option value="{{ $cat['id'] }}">
         {{ $cat['name'] }}
       </option>
       @endforeach
@@ -115,6 +115,7 @@ function number_format(num) {
         $('.numbersOnly').keyup(function () { 
             this.value = this.value.replace(/[^0-9]/g,'');
         });
+        // drawProduct($(new_row).find('select:first').val());
         checkLength();
         updateFee();
     }
@@ -152,6 +153,7 @@ function number_format(num) {
   $(document).ready(function() {
     checkLength();
     updateFee();
+    drawProduct($('.food_row:first').find('select:first').val());
 
     $(window).keydown(function(event){
         if(event.keyCode == 13) {
