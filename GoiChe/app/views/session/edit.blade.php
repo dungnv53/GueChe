@@ -1,5 +1,9 @@
 @include('common.layout')
-
+{{ HTML::style('/css/bootstrap-datetimepicker.min.css') }}
+  {{ HTML::style('css/bootstrap-responsive.css') }}
+  {{ HTML::style('/css/bootstrap.css') }}
+  {{ HTML::script('/js/bootstrap-datetimepicker.min.js') }}
+  {{ HTML::script('/js/bootstrap-datetimepicker.pt-BR.js') }}
 <div class="content">
 {{-- Form::open(array('route'=>'session.update', 'method' => 'POST')) --}}
 {{ Form::open(['route' => ['session.update1',$session->id]]) }}
