@@ -102,6 +102,7 @@ Route::get('/order/complete',   array('uses' => 'OrderController@complete', 'as'
 Route::get('/order/{uid}/admCreate',   array('uses' => 'OrderController@admCreate', 'as' => 'orders.admCreate'));
 Route::get('/order/{order_id}/admEdit',   array('uses' => 'OrderController@admEdit', 'as' => 'orders.admEdit'));
 Route::post('/order/{uid}/admStore',   array('uses' => 'OrderController@admStore', 'as' => 'orders.admStore'));
+Route::get('/order/timeout',   array('uses' => 'OrderController@timeout', 'as' => 'orders.timeout'));
 
 Route::resource('session', 'SessionController', array('name' => array('index'  => 'session.index'
 																	  ,'create' => 'session.create'

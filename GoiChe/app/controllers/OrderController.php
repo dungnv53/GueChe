@@ -3,7 +3,8 @@ class OrderController extends BaseController {
 
     public function __construct() {
         $this->beforeFilter('@check_access_action', array('only' =>
-                            array('edit', 'create', 'show', 'destroy', 'store')));                                                      
+                            array('edit', 'create', 'show', 'destroy', 'store'))); 
+
     }
 
     public function check_access_action() {
@@ -77,7 +78,6 @@ class OrderController extends BaseController {
             return Redirect::to('/');
         }
 
-        $products = Product::all();
         $categories = Category::all();
 
         $che = Product::where('cat_id', '=', 2)->get(); 
@@ -98,19 +98,24 @@ class OrderController extends BaseController {
             //     ->get();
                 // get(array())
         } else {
-            $prod_orders = array();
+            $prod_orders = '';
         }
 
         View::share(compact('id'));
-        return View::make('order.edit', compact('categories', 'products','prod_orders', 'che', 'order','session'));
+        View::share(compact('session'));
+        return View::make('order.edit', compact('categories','prod_orders', 'che', 'order'));
     }
 
     public function store($id = null) {
+
+
         $order_id = Input::get('order_id');
 
         $categories = Input::get('category');
+        dd($categories);
         $products = Input::get('product');
         $qtys = Input::get('quantity');
+        // dd($qtys);
         $uid = Auth::user()->id;
         if(is_null($uid)) Redirect::to('/');
 
@@ -214,6 +219,15 @@ class OrderController extends BaseController {
         return View::make('order.index');        
     }
 
+    public function timeout() {
+        $end = OrderSession::where('updated_at', '>=', date('Y-m-d'))->first();
+        if(count($end)) {
+            $end = $end->end;
+            View:share(compact('end'));
+        }
+        return View::make('order.timeout');
+    }
+
     // Admin manipulate
 
     public function admCreate($uid=null) {
@@ -285,6 +299,10 @@ class OrderController extends BaseController {
         $products = Input::get('product');
         $qtys = Input::get('quantity');
 
+        if($uid) {
+            $uid = Input::segment(2);
+        }
+        dd($uid);
         if(is_null($uid)) Redirect::to('/');
 
         if(!is_null($categories)) {
