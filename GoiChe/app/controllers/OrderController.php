@@ -108,14 +108,14 @@ class OrderController extends BaseController {
 
     public function store($id = null) {
 
-        dd(Input::all());
+
         $order_id = Input::get('order_id');
 
         $categories = Input::get('category');
         dd($categories);
         $products = Input::get('product');
         $qtys = Input::get('quantity');
-        dd($qtys);
+        // dd($qtys);
         $uid = Auth::user()->id;
         if(is_null($uid)) Redirect::to('/');
 
