@@ -41,7 +41,7 @@
   </tr></thead>
 
   <tbody>
-  <?php $stt = 1; ?>
+  <?php $stt = 0; ?>
   @foreach($prod_orders as $order)
   <tr id="food_row" class="food_row">
     <td width="1%" border="0">
@@ -51,18 +51,21 @@
       <select id="cat_{{$order->id}}" name="category[]" onchange="drawProduct(this, {{$order->id}})">
 
       @foreach($categories as $cat)
-      <option value="{{ $cat->id }}" {{ ($cat->id == $order->cat_id) ? "selected='1'" : ""; }}>
+      <option value="{{ $cat->id }}" {{ ($cat->id == $order->getCategory()->id) ? "selected='1'" : ""; }}>
         {{ $cat->name }}
       </option>
       @endforeach
 
     </select>
-    </td>  
+    </td>
+    @if(isset($order->id))
+    <?php $list = $order->getListProduct(); ?>
+    @endif
     <td width="30%" nowrap>
       <select id="prod_{{$order->id}}" name="product[]" onchange="updateFee()">
 
-      @foreach($che as $ch)
-      <option value="{{ $ch->id }}" price="{{$ch->price}}">
+      @foreach($list as $ch)
+      <option value="{{ $ch->id }}" price="{{$ch->price}}" {{ ($order->product_id == $ch->id) ? "selected='1'" : ""}}>
         {{ $ch->name }}
       </option>
       @endforeach

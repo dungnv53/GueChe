@@ -21,6 +21,9 @@ class OrderController extends BaseController {
 
     public function index() {
         $user = Auth::user();
+        if(is_null($user)) {
+            return Redirect::to('/login');
+        }
         $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->orderBy('updated_at', 'asc')->where('user_id', '=', Auth::user()->id)->first();
 
         if(isset($last_order->id)) {
@@ -83,11 +86,12 @@ class OrderController extends BaseController {
         $order = Order::find($id);
 
         if(isset($order->id)) {
+            $prod_orders = $order->getProdOrder();
             // $prod_orders = ProductOrder::where('created_at', '>=', date('Y-m-d'))->where('order_id', '=', $last_order->id)->get();
-            $prod_orders = DB::table('product_order')->join('products', 'product_order.product_id', '=', 'products.id')
-                ->join('categories', 'categories.id', '=', 'products.cat_id')
-                ->where('product_order.order_id','=',$order->id )
-                ->get();
+            // $prod_orders = DB::table('product_order')->join('products', 'product_order.product_id', '=', 'products.id')
+            //     ->join('categories', 'categories.id', '=', 'products.cat_id')
+            //     ->where('product_order.order_id','=',$order->id )
+            //     ->get();
                 // get(array())
         } else {
             $prod_orders = array();
@@ -134,16 +138,19 @@ class OrderController extends BaseController {
             $number = 0;
             foreach($categories as $cat) {
                 $cur_row = $number++;
+
                 $p_order = new ProductOrder();
                 $p_order->order_id = is_null($order) ? $new_order->id : $order->id;
                 if($qtys[$cur_row] > 0) {
                     $p_order->quantity = $qtys[$cur_row];
+
+                    if($products[$cur_row] > 0) {
+                        $p_order->product_id = $products[$cur_row]; // fix me
+                        $p_order->touch();
+                        $p_order->save();
+                    }
                 }
-                if($products[$cur_row] > 0) {
-                    $p_order->product_id = $products[$cur_row]; // fix me
-                    $p_order->touch();
-                    $p_order->save();
-                }
+                // if no quantity entered (or = 0) do nothing
             }
 
         return View::make('order.complete');
@@ -266,17 +273,16 @@ class OrderController extends BaseController {
         $products = Input::get('product');
         $qtys = Input::get('quantity');
 
-        // if(is_null($uid)) Redirect::to('/');
+        if(is_null($uid)) Redirect::to('/');
 
         if(!is_null($categories)) {
-            // Todo only 1 oder per day 
-            // exist --> get order this day
             if($order_id)  {
                 // edit
                 $order =  Order::find($order_id);
             } else {
                 $order = Order::where('user_id', '=', $uid)->orderBy('updated_at', 'desc')->first();
             }
+            dd($uid);
             if(is_null($order)) {
                 $new_order = new Order();
                 $new_order->user_id = $uid;

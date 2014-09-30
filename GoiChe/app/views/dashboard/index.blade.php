@@ -57,8 +57,8 @@
 	    {{ $user['fullname'] }}
     </td>  
     <td width="10%" id="cat_row_{{$user['id']}}">
-    	@if($user->getCurOrder())
-    	<!-- { { print_r($user->getCurOrder()->getProdOrder()) } } -->
+    	@if(($user->getCurOrder()))
+    	@if($user->getCurOrder()->getProdOrder())
     	  @foreach($user->getCurOrder()->getProdOrder() as $prod_order) 
     	  <?php $product = $prod_order->getProduct() ?>
     	  	<select id="cat_{{$user['id']}}" name="cat_{{$user['id']}}[]" onchange="drawProduct(this)">
@@ -72,6 +72,19 @@
 		  	  <br />
 		    @endforeach
 
+        <!-- Order exist but no product order -->
+        @else
+          <select id="cat_{{$user['id']}}" name="cat_{{$user['id']}}[]" onchange="drawProduct(this)">
+
+          @foreach($categories as $cat)
+          <option value="{{ $cat['id'] }}" {{ ($cat['name'] == 'Chè') ? "selected='1'" : ""; }}>
+            {{ $cat['name'] }}
+          </option>
+          @endforeach
+
+          </select>
+        @endif
+
     	@else
 	    <select id="cat_{{$user['id']}}" name="cat_{{$user['id']}}[]" onchange="drawProduct(this)">
 
@@ -81,7 +94,7 @@
 	    </option>
 	    @endforeach
 
-		</select>
+		  </select>
 
 		@endif
 
@@ -90,10 +103,13 @@
     <td width="30%" nowrap>
 
       @if($user->getCurOrder())
-      <!-- { { print_r($user->getCurOrder()->getProdOrder()) } } -->
+       @if($user->getCurOrder()->getProdOrder())
+
        @foreach($user->getCurOrder()->getProdOrder() as $prod_order) 
+
         <?php $list = $prod_order->getListProduct();
-        ?>
+            dd($user->getCurOrder());
+         ?>
           <select id="product_{{$user['id']}}" name="product_{{$user['id']}}[]" >
 
           @foreach($list as $prod)
@@ -104,6 +120,16 @@
           </select>
           <br />
         @endforeach
+        @else  <!-- Empty product order -->
+          <select>
+
+          @foreach($che as $ch)
+          <option name="product_{{ $user['id'] }}" value="{{ $ch['id'] }}">
+            {{ $ch['name'] }}
+          </option>
+          @endforeach
+          </select>
+        @endif
       @else   <!-- normal form -->
 	    <select>
 
@@ -122,16 +148,22 @@
     </td>    
     <td width="5%" align="center" id="qty_row_{{$user['id']}}" nowrap>
       @if($user->getCurOrder())
+       @if($user->getCurOrder()->getProdOrder())
        @foreach($user->getCurOrder()->getProdOrder() as $prod_order) 
           <input type="text" name="quantity_{{ $user['id'] }}[]" size="6" value="{{$prod_order->quantity}}" class="qty_row" />    
           <br />
         @endforeach
+
+        @else
+          <input type="text" name="quantity_{{ $user['id'] }}[]" size="6" class="qty_row" />
+        @endif
       @else   <!-- normal form -->
 	    <input type="text" name="quantity_{{ $user['id'] }}[]" size="6" class="qty_row" />
       @endif
     </td>    
     <td width="15%" nowrap>
       @if($user->getCurOrder())
+       @if($user->getCurOrder()->getProdOrder())
        <?php $total_row = 0; ?>
        @foreach($user->getCurOrder()->getProdOrder() as $prod_order) 
           <?php $total_row += $prod_order->getProduct()[0]['price']*$prod_order->quantity;
@@ -140,13 +172,22 @@
           {{number_format($prod_order->getProduct()[0]['price']*$prod_order->quantity,0,'',' ')}}
           <br />
         @endforeach
+
+        @else
+          0
+        @endif
       @else   <!-- normal form -->
-      0
+        0
       @endif
     </td> 
     <td width="10%">
       @if($user->getCurOrder())
-	    {{ number_format($total_row,0,'',' ') }}
+        @if(isset($total_row))
+  	    {{ number_format($total_row,0,'',' ') }}
+
+        @else
+          0
+        @endif
       @else
       0
       @endif

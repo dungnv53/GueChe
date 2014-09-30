@@ -43,8 +43,8 @@
   <tbody>
   <?php $stt = 1; ?>
   {{-- print_r($prod_orders) --}}
-  @foreach($prod_orders as $order)
 
+  @foreach($prod_orders as $order)
   <tr>
   	<td width="1%" border="0">
 	    {{ $stt++ }}
