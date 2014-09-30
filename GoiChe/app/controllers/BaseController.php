@@ -32,7 +32,7 @@ class BaseController extends Controller {
 
 	// Check if order session closed
 	public function expired() {
-		$end = OrderSession::where('updated_date', '>=', date('Y-m-d'))->first();
+		$end = OrderSession::where('updated_at', '>=', date('Y-m-d'))->first();
 		$now = date('Y-m-d H:i:s');
 		if(count($end) == 0) {
 			return false; // end not set --> no expire due

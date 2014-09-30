@@ -3,7 +3,8 @@ class OrderController extends BaseController {
 
     public function __construct() {
         $this->beforeFilter('@check_access_action', array('only' =>
-                            array('edit', 'create', 'show', 'destroy', 'store')));                                                      
+                            array('edit', 'create', 'show', 'destroy', 'store'))); 
+
     }
 
     public function check_access_action() {
@@ -73,7 +74,6 @@ class OrderController extends BaseController {
             return Redirect::to('/');
         }
 
-        $products = Product::all();
         $categories = Category::all();
 
         $che = Product::where('cat_id', '=', 2)->get(); 
@@ -94,14 +94,15 @@ class OrderController extends BaseController {
             //     ->get();
                 // get(array())
         } else {
-            $prod_orders = array();
+            $prod_orders = '';
         }
 
         View::share(compact('id'));
-        return View::make('order.edit', compact('categories', 'products','prod_orders', 'che', 'order'));
+        return View::make('order.edit', compact('categories','prod_orders', 'che', 'order'));
     }
 
     public function store($id = null) {
+
         $order_id = Input::get('order_id');
 
         $categories = Input::get('category');
@@ -147,7 +148,17 @@ class OrderController extends BaseController {
                     if($products[$cur_row] > 0) {
                         $p_order->product_id = $products[$cur_row]; // fix me
                         $p_order->touch();
-                        $p_order->save();
+                        if(!$this->expired()) {
+                            $p_order->save();
+                        } else {
+
+                            $end = OrderSession::where('updated_at', '>=', date('Y-m-d'))->first();
+                            if(count($end)) {
+                                $end = $end->end;
+                                View:share(compact('end'));
+                            }
+                            return Redirect::to('order.timeout');
+                        }
                     }
                 }
                 // if no quantity entered (or = 0) do nothing
@@ -200,6 +211,15 @@ class OrderController extends BaseController {
 
         View::share('prod_orders');
         return View::make('order.index');        
+    }
+
+    public function timeout() {
+        $end = OrderSession::where('updated_at', '>=', date('Y-m-d'))->first();
+        if(count($end)) {
+            $end = $end->end;
+            View:share(compact('end'));
+        }
+        return View::make('order.timeout');
     }
 
     // Admin manipulate
