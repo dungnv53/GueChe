@@ -12,6 +12,7 @@
 */
  Route::model('user','User');
  Route::model('products','Product');
+ // Route::model('session','OrderSession');
 
 Route::get('/', array('as' => 'home', function () {
 	return View::make('home');
@@ -40,6 +41,8 @@ Route::get('products/{products}/delete', array('uses' =>  'ProductController@del
 
 Route::post('accounts/{user}/update',array('uses' => 'AccountsController@update','as' => 'accounts.update1'));
 Route::post('products/{products}/update', array('uses' => 'ProductController@update', 'as' => 'products.update1'));
+Route::post('session/{session}/update', array('uses' => 'SessionController@update', 'as' => 'session.update1'));
+
 
 Route::resource('accounts', 'AccountsController',array('names' => array('index'  => 'accounts.index'
 	 														        ,'create' =>'accounts.create'
@@ -95,4 +98,13 @@ Route::get('/order/complete',   array('uses' => 'OrderController@complete', 'as'
 Route::get('/order/{uid}/admCreate',   array('uses' => 'OrderController@admCreate', 'as' => 'orders.admCreate'));
 Route::get('/order/{order_id}/admEdit',   array('uses' => 'OrderController@admEdit', 'as' => 'orders.admEdit'));
 Route::post('/order/{uid}/admStore',   array('uses' => 'OrderController@admStore', 'as' => 'orders.admStore'));
+
+Route::resource('session', 'SessionController', array('name' => array('index'  => 'session.index'
+																	  ,'create' => 'session.create'
+																	  ,'store'  => 'session.store'
+																	  ,'show'   => 'session.show'
+																	  ,'edit'   => 'session.edit'
+																	  ,'update' => 'session.update'
+																	 )));
+
 

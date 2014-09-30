@@ -8,11 +8,19 @@
     {{-- HTML::style('/css/rwd2.css') --}}
     {{ HTML::style('/css/baby-blue.css') }}
     {{ HTML::style('/css/grids-responsive-min.css') }}
+   
 
     {{-- HTML::style('assets/stylesheets/foundation.css')--}}
     
     {{ HTML::script('/js/jquery-1.11.1.min.js') }}
     {{ HTML::script('/js/jquery.numeric.js') }}
+    {{ HTML::style('/css/bootstrap-datetimepicker.min.css') }}
+    {{ HTML::style('css/bootstrap-responsive.css') }}
+    {{ HTML::style('/css/bootstrap.css') }}
+    {{ HTML::style('/css/pygment_trac.css') }}
+
+    {{ HTML::script('/js/bootstrap-datetimepicker.min.js') }}
+    {{ HTML::script('/js/bootstrap-datetimepicker.pt-BR.js') }}
 
 </head>
 <body>
@@ -27,6 +35,8 @@
                     <li>{{ HTML::linkRoute('products.create','Add Product') }}</li>
                     <li>{{ HTML::linkRoute('accounts.index','List User') }}</li>
                     <li>{{ HTML::linkRoute('products.index','List Product') }}</li>
+                    <li>{{ HTML::linkRoute('session.create','Add Session') }}</li>
+                    <li>{{ HTML::linkRoute('session.index', 'List Order session') }}</li>
                   @else
                     <li>{{ HTML::linkRoute('orders.index','Reserve') }}</li>
                     <li>{{ HTML::linkRoute('profile', 'Profile') }}</li>
