@@ -53,4 +53,13 @@ class ProductOrder extends Eloquent {
         return $count;
     }
 
+    public function getCategory() {
+        $cat_id = Product::find($this->product_id)->cat_id;
+        if($cat_id) {
+           $cat = Category::find($cat_id);
+           return $cat;
+        }
+        return false;
+    }
+
 }

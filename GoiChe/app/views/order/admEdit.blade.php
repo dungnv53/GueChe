@@ -67,12 +67,12 @@
     </select>
     </td>    
     <td width="5%" align="center">
-      <input type="text" name="quantity[]" value="{{ $p_order->quantity }}" size="6" class="numberOnly" onkeyup="updateFee(this)" />
+      <input type="text" name="quantity[]" value="{{ $p_order->quantity }}" size="6" class="numeric" onkeyup="updateFee(this)" />
     </td>    
     <td width="15%" nowrap>
       <span class="price_cell">{{ number_format($p_order->price,0,'',' ') }}</span>
     </td> 
-    <td width="15%" align="right">
+    <td width="15%" align="center">
       <span id="total_{{$stt}}" class="total">{{ number_format($p_order->price*$p_order->quantity,0,'',' ') }}</span>
     </td>    
     <td width="15%" align="center">
@@ -122,20 +122,20 @@
       }
     
     function updateFee(fee) {
-      console.log(fee);
       var total = 0;
 
       $('.food_row').each(function() {
+        var cur_prod = $(this).find('select:eq(1) option:selected').attr('price');
         var cur_qty = $(this).find("input:text").val();
         var cur_price = parseInt($(this).find('span.price_cell').html());
         // console.log(cur_price);
-        $(this).find('span#total').html(cur_qty*cur_price*1000); //fix me
+        $(this).find('span.total').html(cur_qty*cur_prod); //fix me
       });
       $('.total').each(function(){
         total += parseInt($.trim($(this).html().toString()));
       });
       // fix me
-      $('#total_cell').text(total+ ' 000');
+      $('#total_cell').text(total);
     }
 
     function addChildRow(cur_row) {
@@ -144,7 +144,7 @@
         $('#buy_list tr.food_row:last').after(new_row);
         $('#buy_list tr.food_row:last').find("input:text").val("");
         $('#buy_list tr.food_row:last').find("td:first").text(++length);
-        $('.numbersOnly').keyup(function () { 
+        $('.numeric').keyup(function () { 
             this.value = this.value.replace(/[^0-9]/g,'');
         });
         // checkLength();
@@ -195,7 +195,7 @@
     // checkLength();
     updateFee();
     
-    $('.numbersOnly').keyup(function () { 
+    $('.numeric').keyup(function () { 
         this.value = this.value.replace(/[^0-9]/g,'');
     });
     

@@ -24,11 +24,12 @@ class OrderController extends BaseController {
         $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->orderBy('updated_at', 'asc')->where('user_id', '=', Auth::user()->id)->first();
 
         if(isset($last_order->id)) {
+            $prod_orders = $last_order->getProdOrder();
             // $prod_orders = ProductOrder::where('created_at', '>=', date('Y-m-d'))->where('order_id', '=', $last_order->id)->get();
-            $prod_orders = DB::table('product_order')->join('products', 'product_order.product_id', '=', 'products.id')
-                ->join('categories', 'categories.id', '=', 'products.cat_id')
-                ->where('product_order.order_id','=',$last_order->id )
-                ->get();
+            // $prod_orders = DB::table('product_order')->join('products', 'product_order.product_id', '=', 'products.id')
+            //     ->join('categories', 'categories.id', '=', 'products.cat_id')
+            //     ->where('product_order.order_id','=',$last_order->id )
+            //     ->get();
                 // get(array())
         } else {
             $prod_orders = NULL;
@@ -50,18 +51,14 @@ class OrderController extends BaseController {
             return Redirect::to(route('orders.index'));
         }
 
-        $products = Product::all()->toArray();
-        $categories = Category::all()->toArray();
+        $products = Product::all();
+        $categories = Category::all();
 
         $che = Product::where('cat_id', '=', 2)->get(); 
         if(!is_null($che)) { 
-            $che = $che->toArray();
+            $che = $che;
         } else {
             $che = array();
-        }
-
-        if($uid && isAdmin()) {
-            View::share(compact('uid'));
         }
 
         return View::make('order.form', compact('users', 'products', 'categories', 'che'));
@@ -78,50 +75,49 @@ class OrderController extends BaseController {
 
         $che = Product::where('cat_id', '=', 2)->get(); 
         if(!is_null($che)) { 
-            $che = $che->toArray();
+            $che = $che;
         } else {
             $che = array();
         }
 
-        $user = Auth::user();
-        $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->orderBy('updated_at', 'asc')->where('user_id', '=', Auth::user()->id)->first();
+        $order = Order::find($id);
 
-
-        if(isset($last_order->id)) {
+        if(isset($order->id)) {
             // $prod_orders = ProductOrder::where('created_at', '>=', date('Y-m-d'))->where('order_id', '=', $last_order->id)->get();
             $prod_orders = DB::table('product_order')->join('products', 'product_order.product_id', '=', 'products.id')
                 ->join('categories', 'categories.id', '=', 'products.cat_id')
-                ->where('product_order.order_id','=',$last_order->id )
+                ->where('product_order.order_id','=',$order->id )
                 ->get();
                 // get(array())
         } else {
             $prod_orders = array();
         }
 
-        // dd($prod_orders);
-
-        return View::make('order.edit', compact('prod_orders', 'last_order', 'users', 'categories', 'che'));
+        View::share(compact('id'));
+        return View::make('order.edit', compact('categories', 'products','prod_orders', 'che', 'order'));
     }
 
     public function store($id = null) {
         $order_id = Input::get('order_id');
-        if($order_id)  {
-            // edit
-
-        }
 
         $categories = Input::get('category');
         $products = Input::get('product');
         $qtys = Input::get('quantity');
         $uid = Auth::user()->id;
-
         if(is_null($uid)) Redirect::to('/');
+
+           // dd($categories);
 
         if(!is_null($categories)) {
 
             // Todo only 1 oder per day 
             // exist --> get order this day
-            $order = Order::where('user_id', '=', $uid)->orderBy('updated_at', 'desc')->first();
+            if($order_id)  {
+                // edit
+                $order = Order::find($order_id);
+            } else {
+                $order = Order::where('user_id', '=', $uid)->orderBy('updated_at', 'desc')->first();
+            }
             if(is_null($order)) {
                 $new_order = new Order();
                 $new_order->user_id = Auth::user()->id;
@@ -262,6 +258,7 @@ class OrderController extends BaseController {
     }
 
     public function admStore($uid = null) {
+        dd($uid);
         $order_id = Input::get('order_id');
         if($order_id)  {
             // edit
@@ -310,7 +307,6 @@ class OrderController extends BaseController {
         // return View::make('orders.complete');
         return Redirect::to(route('dashboard.index'));
         }
-        // dd(Input::all());
 
         return Redirect::back()
             ->withInput();

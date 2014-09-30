@@ -111,12 +111,20 @@ function number_format(num) {
       }
     
     function updateFee(fee) {
-      // var
-      // khai bao cac bien food, quatity
-      // check  isNaN
-      // loop tinh tong
-      // update view
+      var total = 0;
 
+      $('.food_row').each(function() {
+        var cur_prod = $(this).find('select:eq(1) option:selected').attr('price');
+        var cur_qty = $(this).find("input:text").val();
+        var cur_price = parseInt($(this).find('span.price_cell').html());
+        // console.log(cur_price);
+        $(this).find('span.total').html(cur_qty*cur_prod); //fix me
+      });
+      $('.total').each(function(){
+        total += parseInt($.trim($(this).html().toString()));
+      });
+      // fix me
+      $('#total_cell').text(total);
     }
 
     function addChildRow(cur_row) {

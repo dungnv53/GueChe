@@ -51,25 +51,23 @@
     </td> 
     <td width="10%">
 
-    	{{ $order->name }}
+    	{{ $order->getCategory()->name }}
 
     </td>  
     <td width="30%" nowrap>
-
-	    {{ Product::where('id', '=', $order->product_id)->lists('name')[0] }}
-	   	
+      {{ $order->getProduct()[0]['name'] }}
     </td>    
     <td width="5%" align="center">
-	    {{ $order->quantity }}
+      {{ $order->quantity }}
     </td>    
     <td width="15%" nowrap>
-	    {{ number_format($order->price,0,'',' ') }}
+      {{ number_format($order->getProduct()[0]['price'],0,'',' ') }}
     </td> 
     <td width="10%">
-	    {{ number_format($order->price*$order->quantity,0,'',' ') }}
+      {{ number_format($order->getProduct()[0]['price']*$order->quantity,0,'',' ') }}
     </td>    
     <td width="20%" align="center">
- 		{{ HTML::linkRoute('orders.edit','Edit', 12) }}
+    {{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }}
     </td>
   </tr>
   @endforeach

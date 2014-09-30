@@ -6,6 +6,9 @@
 <table border="0" id="buy_list">
 {{ Form::open(array('route' => 'orders.store')) }}
 
+  @if(isset($id))
+  {{ Form::hidden('order_id', $id) }}
+  @endif
 
   @if($errors->any())
     <ul>
@@ -42,13 +45,13 @@
   @foreach($prod_orders as $order)
   <tr id="food_row" class="food_row">
     <td width="1%" border="0">
-      {{ $stt++ }}
+      {{ ++$stt }}
     </td> 
     <td width="10%">
-      <select onchange="drawProduct(this)">
+      <select id="cat_{{$order->id}}" name="category[]" onchange="drawProduct(this, {{$order->id}})">
 
       @foreach($categories as $cat)
-      <option name="cat[]" value="{{ $cat->id }}" {{ ($cat->id == $order->cat_id) ? "selected='1'" : ""; }}>
+      <option value="{{ $cat->id }}" {{ ($cat->id == $order->cat_id) ? "selected='1'" : ""; }}>
         {{ $cat->name }}
       </option>
       @endforeach
@@ -56,22 +59,22 @@
     </select>
     </td>  
     <td width="30%" nowrap>
-      <select onchange="updateFee()">
+      <select id="prod_{{$order->id}}" name="product[]" onchange="updateFee()">
 
       @foreach($che as $ch)
-      <option name="product[]" value="{{ $ch->id }}">
+      <option value="{{ $ch->id }}" price="{{$ch->price}}">
         {{ $ch->name }}
       </option>
       @endforeach
     </select>
     </td>    
     <td width="5%" align="center">
-      <input type="text" name="quantity[]" value="{{ $order->quantity }}" size="6" class="numberOnly" onkeyup="updateFee(this)" />
+      <input type="text" name="quantity[]" value="{{ $order->quantity }}" size="6" class="numeric" onkeyup="updatePrice(this)" />
     </td>    
     <td width="15%" nowrap>
       <span class="price_cell">{{ number_format($order->price,0,'',' ') }}</span>
     </td> 
-    <td width="15%" align="right">
+    <td width="15%" align="center">
       <span id="total_{{$stt}}" class="total">{{ number_format($order->price*$order->quantity,0,'',' ') }}</span>
     </td>    
     <td width="15%" align="center">
@@ -100,14 +103,6 @@
       return num.toString().replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g , '$1,')
     }
 
-    var s = new Array();
-    <?php
-        // foreach ($services as $service) {
-        //     echo "s[".$service->getId()."] = ".$service->getFee().";\n";
-        // }
-    ?>
-    
-
     function checked_click(id) {
         var checked = $('#checkbox_'+id).attr('checked');
         if (checked) {
@@ -121,20 +116,31 @@
       }
     
     function updateFee(fee) {
-      console.log(fee);
+      // alert('ou');
       var total = 0;
 
       $('.food_row').each(function() {
+        var cur_prod = $(this).find('select:eq(1) option:selected').attr('price');
+        // console.log(cur_prod);
+        $(this).find('span.price_cell').text(cur_prod);
         var cur_qty = $(this).find("input:text").val();
-        var cur_price = parseInt($(this).find('span.price_cell').html());
+        // var cur_price = parseInt($(this).find('span.price_cell').html());
         // console.log(cur_price);
-        $(this).find('span#total').html(cur_qty*cur_price*1000); //fix me
+        $(this).find('span.total').html(cur_qty*cur_prod);
       });
       $('.total').each(function(){
         total += parseInt($.trim($(this).html().toString()));
       });
       // fix me
-      $('#total_cell').text(total+ ' 000');
+      $('#total_cell').text(total);
+    }
+
+    function updatePrice(row) {
+
+      var new_price = $(row).closest('tr').find('select:eq(1)').price;
+      console.log(new_price);
+     
+      updateFee();
     }
 
     function addChildRow(cur_row) {
@@ -143,9 +149,6 @@
         $('#buy_list tr.food_row:last').after(new_row);
         $('#buy_list tr.food_row:last').find("input:text").val("");
         $('#buy_list tr.food_row:last').find("td:first").text(++length);
-        $('.numbersOnly').keyup(function () { 
-            this.value = this.value.replace(/[^0-9]/g,'');
-        });
         // checkLength();
         updateFee();
     }
@@ -172,16 +175,18 @@
       return length;
     }
 
-    function drawProduct(row) {
-      console.log(row);
-    }
+    function drawProduct(row, row_id) {
+      $.post('{{ route("products.getList" ) }}', {'cat_id': row.value, '_method': 'POST' }, function(data, msg) {
+          // console.log(data);
+          var products = data;
+          var html = '';
+          for(var i = 0; i < products.length; i++){
+            var product = products[i];
+            html += '<option value='+product.id+' price='+product.price+' cat_id='+product.cat_id+'>'+product.name+'</option>';
+          }
 
-    function getListProduct(cat_id) {
-      // $('').click(function() {
-      // });
-    console.log(cat_id);
-      $.post('{{ route("products.getList" ) }}', {'cat_id': cat_id, '_method': 'POST' }, function(data, msg) {
-      // console.log(data);
+          // $('#prod_'+row_id).html(html); // clone error
+          $(row).closest('tr').find('select:eq(1)').html(html);
       
       });
     }
@@ -190,7 +195,7 @@
     // checkLength();
     updateFee();
     
-    $('.numbersOnly').keyup(function () { 
+    $('.numeric').keyup(function () { 
         this.value = this.value.replace(/[^0-9]/g,'');
     });
     
