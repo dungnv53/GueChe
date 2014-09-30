@@ -143,13 +143,14 @@ class OrderController extends BaseController {
                 $p_order->order_id = is_null($order) ? $new_order->id : $order->id;
                 if($qtys[$cur_row] > 0) {
                     $p_order->quantity = $qtys[$cur_row];
-                }
 
-                if($products[$cur_row] > 0) {
-                    $p_order->product_id = $products[$cur_row]; // fix me
-                    $p_order->touch();
-                    $p_order->save();
+                    if($products[$cur_row] > 0) {
+                        $p_order->product_id = $products[$cur_row]; // fix me
+                        $p_order->touch();
+                        $p_order->save();
+                    }
                 }
+                // if no quantity entered (or = 0) do nothing
             }
 
         return View::make('order.complete');

@@ -21,17 +21,15 @@ class DashboardController extends BaseController {
         }
 
         $users = User::where('role_id', '=', ROLE_USER)->orderBy('username')->get();
-        $products = Product::all()->toArray();
-        $categories = Category::all()->toArray();
+
+        $categories = Category::all();
 
         $che = Product::where('cat_id', '=', 3)->get(); 
-        if(!is_null($che)) { 
-            $che = $che->toArray();
-        } else {
-            $che = array();
+        if(count($che) == 0) {
+            $che = null;
         }
 
-        return View::make('dashboard.index', compact('users', 'products', 'categories', 'che'));
+        return View::make('dashboard.index', compact('users', 'categories', 'che'));
     }
 
     public function edit($id = null) {
