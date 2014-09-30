@@ -1,6 +1,8 @@
 @include('common.layout')
 
 <div class="content">
+<p>Thời gian đặt chè ngày {{$session->date}} : Từ {{ $session->start }} đến {{ $session->end }}</p>
+
 {{ Form::open(array('route' => 'orders.store')) }}
 
   @if($errors->any())

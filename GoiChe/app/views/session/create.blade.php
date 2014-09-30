@@ -1,5 +1,9 @@
 @include('common.layout')
-
+  {{ HTML::style('/css/bootstrap-datetimepicker.min.css') }}
+  {{ HTML::style('css/bootstrap-responsive.css') }}
+  {{ HTML::style('/css/bootstrap.css') }}
+  {{ HTML::script('/js/bootstrap-datetimepicker.min.js') }}
+  {{ HTML::script('/js/bootstrap-datetimepicker.pt-BR.js') }}
 <div class="content">
 {{ Form::open(array('route'=>'session.store', 'method' => 'POST')) }}
   <div class="well">
@@ -8,7 +12,7 @@
       <input data-format="yyyy-MM-dd" type="text" name="date"></input>
       <span class="add-on">
         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-          {{ HTML::image('img/date.jpeg')}}
+          {{-- HTML::image('img/date.jpeg') --}}
         </i>
       </span>
     </div>

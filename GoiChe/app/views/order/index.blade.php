@@ -1,7 +1,8 @@
 @include('common.layout')
 
  <div class="content">
-
+ @if(!empty($session))
+<p>Thời gian đặt chè ngày {{$session->date}} : Từ {{ $session->start }} đến {{ $session->end }}</p>
  @if(empty($prod_orders))
 
  <fieldset>
@@ -67,7 +68,11 @@
       {{ number_format($order->getProduct()[0]['price']*$order->quantity,0,'',' ') }}
     </td>    
     <td width="20%" align="center">
+    @if(date('H:i:s')<= $session->end)
     {{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }}
+    @else
+     End time edit
+     @endif
     </td>
   </tr>
   @endforeach
@@ -75,5 +80,8 @@
  
 </table> 
 
+ @endif
+ @else
+  Hôm nay không đặt hàng được 
  @endif
 </div>

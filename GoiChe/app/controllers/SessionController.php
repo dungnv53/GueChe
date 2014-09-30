@@ -39,7 +39,7 @@ class SessionController extends \BaseController {
 		$session->start = Input::get('start');
 		$session->end = Input::get('end');
 		$session->save();
-		return Redirect::route('dashboard.index');
+		return Redirect::route('session.index');
 
 	}
 
