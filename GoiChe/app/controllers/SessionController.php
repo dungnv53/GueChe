@@ -79,8 +79,12 @@ class SessionController extends \BaseController {
 	public function update(OrderSession $session)
 	{
 		//
-		$date = Input::get('date');
-		dd($date);
+		$session->date = Input::get('date');
+		$session->start = Input::get('start');
+		$session->end  = Input::get('end');
+		$session->save();
+		return Redirect::route('session.index');
+		
 	}
 
 

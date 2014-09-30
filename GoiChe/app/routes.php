@@ -12,7 +12,7 @@
 */
  Route::model('user','User');
  Route::model('products','Product');
- // Route::model('session','OrderSession');
+ Route::model('sessionOrder','OrderSession');
 
 Route::get('/', array('as' => 'home', function () {
 	return View::make('home');
@@ -41,7 +41,7 @@ Route::get('products/{products}/delete', array('uses' =>  'ProductController@del
 
 Route::post('accounts/{user}/update',array('uses' => 'AccountsController@update','as' => 'accounts.update1'));
 Route::post('products/{products}/update', array('uses' => 'ProductController@update', 'as' => 'products.update1'));
-Route::post('session/{session}/update', array('uses' => 'SessionController@update', 'as' => 'session.update1'));
+Route::post('session/{sessionOrder}/update', array('uses' => 'SessionController@update', 'as' => 'session.update1'));
 
 
 Route::resource('accounts', 'AccountsController',array('names' => array('index'  => 'accounts.index'
