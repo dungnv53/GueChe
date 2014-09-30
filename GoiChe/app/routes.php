@@ -13,6 +13,8 @@
  Route::model('user','User');
  Route::model('products','Product');
  Route::model('sessionOrder','OrderSession');
+ Route::model('orders','Order');
+ Route::model('productOrder','ProductOrder');
 
 Route::get('/', array('as' => 'home', function () {
 	return View::make('home');
@@ -63,6 +65,7 @@ Route::resource('dashboard', 'DashboardController',array('names' => array('index
 	 														    	,'destroy'=>'dashboard.destroy'
 	 														 )));
 Route::get('/report', array('uses' => 'DashboardController@report', 'as' => 'report'));
+Route::get('/report/detail/',array('uses' => 'DashboardController@reportDetail', 'as' => 'report.detail'));
 
 Route::resource('user', 'UserController',array('names' => array('index'  => 'front_end.index'
  														        ,'create' =>'front_end.create'
@@ -94,6 +97,7 @@ Route::resource('order', 'OrderController',array('names' => array('index'  => 'o
 	 														    	,'admCreate' =>'orders.admCreate'
 	 														    	,'destroy'=>'orders.destroy'
 	 														 )));
+Route::get('/order/{orders}/product/{productOrder}/delete', array('uses' => 'OrderController@delete', 'as' => 'orders.delete'));
 Route::get('/order/complete',   array('uses' => 'OrderController@complete', 'as' => 'order_complete'));
 Route::get('/order/{uid}/admCreate',   array('uses' => 'OrderController@admCreate', 'as' => 'orders.admCreate'));
 Route::get('/order/{order_id}/admEdit',   array('uses' => 'OrderController@admEdit', 'as' => 'orders.admEdit'));

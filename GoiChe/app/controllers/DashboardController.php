@@ -53,4 +53,10 @@ class DashboardController extends BaseController {
         View::share(compact('list'));
         return View::make('dashboard.report');
     }
+
+    public function reportDetail()
+    {
+        
+       return View::make('dashboard.reportDetail');
+    }
 }
