@@ -6,6 +6,9 @@
 <table border="0" id="buy_list">
 {{ Form::open(array('route' => 'orders.admStore')) }}
 
+  @if(isset($uid))
+  {{ Form::hidden('uid', $uid)}}
+  $endif
 
   @if($errors->any())
     <ul>

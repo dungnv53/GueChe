@@ -107,11 +107,14 @@ class OrderController extends BaseController {
 
     public function store($id = null) {
 
+        dd(Input::all());
         $order_id = Input::get('order_id');
 
         $categories = Input::get('category');
+        dd($categories);
         $products = Input::get('product');
         $qtys = Input::get('quantity');
+        dd($qtys);
         $uid = Auth::user()->id;
         if(is_null($uid)) Redirect::to('/');
 
@@ -152,17 +155,7 @@ class OrderController extends BaseController {
                     if($products[$cur_row] > 0) {
                         $p_order->product_id = $products[$cur_row]; // fix me
                         $p_order->touch();
-                        if(!$this->expired()) {
-                            $p_order->save();
-                        } else {
-
-                            $end = OrderSession::where('updated_at', '>=', date('Y-m-d'))->first();
-                            if(count($end)) {
-                                $end = $end->end;
-                                View:share(compact('end'));
-                            }
-                            return Redirect::to('order.timeout');
-                        }
+                        $p_order->save();
                     }
                 }
                 // if no quantity entered (or = 0) do nothing
@@ -297,6 +290,10 @@ class OrderController extends BaseController {
         $products = Input::get('product');
         $qtys = Input::get('quantity');
 
+        if($uid) {
+            $uid = Input::segment(2);
+        }
+        dd($uid);
         if(is_null($uid)) Redirect::to('/');
 
         if(!is_null($categories)) {
