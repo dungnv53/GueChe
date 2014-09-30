@@ -127,11 +127,12 @@
         checkLength();
         updateFee();
     }
+
     function removeChildRow(cur_row) {
-      console.log(cur_row.parent());
-       $('#buy_list tr.food_row:last').not('tr.food_row:first').remove();
-       checkLength();
-       updateFee();
+       if(checkLength()) {
+         $('#buy_list tr.food_row:last').remove();
+         updateFee();
+       }
     }
 
     function drawProduct(row) {
@@ -159,9 +160,9 @@
     }
     
   $(document).ready(function() {
-    // $('.food_row select:first').each(function() {
-    //    drawProduct(this); // fix me che default
-    // });
+    $('.food_row select:first').each(function() {
+       drawProduct(this); // fix me che default
+    });
 
     updateFee();
     

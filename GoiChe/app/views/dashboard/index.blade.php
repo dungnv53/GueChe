@@ -108,7 +108,6 @@
        @foreach($user->getCurOrder()->getProdOrder() as $prod_order) 
 
         <?php $list = $prod_order->getListProduct();
-            dd($user->getCurOrder());
          ?>
           <select id="product_{{$user['id']}}" name="product_{{$user['id']}}[]" >
 
@@ -213,7 +212,7 @@
   <td class="seaGreen" colspan="2">
     {{ HTML::linkRoute('report', 'Report') }}
   </td>
-  <td class="seaGreen" id="allFee">{{number_format($total_fee,0,'',' ')}}</td>
+  <td class="seaGreen" id="allFee" nowrap>{{number_format($total_fee,0,'',' ')}}</td>
   <td colspan="" align="right" class="seaGreen">
 	    {{ Form::button('stopReserve') }}
   </td>
