@@ -68,7 +68,11 @@
       {{ number_format($order->getProduct()[0]['price']*$order->quantity,0,'',' ') }}
     </td>    
     <td width="20%" align="center">
+    @if(date('H:i:s')<= $session->end)
     {{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }}
+    @else
+     End time edit
+     @endif
     </td>
   </tr>
   @endforeach
