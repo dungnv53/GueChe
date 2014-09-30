@@ -36,7 +36,7 @@
 
   <tr id="food_row" class="food_row"> 
     <td width="10%">
-      <select name="category[]">
+      <select name="category[]" onchange="drawProduct(this)">
 
       @foreach($categories as $cat)
       <option value="{{ $cat['id'] }}" {{ ($cat['name'] == 'Chè') ? "selected=" : ""; }}>
@@ -47,10 +47,10 @@
     </select>
     </td>  
     <td width="30%" nowrap>
-      <select name="product[]">
+      <select name="product[]" onchange="updateFee(this)">
 
       @foreach($che as $ch)
-      <option value="{{ $ch['id'] }}">
+      <option value="{{ $ch['id'] }}" price="{{$ch['price']}}">
         {{ $ch['name'] }}
       </option>
       @endforeach
@@ -58,13 +58,13 @@
         
     </td>    
     <td width="5%" align="center">
-      <input type="text" name="quantity[]" size="6" class="numberOnly" />
+      <input type="text" name="quantity[]" size="6" class="numeric"  onkeyup="updateFee(this)" />
     </td>    
     <td width="15%" nowrap>
-      {{ number_format($che[0]['price'],0,'',' ') }}
+      <span class="price_cell" >0</span>
     </td> 
     <td width="10%" align="right">
-      {{ 0 }}
+      <span class="total">{{ 0 }}</span>
     </td>    
     <td width="20%" nowrap align="center">
       <button type="button" id="plus" name="plus" onclick="addChildRow(this)" >+</button>
@@ -90,33 +90,15 @@ function number_format(num) {
   return num.toString().replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g , '$1,')
 }
 
-    var s = new Array();
-    <?php
-        // foreach ($services as $service) {
-        //     echo "s[".$service->getId()."] = ".$service->getFee().";\n";
-        // }
-    ?>
-    
-
-    function checked_click(id) {
-        var checked = $('#checkbox_'+id).attr('checked');
-        if (checked) {
-          $('#input_number_rental_'+id).val(1);
-          $('#number_rental_'+id).html(1);
-        } else {
-          $('#input_number_rental_'+id).val(0);
-          $('#number_rental_'+id).html(0);
-        }
-        updateFee();
-      }
-    
     function updateFee(fee) {
       var total = 0;
 
       $('.food_row').each(function() {
         var cur_prod = $(this).find('select:eq(1) option:selected').attr('price');
+        // console.log(cur_prod);
         var cur_qty = $(this).find("input:text").val();
-        var cur_price = parseInt($(this).find('span.price_cell').html());
+        $(this).find('span.price_cell').text(cur_prod);
+        // var cur_price = parseInt($(this).find('span.price_cell').html());
         // console.log(cur_price);
         $(this).find('span.total').html(cur_qty*cur_prod); //fix me
       });
@@ -143,57 +125,34 @@ function number_format(num) {
        updateFee();
     }
 
-    function minus(id) {
-        var value = $('#input_number_rental_'+id).val();
-        if (value <= 0) return;
-        
-        value--;
-        if (value == 0) {
-          $('#checkbox_'+id).attr('checked', false);
-        }
-        $('#input_number_rental_'+id).val(value);
-        $('#number_rental_'+id).html(number_format(value));
-        updateFee();
-     }
+    function drawProduct(row) {
+      $.post('{{ route("products.getList" ) }}', {'cat_id': row.value, '_method': 'POST' }, function(data, msg) {
+          // console.log(data);
+          var products = data;
+          var html = '';
+          for(var i = 0; i < products.length; i++){
+            var product = products[i];
+            html += '<option value='+product.id+' price='+product.price+' cat_id='+product.cat_id+'>'+product.name+'</option>';
+          }
+
+          console.log($(row).closest('tr'));
+          $(row).closest('tr').find('select:eq(1)').html(html);
       
-     function plus(id) {
-        var value = $('#input_number_rental_'+id).val();
-        // if (value <= 1) return;
-        
-        value++;
-        $('#checkbox_'+id).attr('checked', true);
-        $('#input_number_rental_'+id).val(value);
-        $('#number_rental_'+id).html(number_format(value));
-        updateFee();
-     }
+      });
+    }
       
     function checkLength() {
-      var length = $('#service_list tr:last').index(); 
-      if(parseInt(length) <= 0) 
-           $('#minus_service').attr('disabled', 'true');
-      else $('#minus_service').removeAttr('disabled');
-        if((length+2) > <?php echo count($categories)?>) 
-             $('#plus_service').attr('disabled', 'true');
-        else $('#plus_service').removeAttr('disabled');
+      length = $('tr.food_row').length;
+      if(length < 2) {
+        return false;
+      }
+      return length;
     }
-  function calc_rental() {
-    updateFee();
-  }
-
     
   $(document).ready(function() {
     checkLength();
     updateFee();
-    
-    $('.numbersOnly').keyup(function () { 
-        this.value = this.value.replace(/[^0-9]/g,'');
-    });
-    $('.numbersChild').keyup(function () { 
-        this.value = this.value.replace(/[^0-9]/g,'');
-    });
-    $('form').submit(function(){
-        $(this).find(':submit').attr('disabled','disabled');
-    });
+
     $(window).keydown(function(event){
         if(event.keyCode == 13) {
           event.preventDefault();

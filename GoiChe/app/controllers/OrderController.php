@@ -258,24 +258,25 @@ class OrderController extends BaseController {
     }
 
     public function admStore($uid = null) {
-        dd($uid);
+        // dd($uid);
         $order_id = Input::get('order_id');
-        if($order_id)  {
-            // edit
-
-        }
 
         // dd(Input::all());
         $categories = Input::get('category');
         $products = Input::get('product');
         $qtys = Input::get('quantity');
 
-        if(is_null($uid)) Redirect::to('/');
+        // if(is_null($uid)) Redirect::to('/');
 
         if(!is_null($categories)) {
             // Todo only 1 oder per day 
             // exist --> get order this day
-            $order = Order::where('user_id', '=', $uid)->orderBy('updated_at', 'desc')->first();
+            if($order_id)  {
+                // edit
+                $order =  Order::find($order_id);
+            } else {
+                $order = Order::where('user_id', '=', $uid)->orderBy('updated_at', 'desc')->first();
+            }
             if(is_null($order)) {
                 $new_order = new Order();
                 $new_order->user_id = $uid;

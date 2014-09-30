@@ -65,7 +65,7 @@
       <span class="price_cell">0</span>
     </td> 
     <td width="10%" align="right">
-      {{ 0 }}
+      <span class="total">{{ 0 }}</span>
     </td>    
     <td width="20%" nowrap align="center">
       <button type="button" id="plus" name="plus" onclick="addChildRow(this)" >+</button>
