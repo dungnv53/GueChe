@@ -102,6 +102,7 @@ class OrderController extends BaseController {
         }
 
         View::share(compact('id'));
+        View::share(compact('session'));
         return View::make('order.edit', compact('categories','prod_orders', 'che', 'order'));
     }
 
