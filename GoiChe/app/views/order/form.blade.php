@@ -109,7 +109,8 @@
       $('.food_row').each(function() {
         var cur_prod = $(this).find('select:eq(1) option:selected').attr('price');
         var cur_qty = $(this).find("input:text").val();
-        var cur_price = parseInt($(this).find('span.price_cell').html());
+        $(this).find('span.price_cell').text(cur_prod)
+        // var cur_price = parseInt($(this).find('span.price_cell').html());
         // console.log(cur_price);
         $(this).find('span.total').html(cur_qty*cur_prod);
       });
