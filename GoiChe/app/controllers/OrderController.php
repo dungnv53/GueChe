@@ -20,6 +20,8 @@ class OrderController extends BaseController {
     }
 
     public function index() {
+        $session = OrderSession::where('date','=',date('Y-m-d'))->first();
+        // dd($session->date);
         $user = Auth::user();
         if(is_null($user)) {
             return Redirect::to('/login');
@@ -40,10 +42,11 @@ class OrderController extends BaseController {
 
         // dd($prod_orders);
 
-        return View::make('order.index', compact('prod_orders', 'last_order'));
+        return View::make('order.index', compact('prod_orders', 'last_order','session'));
     }
 
     public function create($id=null) {
+        $session = OrderSession::where('date','=',date('Y-m-d'))->first();
         $users = Auth::user();
         if($this->isAdmin()) {
             return Redirect::to('/');
@@ -64,10 +67,11 @@ class OrderController extends BaseController {
             $che = array();
         }
 
-        return View::make('order.form', compact('users', 'products', 'categories', 'che'));
+        return View::make('order.form', compact('users', 'products', 'categories', 'che','session'));
     }
 
     public function edit($id = null) {
+        $session = OrderSession::where('date','=',date('Y-m-d'))->first();
         // admin not allowed here
         if($this->isAdmin()) {
             return Redirect::to('/');
@@ -98,7 +102,7 @@ class OrderController extends BaseController {
         }
 
         View::share(compact('id'));
-        return View::make('order.edit', compact('categories', 'products','prod_orders', 'che', 'order'));
+        return View::make('order.edit', compact('categories', 'products','prod_orders', 'che', 'order','session'));
     }
 
     public function store($id = null) {

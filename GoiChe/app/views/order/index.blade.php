@@ -1,7 +1,7 @@
 @include('common.layout')
 
  <div class="content">
-
+<p>Thời gian đặt chè ngày {{$session->date}} : Từ {{ $session->start }} đến {{ $session->end }}</p>
  @if(empty($prod_orders))
 
  <fieldset>
