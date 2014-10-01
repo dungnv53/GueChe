@@ -80,7 +80,7 @@
   {{ Form::submit('Reserve') }}
   </td>
   </tr>
-
+</table>
 {{ Form::close() }}
 
 </div>

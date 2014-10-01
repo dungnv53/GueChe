@@ -8,8 +8,8 @@
 </p>
 
 
-<table border="0" id="buy_list">
 {{ Form::open(array('route' => 'orders.store')) }}
+<table border="0" id="buy_list">
 
   @if(isset($id))
   {{ Form::hidden('order_id', $id) }}
@@ -101,27 +101,15 @@
       {{ Form::submit('save') }}
       {{ HTML::linkRoute('orders.index', 'Cancel') }}
   </td>
-
-{{ Form::close() }}
+  </tr>
 </table>
+{{ Form::close() }}
 
 </div>
 <script>
     function number_format(num) {
       return num.toString().replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g , '$1,')
     }
-
-    function checked_click(id) {
-        var checked = $('#checkbox_'+id).attr('checked');
-        if (checked) {
-          $('#input_number_rental_'+id).val(1);
-          $('#number_rental_'+id).html(1);
-        } else {
-          $('#input_number_rental_'+id).val(0);
-          $('#number_rental_'+id).html(0);
-        }
-        updateFee();
-      }
     
     function updateFee(fee) {
       // alert('ou');
@@ -146,7 +134,6 @@
     function updatePrice(row) {
 
       var new_price = $(row).closest('tr').find('select:eq(1)').price;
-      console.log(new_price);
      
       updateFee();
     }

@@ -94,17 +94,6 @@
       return num.toString().replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g , '$1,')
     }
 
-    function checked_click(id) {
-        var checked = $('#checkbox_'+id).attr('checked');
-        if (checked) {
-          $('#input_number_rental_'+id).val(1);
-          $('#number_rental_'+id).html(1);
-        } else {
-          $('#input_number_rental_'+id).val(0);
-          $('#number_rental_'+id).html(0);
-        }
-        updateFee();
-      }
     
     function updateFee(fee) {
       var total = 0;
