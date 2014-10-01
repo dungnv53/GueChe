@@ -242,10 +242,10 @@ class OrderController extends BaseController {
             return Redirect::to('/');
         }
 
-        $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->orderBy('updated_at', 'asc')->where('user_id', '=', Auth::user()->id)->first();
-        if(!empty($last_order)) {
-            return Redirect::to(route('orders.index'));
-        }
+        // $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->orderBy('updated_at', 'asc')->where('user_id', '=', Auth::user()->id)->first();
+        // if(!empty($last_order)) {
+        //     return Redirect::to(route('orders.index'));
+        // }
 
         $products = Product::all()->toArray();
         $categories = Category::all()->toArray();
@@ -258,7 +258,6 @@ class OrderController extends BaseController {
         }
 
         View::share(compact('uid'));
-
         return View::make('order.admForm', compact('users', 'products', 'categories', 'che'));
     }
 
@@ -278,6 +277,9 @@ class OrderController extends BaseController {
             $che = array();
         }
 
+        if(isset($uid)) {
+            $order_id = $uid;
+        } 
         $order = Order::find($uid);
 
         if(isset($order->id)) {
@@ -292,7 +294,7 @@ class OrderController extends BaseController {
         }
 
         // dd($prod_orders);
-
+        View::share(compact('order_id'));
         return View::make('order.admEdit', compact('prod_orders', 'order', 'users', 'categories', 'che'));
     }
 
@@ -346,8 +348,9 @@ class OrderController extends BaseController {
                 }
             }
 
-        // return View::make('orders.complete');
-        return Redirect::to(route('dashboard.index'));
+
+            // return View::make('orders.complete');
+            return Redirect::to(route('dashboard.index'));
         }
 
         return Redirect::back()

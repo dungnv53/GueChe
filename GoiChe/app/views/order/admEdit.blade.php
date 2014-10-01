@@ -3,12 +3,8 @@
 
 <div class="content">
 
-<table border="0" id="buy_list">
 {{ Form::open(array('route' => 'orders.admStore')) }}
-
-  @if(isset($uid))
-  {{ Form::hidden('uid', $uid)}}
-  $endif
+<table border="0" id="buy_list">
 
   @if($errors->any())
     <ul>
@@ -41,8 +37,11 @@
   </tr></thead>
 
   <tbody>
-  <?php $stt = 1; ?>
+  <?php $stt = 1; 
+    $total_fee = 0;
+  ?>
   <!-- { { dd($prod_orders)} } -->
+  @if($prod_orders)
   @foreach($prod_orders as $p_order)
   <tr id="food_row" class="food_row">
     <td width="1%" border="0">
@@ -63,7 +62,7 @@
     <td width="30%" nowrap id="product_row">
       <select id="prod_{{$p_order->id}}" name="product[]" onchange="updateFee()">
       @foreach($prod_list as $prod)
-      <option value="{{ $prod->id }}" {{ ($prod->id == $p_order->product_id) ? "selected='1'" : "" }}>
+      <option value="{{ $prod->id }}" price="{{$prod->price}}" {{ ($prod->id == $p_order->product_id) ? "selected='1'" : "" }}>
         {{ $prod->name }}
       </option>
       @endforeach
@@ -76,69 +75,55 @@
       <span class="price_cell">{{ number_format($p_order->price,0,'',' ') }}</span>
     </td> 
     <td width="15%" align="center">
-      <span id="total_{{$stt}}" class="total">{{ number_format($p_order->price*$p_order->quantity,0,'',' ') }}</span>
-    </td>    
+      <span id="total_{{$stt}}" class="total_cell">{{ number_format($p_order->price*$p_order->quantity,0,'',' ') }}</span>
+    </td>  
+    <?php $total_fee += ($p_order->price*$p_order->quantity); ?>  
     <td width="15%" align="center">
       <button type="button" id="plus" name="plus" onclick="addChildRow(this)" >+</button>
       <button type="button"  id="minus" name="minus" onclick="removeChildRow(this)">-</button>
     </td>
   </tr>
   @endforeach
+  @endif
   </tbody>
 
   <tr>
   <td colspan="4" class="steelBlue">&nbsp;</td>
   <td class="steelBlue">&nbsp;</td>
-  <td class="steelBlue" id="total_cell">{{ number_format($order->price*$order->quantity,0,'',' ') }}</td>
+  <td class="steelBlue" id="total_fee">{{ number_format($total_fee,0,'',' ') }}</td>
   <td align="right" class="steelBlue">
       {{ Form::submit('save') }}
       {{ HTML::linkRoute('orders.index', 'Cancel') }}
   </td>
-
-{{ Form::close() }}
+  </tr>
 </table>
 
+{{ Form::close() }}
+
 </div>
+
 <script>
     function number_format(num) {
       return num.toString().replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g , '$1,')
     }
 
-    var s = new Array();
-    <?php
-        // foreach ($services as $service) {
-        //     echo "s[".$service->getId()."] = ".$service->getFee().";\n";
-        // }
-    ?>
-    
-
-    function checked_click(id) {
-        var checked = $('#checkbox_'+id).attr('checked');
-        if (checked) {
-          $('#input_number_rental_'+id).val(1);
-          $('#number_rental_'+id).html(1);
-        } else {
-          $('#input_number_rental_'+id).val(0);
-          $('#number_rental_'+id).html(0);
-        }
-        updateFee();
-      }
-    
     function updateFee(fee) {
       var total = 0;
 
       $('.food_row').each(function() {
         var cur_prod = $(this).find('select:eq(1) option:selected').attr('price');
+        // console.log(cur_prod);
         var cur_qty = $(this).find("input:text").val();
-        var cur_price = parseInt($(this).find('span.price_cell').html());
+        $(this).find('span.price_cell').text(cur_prod);
+        var cur_price = parseInt($(this).find('span.price_cell').html()); 
         // console.log(cur_price);
-        $(this).find('span.total').html(cur_qty*cur_prod); //fix me
+        $(this).find('span.total_cell').html(cur_qty*cur_prod); //fix me
       });
-      $('.total').each(function(){
+      $('.total_cell').each(function(){
         total += parseInt($.trim($(this).html().toString()));
       });
       // fix me
-      $('#total_cell').text(total);
+      $('#total_fee').text(total);
     }
 
     function addChildRow(cur_row) {
@@ -189,7 +174,8 @@
             html += '<option value='+product.id+' price='+product.price+' cat_id='+product.cat_id+'>'+product.name+'</option>';
           }
 
-          $('#prod_'+row_id).html(html);
+          // $('#prod_'+row_id).html(html);
+          $(row).closest('tr').find('select:eq(1)').html(html);
       
       });
     }
@@ -205,11 +191,6 @@
     $('form').submit(function(){
         $(this).find(':submit').attr('disabled','disabled');
     });
-    $(window).keydown(function(event){
-        if(event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-    });
+
   });
 </script>
