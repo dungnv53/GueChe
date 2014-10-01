@@ -48,6 +48,7 @@ class OrderController extends BaseController {
 
     public function create($id=null) {
         $session = OrderSession::where('date','=',date('Y-m-d'))->first();
+        dd($session);
         $users = Auth::user();
         if($this->isAdmin()) {
             return Redirect::to('/');
@@ -190,9 +191,10 @@ class OrderController extends BaseController {
         
     }
 
-    public function delete(Order $order, ProductOrder $productOrder)
+    public function delete($order_id, $pO_id)
     {
-        
+        $productOrder = ProductOrder::where('order_id','=',$order_id)->where('product_id','=',$pO_id)->get();   
+        dd($productOrder);
        $productOrder->delete();
         
         return Redirect::route('orders.index');
