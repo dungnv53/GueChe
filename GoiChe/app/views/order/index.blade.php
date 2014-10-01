@@ -51,6 +51,7 @@
   {{-- dd($prod_orders) --}}
 
   @foreach($prod_orders as $order)
+  {{-- print_r($order->product_id)--}}
   <tr>
   	<td width="1%" border="0">
 	    {{ $stt++ }}
@@ -73,9 +74,10 @@
       {{ number_format($order->getProduct()[0]['price']*$order->quantity,0,'',' ') }}
     </td>    
     <td width="20%" align="center">
-    @if(date('H:i:s')<= $session->end)
-    {{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }}
-    @else
+    @if(date('H:i:s') <= $session->end)
+      <button>{{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }}</button>
+      <button>{{ HTML::linkRoute('orders.delete','Delete',array($order->order_id, $order->product_id)) }}</button>
+    @else 
      End time edit
      @endif
     </td>

@@ -24,6 +24,9 @@
 	<th width="10%">
 		Tổng 
 	</th>
+  <th width="5%">
+    Chi tiết
+  </th>
   </tr></thead>
 
   <?php $stt=0; $total = 0; ?>
@@ -36,11 +39,13 @@
   		<td>{{ number_format($order->getProduct()[0]['price'], 0, '', ' ') }}</td>
   		<?php $total += $order->getProduct()[0]['price']*$order->countProduct(); ?>
   		<td align="center">{{ number_format($order->getProduct()[0]['price']*$order->countProduct(), 0, '', ' ') }}</td>
+      <td>{{ HTML::linkRoute('report.detail','Xem')}}</td>
   	</tr>
   	@endforeach
   	<tr>
   		<td colspan="4" class="seaGreen">Tổng đơn hàng</td>
   		<td class="seaGreen">{{ number_format($total, 0, '', ' ') }}</td>
+
   	</tr>
   </tbody>
 

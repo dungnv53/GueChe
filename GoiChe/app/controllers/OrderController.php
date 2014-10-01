@@ -188,6 +188,14 @@ class OrderController extends BaseController {
         
     }
 
+    public function delete(Order $order, ProductOrder $productOrder)
+    {
+        
+       $productOrder->delete();
+        
+        return Redirect::route('orders.index');
+    }
+
     public function show($id=null) {
         $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->where('user_id', '=', Auth::user()->id)->get();
         if(is_null($id)) {
