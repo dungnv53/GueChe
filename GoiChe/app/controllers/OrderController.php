@@ -48,7 +48,7 @@ class OrderController extends BaseController {
 
     public function create($id=null) {
         $session = OrderSession::where('date','=',date('Y-m-d'))->first();
-        dd($session);
+        // dd($session);
         $users = Auth::user();
         if($this->isAdmin()) {
             return Redirect::to('/');
