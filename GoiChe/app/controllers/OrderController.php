@@ -54,10 +54,10 @@ class OrderController extends BaseController {
             return Redirect::to('/');
         }
 
-        $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->orderBy('updated_at', 'asc')->where('user_id', '=', Auth::user()->id)->first();
-        if(!empty($last_order)) {
-            return Redirect::to(route('orders.index'));
-        }
+        // $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->orderBy('updated_at', 'asc')->where('user_id', '=', Auth::user()->id)->first();
+        // if(!empty($last_order)) {
+        //     return Redirect::to(route('orders.index'));
+        // }
 
         $products = Product::all();
         $categories = Category::all();
@@ -113,6 +113,10 @@ class OrderController extends BaseController {
         $order_id = Input::get('order_id');
 
         $categories = Input::get('category');
+
+        // dd($_POST['category']);
+        // dd($_POST['quantity']);
+        // dd($_POST['test']);
 
         // dd($categories);
 
