@@ -136,8 +136,9 @@ function number_format(num) {
             html += '<option value='+product.id+' price='+product.price+' cat_id='+product.cat_id+'>'+product.name+'</option>';
           }
 
-          console.log($(row).closest('tr'));
+          // console.log($(row).closest('tr'));
           $(row).closest('tr').find('select:eq(1)').html(html);
+          updateFee();
       
       });
     }

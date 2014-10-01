@@ -48,7 +48,6 @@ class OrderController extends BaseController {
 
     public function create($id=null) {
         $session = OrderSession::where('date','=',date('Y-m-d'))->first();
-        dd($session);
         $users = Auth::user();
         if($this->isAdmin()) {
             return Redirect::to('/');
@@ -360,7 +359,6 @@ class OrderController extends BaseController {
     }
 
     public function admComplete() {
-        dd('in comp');
         $last_order = Order::where('updated_at', '>=', date('Y-m-d'))->orderBy('updated_at', 'asc')->groupBy('user_id')->get();
 
         if(!empty($last_order)) {
