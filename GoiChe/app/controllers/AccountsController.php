@@ -32,16 +32,6 @@ class AccountsController extends BaseController {
         return View::make('account.login', compact('model'));
     }
 
-    public function loginCheck() {
-    }
-
-    public function changePassword() {
-    }
-
-    public function updateCurrentPassword() {
-    	return "update cur passwd";
-    }
-
     public function logout() {
     	Auth::logout();
         return Redirect::intended('/login');
@@ -62,15 +52,7 @@ class AccountsController extends BaseController {
         $user->delete();
          return Redirect::route('accounts.index');
     }
-    // public function destroy($id){
-    //     dd($id);
-    //     $user = User::find($id);
-    //     dd($user);
-    //     // dd($user);
-    //     $user->delete();
-    //     return Redirect::route('accounts.index');
-
-    // }
+   
 
     public function store($id = null) {
         // Edit
@@ -183,21 +165,8 @@ class AccountsController extends BaseController {
         }
     
 
-    public function show($id) {
-
+    public function show($id) {}
         
-    }
-
-    public function resetPass() {
-    	return "reset passwd";
-    }
-
-    public function getPassword($account_id) {
-    }
-
-    public function doPassword($account_id) {
-     	return "do passwd";
-    }
 
     public function doLogin() {
 	    if ($this->isPostRequest()) {
@@ -246,7 +215,54 @@ class AccountsController extends BaseController {
       ]);
     }
 
-    public function profile() {
-    	return View::make('account.profile');
+    // get change password (user)
+    public function getChangePass() {
+        
+    	return View::make('account.changePassword');
+    }
+
+    //post change password
+    public function postChangePass(){
+     
+        $validator = Validator::make(Input::all(),
+                array(
+                        'old_password'      => 'required',
+                        'new_password'      => 'required|min:4',
+                        'confirm_password'  => 'required|same:new_password'
+                    )
+            );
+        if($validator->fails())
+        {
+            return Redirect::route('changePassword')->withErrors($validator);
+        }
+        else
+        {
+            $user     = User::find(Auth::user()->id);
+            $pass     = Input::get('old_password');
+            $new_pass = Input::get('new_password');
+            if(Hash::check($pass, $user->getAuthPassword())){
+                $user->password = Input::get('new_password');
+                
+                if($user->save()){
+                    return Redirect::route('home');
+                }
+            }
+            else return Redirect::route('changePassword')->withErrors('The old password is incorrect');
+
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

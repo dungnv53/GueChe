@@ -39,7 +39,7 @@
                     <li>{{ HTML::linkRoute('session.index', 'List Order session') }}</li>
                   @else
                     <li>{{ HTML::linkRoute('orders.index','Reserve') }}</li>
-                    <li>{{ HTML::linkRoute('profile', 'Profile') }}</li>
+                    <li>{{ HTML::linkRoute('changePassword', 'Change password') }}</li>
                   @endif
                     <li>{{ HTML::linkRoute('logout', 'Logout ('.Auth::user()->username.')') }}</li>
 

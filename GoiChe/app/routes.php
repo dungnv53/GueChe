@@ -30,11 +30,10 @@ Route::get('/accounts/{accounts}/password',array('uses'=>"AccountsController@get
 
 Route::post('/accounts/{accounts}/password',array('uses'=>"AccountsController@doPassword",'as'=>'admin.accounts.doPassword'));
 
-Route::get('change_password', ['uses' => 'AccountsController@changePassword', 'as' => 'change_password']);
-
 Route::post('change_password/cmp', ['uses' => 'AccountsController@updateCurrentPassword', 'as' => 'update_current_password']);
 
-Route::get('/accounts/{accounts}/profile',   array('uses' => 'AccountsController@profile', 'as' => 'profile'));
+Route::get('/accounts/changePassword',   array('uses' => 'AccountsController@getChangePass', 'as' => 'changePassword'));
+Route::post('/accounts/changePassword', array('uses' => 'AccountsController@postChangePass', 'as' => 'changePassword.update'));
 Route::get('/accounts/complete',   array('uses' => 'AccountsController@complete', 'as' => 'account_complete'));
 Route::get('/accounts/list',   array('uses' => 'AccountsController@index', 'as' => 'account_list'));
 Route::get('/logout',   array('uses' => 'AccountsController@logout', 'as' => 'logout'));

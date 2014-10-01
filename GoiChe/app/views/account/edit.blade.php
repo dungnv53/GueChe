@@ -1,6 +1,5 @@
 @include('common.layout')
 
-
 <div class="content">
 {{ Form::open(array('route' => 'accounts.store', 'method' => 'POST')) }}
 {{-- Form::open(['route' => ['accounts.update1',$user->id]]) --}}

@@ -193,12 +193,13 @@ class OrderController extends BaseController {
     public function update($id='') {
         
     }
-
-    public function delete($order_id, $pO_id)
+    // bug
+    public function delete()
     {
+        dd("123");
         $productOrder = ProductOrder::where('order_id','=',$order_id)->where('product_id','=',$pO_id)->get();   
         dd($productOrder);
-       $productOrder->delete();
+        $productOrder->delete();
         
         return Redirect::route('orders.index');
     }
