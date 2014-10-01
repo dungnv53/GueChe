@@ -63,7 +63,7 @@
         
     </td>    
     <td width="5%" align="center">
-      <input type="text" name="quantity[]" size="6" class="numeric"  onkeyup="updateFee(this)" />
+      <input type="text" name="quantity[]" size="6" class="numeric" maxlength="2" onkeyup="updateFee(this)" />
     </td>    
     <td width="15%" nowrap>
       <span class="price_cell">0</span>
@@ -158,14 +158,5 @@
 
     updateFee();
     
-    $('form').submit(function(){
-        $(this).find(':submit').attr('disabled','disabled');
-    });
-    $(window).keydown(function(event){
-        if(event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-    });
   });
 </script>

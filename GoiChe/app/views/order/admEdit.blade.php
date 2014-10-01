@@ -93,7 +93,7 @@
   <td class="steelBlue" id="total_fee">{{ number_format($total_fee,0,'',' ') }}</td>
   <td align="right" class="steelBlue">
       {{ Form::submit('save') }}
-      {{ HTML::linkRoute('orders.index', 'Cancel') }}
+      {{ HTML::linkRoute('dashboard.index', 'Cancel') }}
   </td>
   </tr>
 </table>
@@ -176,7 +176,7 @@
 
           // $('#prod_'+row_id).html(html);
           $(row).closest('tr').find('select:eq(1)').html(html);
-      
+          updateFee();
       });
     }
 
@@ -188,9 +188,6 @@
         this.value = this.value.replace(/[^0-9]/g,'');
     });
     
-    $('form').submit(function(){
-        $(this).find(':submit').attr('disabled','disabled');
-    });
 
   });
 </script>

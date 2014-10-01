@@ -77,7 +77,7 @@
     </select>
     </td>    
     <td width="5%" align="center">
-      <input type="text" name="quantity[]" value="{{ $order->quantity }}" size="6" class="numeric" onkeyup="updatePrice(this)" />
+      <input type="text" name="quantity[]" value="{{ $order->quantity }}" maxlength="2" size="6" class="numeric" onkeyup="updatePrice(this)" />
     </td>    
     <td width="15%" nowrap>
       <span class="price_cell">{{ number_format($order->price,0,'',' ') }}</span>
@@ -194,14 +194,5 @@
         this.value = this.value.replace(/[^0-9]/g,'');
     });
     
-    $('form').submit(function(){
-        $(this).find(':submit').attr('disabled','disabled');
-    });
-    $(window).keydown(function(event){
-        if(event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-    });
   });
 </script>
