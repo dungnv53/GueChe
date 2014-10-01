@@ -48,7 +48,7 @@
       {{ $stt++ }}
     </td> 
     <td width="10%">
-      <select id="cat_{{$p_order->id}}" name="cat[]" onchange="drawProduct(this, {{$p_order->id}})">
+      <select id="cat_{{$p_order->id}}" name="category[]" onchange="drawProduct(this, {{$p_order->id}})">
 
       @foreach($categories as $cat)
       <option value="{{ $cat->id }}" {{ ($cat->id == $p_order->cat_id) ? "selected='1'" : ""; }}>
@@ -69,7 +69,7 @@
     </select>
     </td>    
     <td width="5%" align="center">
-      <input type="text" name="quantity[]" value="{{ $p_order->quantity }}" size="6" class="numeric" onkeyup="updateFee(this)" />
+      <input type="text" name="quantity[]" value="{{ $p_order->quantity }}" size="6" maxlength="2" class="numeric" onkeyup="updateFee(this)" />
     </td>    
     <td width="15%" nowrap>
       <span class="price_cell">{{ number_format($p_order->price,0,'',' ') }}</span>
@@ -97,6 +97,9 @@
   </td>
   </tr>
 </table>
+@if(isset($order_id))
+{{ Form::hidden('order_id', $order_id) }}
+@endif
 
 {{ Form::close() }}
 

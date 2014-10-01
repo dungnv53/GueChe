@@ -42,7 +42,9 @@
   </tr></thead>
 
   <tbody>
-  <?php $stt = 1; ?>
+  <?php $stt = 1; 
+        $total_fee = 0;
+  ?>
   {{-- print_r($prod_orders) --}}
 
   @foreach($prod_orders as $order)
@@ -67,11 +69,12 @@
     </td> 
     <td width="10%">
       {{ number_format($order->getProduct()[0]['price']*$order->quantity,0,'',' ') }}
+      <?php $total_fee += $order->getProduct()[0]['price']*$order->quantity; ?>
     </td>    
     <td width="20%" align="center">
     @if(date('H:i:s') <= $session->end)
-      <button>{{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }}</button>
-      <button>{{ HTML::linkRoute('orders.delete','Delete',array($order->order_id, $order->product_id)) }}</button>   
+      {{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }} &nbsp;|
+      {{ HTML::linkRoute('orders.delete','Delete',array($order->order_id, $order->product_id)) }}   
     @else 
      End time edit
      @endif
@@ -79,6 +82,14 @@
   </tr>
   @endforeach
   </tbody>
+  <tr>
+    <td colspan="4" class="steelBlue">&nbsp;</td>
+    <td class="steelBlue">&nbsp;</td>
+    <td class="steelBlue" id="total_fee">{{ number_format($total_fee, 0, '', ' ') }}</td>
+    <td align="right" class="steelBlue">
+        {{ HTML::linkRoute('home', 'Back') }}
+    </td>
+  </tr> 
  
 </table> 
 

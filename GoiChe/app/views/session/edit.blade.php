@@ -29,7 +29,7 @@
   <div class="well">
   {{ Form::label('start', 'Start time:') }}
     <div id="datetimepicker1" class="input-append">
-      <input data-format="hh:mm:ss" type="text" name='start' value={{ Input::old('start', $session->start) }}></input>
+      <input data-format="hh:mm:ss" type="text" name='start' value={{ Input::old('start', date('H:i:s', strtotime($session->start))) }}></input>
       <span class="add-on">
         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
         </i>
@@ -47,7 +47,7 @@
   <div class="well">
   {{ Form::label('end', 'End time:') }}
     <div id="datetimepicker2" class="input-append">
-      <input data-format="hh:mm:ss" type="text" name="end" value={{ Input::old('end', $session->end) }}></input>
+      <input data-format="hh:mm:ss" type="text" name="end" value={{ Input::old('end', date('H:i:s', strtotime($session->end))) }}></input>
       <span class="add-on">
         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
         </i>

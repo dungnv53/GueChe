@@ -78,7 +78,7 @@
   </tr>
   <tr class="tfoot">
   <td colspan="4" class="steelBlue">&nbsp</td>
-  <td colspan="" class="steelBlue">&nbsp</td>
+  <td colspan="" id="total_cell" class="steelBlue">&nbsp</td>
   <td colspan="2" class="steelBlue" align="center">
   <button>{{ HTML::linkRoute('orders.show','Cancel') }}</button>
   {{ Form::submit('Reserve') }}
@@ -137,8 +137,9 @@
             html += '<option value='+product.id+' price='+product.price+' cat_id='+product.cat_id+'>'+product.name+'</option>';
           }
 
-          console.log($(row).closest('tr'));
+          // console.log($(row).closest('tr'));
           $(row).closest('tr').find('select:eq(1)').html(html);
+          updateFee();
       
       });
     }

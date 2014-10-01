@@ -2,6 +2,18 @@
 
 class SessionController extends \BaseController {
 
+	public function __construct() {
+        $this->beforeFilter('@check_access_action', array('only' =>
+                            array('index', 'edit', 'create', 'show', 'destroy', 'store'))); 
+
+    }
+
+    public function check_access_action() {
+        if(Auth::user()->role_id != ROLE_ADMIN) {
+            return Redirect::to('/');
+        }
+    }
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -36,8 +48,9 @@ class SessionController extends \BaseController {
 	{
 		$session = new OrderSession();
 		$session->date = Input::get('date');
-		$session->start = Input::get('start');
-		$session->end = Input::get('end');
+		$session->start = date('Y-m-d')." ".Input::get('start');
+		$session->end = date('Y-m-d')." ".Input::get('end');
+		$session->touch();
 		$session->save();
 		return Redirect::route('session.index');
 
@@ -80,8 +93,9 @@ class SessionController extends \BaseController {
 	{
 		//
 		$session->date = Input::get('date');
-		$session->start = Input::get('start');
-		$session->end  = Input::get('end');
+		$session->start = date('Y-m-d')." ".Input::get('start');
+		$session->end  = date('Y-m-d')." ".Input::get('end');
+		$session->touch();
 		$session->save();
 		return Redirect::route('session.index');
 		

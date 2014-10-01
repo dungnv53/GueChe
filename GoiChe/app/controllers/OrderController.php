@@ -285,12 +285,10 @@ class OrderController extends BaseController {
         $order = Order::find($uid);
 
         if(isset($order->id)) {
-            // $prod_orders = ProductOrder::where('created_at', '>=', date('Y-m-d'))->where('order_id', '=', $last_order->id)->get();
             $prod_orders = DB::table('product_order')->join('products', 'product_order.product_id', '=', 'products.id')
                 ->join('categories', 'categories.id', '=', 'products.cat_id')
                 ->where('product_order.order_id','=',$order->id )
                 ->get();
-                // get(array())
         } else {
             $prod_orders = array();
         }
@@ -301,28 +299,28 @@ class OrderController extends BaseController {
     }
 
     public function admStore($uid = null) {
-        // dd($uid);
-        $order_id = Input::get('order_id');
+        $order_id = Input::get('order_id'); // edit
+        $uid = Input::get('uid');
 
         // dd(Input::all());
         $categories = Input::get('category');
         $products = Input::get('product');
         $qtys = Input::get('quantity');
 
-        if($uid) {
-            $uid = Input::segment(2);
+        if(isset($uid) && ($uid==ROLE_ADMIN)) { // Admin order for user with uid
+            return Redirect::to(route('dashboard.index'));
         }
         // dd($uid);
-        if(is_null($uid)) Redirect::to('/');
+        if(is_null($uid) && is_null($order_id)) Redirect::to('/');
 
-        if(!is_null($categories)) {
+        if($categories) {
             if($order_id)  {
                 // edit
                 $order =  Order::find($order_id);
             } else {
                 $order = Order::where('user_id', '=', $uid)->orderBy('updated_at', 'desc')->first();
             }
-            if(is_null($order)) {
+            if(!count($order)) {
                 $new_order = new Order();
                 $new_order->user_id = $uid;
                 $new_order->orderSession_id = 1; // fix me
@@ -347,9 +345,10 @@ class OrderController extends BaseController {
                     $p_order->product_id = $products[$cur_row]; // fix me
                     $p_order->touch();
                     $p_order->save();
+                    // dd($p_order->id);
                 }
             }
-
+                // dd('conde');
 
             // return View::make('orders.complete');
             return Redirect::to(route('dashboard.index'));

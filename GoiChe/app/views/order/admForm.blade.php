@@ -58,7 +58,7 @@
         
     </td>    
     <td width="5%" align="center">
-      <input type="text" name="quantity[]" size="6" class="numeric"  onkeyup="updateFee(this)" />
+      <input type="text" name="quantity[]" size="6" maxlength="2" class="numeric"  onkeyup="updateFee(this)" />
     </td>    
     <td width="15%" nowrap>
       <span class="price_cell" >0</span>
@@ -80,6 +80,10 @@
   {{ Form::submit('Reserve') }}
   </td>
   </tr>
+
+  @if(isset($uid))
+  {{ Form::hidden('uid', $uid) }}
+  @endif
 </table>
 {{ Form::close() }}
 
