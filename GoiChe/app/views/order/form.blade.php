@@ -1,7 +1,9 @@
 @include('common.layout')
 
 <div class="content">
+@if(isset($session))
 <p>Thời gian đặt chè ngày {{$session->date}} : Từ {{ $session->start }} đến {{ $session->end }}</p>
+@endif
 
 {{ Form::open(array('route' => 'orders.store')) }}
 
@@ -74,7 +76,6 @@
       <button type="button"  id="minus" name="minus" onclick="removeChildRow(this)">-</button>
     </td>
   </tr>
- 
   <tr class="tfoot">
   <td colspan="4" class="steelBlue">&nbsp</td>
   <td colspan="" class="steelBlue">&nbsp</td>

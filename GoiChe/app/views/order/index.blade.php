@@ -1,8 +1,12 @@
 @include('common.layout')
 
  <div class="content">
- @if(!empty($session))
-<p>Thời gian đặt chè ngày {{$session->date}} : Từ {{ $session->start }} đến {{ $session->end }}</p>
+ <p>
+  @if(!empty($session))
+  Thời gian đặt chè ngày {{$session->date}} : Từ {{ $session->start }} đến {{ $session->end }}
+  @endif
+ </p>
+ 
  @if(empty($prod_orders))
 
  <fieldset>
@@ -10,6 +14,7 @@
  <a id="btn-back" href="{{ route('orders.create') }}">Order</a>
  </fieldset>
  @else
+
 <table border="0" id="buy_list" class="responstable2">
   @if($errors->any())
     <ul>
@@ -43,7 +48,7 @@
 
   <tbody>
   <?php $stt = 1; ?>
-  {{-- print_r($prod_orders) --}}
+  {{-- dd($prod_orders) --}}
 
   @foreach($prod_orders as $order)
   <tr>
@@ -81,7 +86,7 @@
 </table> 
 
  @endif
- @else
-  Hôm nay không đặt hàng được 
- @endif
+ <!-- @ else -->
+  <!-- Hôm nay không đặt hàng được  -->
+ <!-- @ endif -->
 </div>
