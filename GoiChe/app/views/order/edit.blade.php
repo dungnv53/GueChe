@@ -101,10 +101,6 @@
       {{ Form::submit('save') }}
       {{ HTML::linkRoute('orders.index', 'Cancel') }}
   </td>
-  <input name="test[]" type="text" value="test"></input>
-  <input name="test[]" type="tex21t" value="test"></input>
-  <input name="test[]" type="tex3t" value="test"></input>
-  <input name="test[]" type="text3" value="test"></input>
 
 {{ Form::close() }}
 </table>

@@ -23,42 +23,43 @@
   @endif
 
   <thead><tr>
-	<th width="1%">
-		Stt
-	</th>
-	<th width="10%">
-		Loại
-	</th>
-	<th width="25%">
-		Đồ ăn
-	</th>
-	<th width="5%">
-		Số lượng
-	</th>
-	<th width="15%">
-		Giá
-	</th>
-	<th width="10%">
-		Tổng 
-	</th>
-	<th width="20%">
-		Thao tác
-	</th>
+  <th width="1%">
+    Stt
+  </th>
+  <th width="10%">
+    Loại
+  </th>
+  <th width="25%">
+    Đồ ăn
+  </th>
+  <th width="5%">
+    Số lượng
+  </th>
+  <th width="15%">
+    Giá
+  </th>
+  <th width="10%">
+    Tổng 
+  </th>
+  <th width="20%">
+    Thao tác
+  </th>
   </tr></thead>
 
   <tbody>
   <?php $stt = 1; ?>
   {{-- dd($prod_orders) --}}
 
+  @if($prod_orders)
   @foreach($prod_orders as $order)
   {{-- print_r($order->product_id)--}}
   <tr>
-  	<td width="1%" border="0">
-	    {{ $stt++ }}
+    <td width="1%" border="0">
+      {{ $stt++ }}
     </td> 
     <td width="10%">
 
-    	{{ $order->getCategory()->name }}
+      {{ $order->getCategory()->name }}
 
     </td>  
     <td width="30%" nowrap>
@@ -74,15 +75,22 @@
       {{ number_format($order->getProduct()[0]['price']*$order->quantity,0,'',' ') }}
     </td>    
     <td width="20%" align="center">
-    @if(date('H:i:s') <= $session->end)
+    <!-- Check sessien exist -->
+    @if(isset($session))
+    @if(date('Y-m-d H:i:s') <= $session->end)
       <button>{{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }}</button>
       <button>{{ HTML::linkRoute('orders.delete','Delete',array($order->order_id, $order->product_id)) }}</button>
     @else 
-     End time edit
-     @endif
+     Hết hạn sửa
+    @endif
+    @else
+      <button>{{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }}</button>
+      <button>{{ HTML::linkRoute('orders.delete','Delete',array($order->order_id, $order->product_id)) }}</button>
+    @endif
     </td>
   </tr>
   @endforeach
+  @endif
   </tbody>
  
 </table> 

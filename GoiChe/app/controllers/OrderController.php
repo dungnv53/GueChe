@@ -21,7 +21,7 @@ class OrderController extends BaseController {
     }
 
     public function index() {
-        $session = OrderSession::where('date','=',date('Y-m-d'))->first();
+        $session = OrderSession::where('date','>=',date('Y-m-d'))->first();
         // dd($session->date);
         $user = Auth::user();
         if(is_null($user)) {
@@ -112,7 +112,9 @@ class OrderController extends BaseController {
         $order_id = Input::get('order_id');
 
         $categories = Input::get('category');
-        dd($categories);
+
+        // dd($categories);
+
         $products = Input::get('product');
         $qtys = Input::get('quantity');
         // dd($qtys);
@@ -302,7 +304,7 @@ class OrderController extends BaseController {
         if($uid) {
             $uid = Input::segment(2);
         }
-        dd($uid);
+        // dd($uid);
         if(is_null($uid)) Redirect::to('/');
 
         if(!is_null($categories)) {
