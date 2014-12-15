@@ -73,8 +73,8 @@
     </td>    
     <td width="20%" align="center">
     @if(date('H:i:s') <= $session->end)
-      {{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }} &nbsp;|
-      {{ HTML::linkRoute('orders.delete','Delete',array($order->order_id, $order->product_id)) }}   
+      {{ HTML::linkRoute('orders.edit','Edit', $order->order_id) }} <!-- &nbsp;| -->
+      {{-- HTML::linkRoute('orders.delete','Delete',array($order->order_id, $order->product_id)) --}}   
     @else 
      End time edit
      @endif

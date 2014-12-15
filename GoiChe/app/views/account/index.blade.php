@@ -3,7 +3,8 @@
 <table class="pure-table pure-table-bordered">
 	<thead>
 		<tr>
-			<th>ID</th>
+			<!-- <th>ID</th> -->
+			<th>STT</th>
 			<th width="200px">Username</th>
 			<th width="300px">Email</th>
 			<th>Role</th>
@@ -11,10 +12,14 @@
 			<th>Delete</th>
 		</tr>
 	</thead>
+	<?php
+		$stt =1;
+	?>
 	<tbody>
 		@foreach($users as $user)
 			<tr>
-				<td>{{ $user->id }}</td>
+				<!-- <td>{{ $user->id }}</td> -->
+				<td>{{ $stt++ }}</td>
 				<td>{{ $user->username }}</td>
 				<td>{{ $user->email }}</td>
 				<td>{{ $user->role_id }}</td>

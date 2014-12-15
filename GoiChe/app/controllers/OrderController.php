@@ -108,24 +108,17 @@ class OrderController extends BaseController {
 
     public function store($id = null) {
 
-
+        $session = OrderSession::where('date','=',date('Y-m-d'))->first();
+        // dd($session->id);
         $order_id = Input::get('order_id');
 
         $categories = Input::get('category');
-
-        // dd($_POST['category']);
-        // dd($_POST['quantity']);
-        // dd($_POST['test']);
-
-        // dd($categories);
 
         $products = Input::get('product');
         $qtys = Input::get('quantity');
         // dd($qtys);
         $uid = Auth::user()->id;
         if(is_null($uid)) Redirect::to('/');
-
-           // dd($categories);
 
         if(!is_null($categories)) {
 
@@ -140,7 +133,7 @@ class OrderController extends BaseController {
             if(is_null($order)) {
                 $new_order = new Order();
                 $new_order->user_id = Auth::user()->id;
-                $new_order->orderSession_id = 1; // fix me
+                $new_order->orderSession_id = $session->id; // fix me
                 $new_order->touch();
                 $new_order->save();
             } else {

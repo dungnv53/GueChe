@@ -15,7 +15,7 @@ class AccountsController extends BaseController {
     }
     
     public function index(){
-        $users = User::orderBy('id')->paginate(15);
+        $users = User::orderBy('username')->paginate(15);
 
         return View::make('account.index',compact('users'));
     }
@@ -79,16 +79,12 @@ class AccountsController extends BaseController {
             $user->save();
 
         } else {
-            return Redirect::back()
-            ->withInput()
-            ->withErrors($validator);
+            return Redirect::back()->withErrors($validator)->withInput();
         }
 
         return View::make('account.complete');
 
-        return Redirect::back()
-            ->withInput()
-            ->withErrors($validator);
+        return Redirect::back() ->withErrors($validator) ->withInput();
         }
 
     	// dd(Input::all());
@@ -98,7 +94,7 @@ class AccountsController extends BaseController {
          'fullname'=>'required',
          'password'=>'required|alpha_dash',
          'role_id'=>'required|numeric|digits_between:1,3',
-         'email'=>'required|email',
+         'email'=>'required|email|unique:users',
          // 'email_confirmation'=>'required|email',
         );
         
@@ -114,16 +110,12 @@ class AccountsController extends BaseController {
         	$user->save();
 
         } else {
-        	return Redirect::back()
-            ->withInput()
-            ->withErrors($validator);
+        	return Redirect::back()->withErrors($validator)->withInput();
         }
 
         return View::make('account.complete');
 
-        return Redirect::back()
-            ->withInput()
-            ->withErrors($validator);
+        return Redirect::back()->withErrors($validator)->withInput();
     }
 
     public function complete() {

@@ -7,7 +7,7 @@ class Product extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'products';
-
+    protected $fillable = ['name','price','unit','cat_id'];
 	/**
 	* Get the password for the user.
 	*
